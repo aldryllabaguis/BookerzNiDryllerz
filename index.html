@@ -812,12 +812,12 @@ button:focus-visible{outline:2px solid #dec2a3;outline-offset:5px}
 #shelf-view .shelf-stage{
  position:relative;
  z-index:1;
- top:-18px;
+ top:-46px;
 }
 @media(max-width:790px){
  #shelf-view .shelf-title{margin-bottom:25px}
  #shelf-view .shelf-title .shelf-prompt{font-size:9px;letter-spacing:.12em}
- #shelf-view .shelf-stage{top:-10px}
+ #shelf-view .shelf-stage{top:-25px}
 }
 
 /* SEAMLESS BOOK-TO-DETAIL TRANSITION.
@@ -958,12 +958,6 @@ button:focus-visible{outline:2px solid #dec2a3;outline-offset:5px}
 @media(max-width:790px){
  .focus-stage{min-height:385px}
  .focus-book{width:min(65vw,260px);height:min(94vw,375px)}
-}
-/* Raise the book in the opened detail view slightly without modifying
-   its transforms, so the flight animation uses the new landing position. */
-.detail-view .focus-book{top:-48px}
-@media(max-width:790px){
- .detail-view .focus-book{top:-28px}
 }
 @media(prefers-reduced-motion:reduce){
  .scene.is-opening .shelf-book,
