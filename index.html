@@ -2262,6 +2262,146 @@ body::after{
 }
 
 
+
+/* AUTHENTIC TAPED POLAROID — About Me, page three.
+   The complete portrait is kept uncropped inside a larger 4x5-ish instant
+   photograph, with warm aged paper, offset corners, and translucent washi tape. */
+.page-face .pola.taped-polaroid{
+ position:relative;
+ display:block;
+ width:min(82%,318px);
+ max-width:none;
+ margin:16px auto 20px;
+ padding:11px 11px 10px;
+ border:1px solid #b6a798;
+ border-bottom:2px solid #a89a87;
+ border-radius:1px;
+ background:
+  repeating-linear-gradient(118deg,transparent 0 12px,#d5bf9c0b 12px 13px),
+  linear-gradient(145deg,#fffdf5 0%,#f8f3e9 60%,#e8dccb 100%);
+ box-shadow:
+  2px 3px 1px #7564503a,
+  8px 13px 15px #483c2c5c,
+  14px 23px 28px #3b2d202d,
+  inset 0 0 0 2px #fffdf2b5;
+ transform:rotate(-3deg);
+ transform-origin:50% 47%;
+ isolation:isolate;
+ overflow:visible;
+}
+.page-face .taped-polaroid::before,
+.page-face .taped-polaroid::after{
+ content:"";
+ position:absolute;
+ z-index:8;
+ top:-15px;
+ width:80px;
+ height:26px;
+ pointer-events:none;
+ background:
+  repeating-linear-gradient(92deg,transparent 0 5px,#fef3d022 5px 6px),
+  linear-gradient(90deg,#c7aa78b9,#e2c69ba8 25%,#f3dfb69f 70%,#bda076b8);
+ border:1px solid #927b5a45;
+ box-shadow:0 2px 3px #65503d42,inset 0 1px 1px #fff6d67d;
+ clip-path:polygon(0 8%,4% 0,92% 3%,100% 9%,98% 89%,91% 100%,5% 93%,0 100%);
+}
+.page-face .taped-polaroid::before{
+ left:-25px;
+ transform:rotate(-25deg);
+}
+.page-face .taped-polaroid::after{
+ right:-23px;
+ top:-9px;
+ transform:rotate(23deg);
+}
+.page-face .taped-polaroid .ph.polaroid-picture{
+ position:relative;
+ display:block;
+ width:100%;
+ aspect-ratio:340 / 431;
+ background:#a79e8e;
+ overflow:hidden;
+ border:1px solid #aaa395;
+ box-shadow:inset 0 0 1px #fff8ee,0 1px 2px #5b50402b;
+}
+.page-face .taped-polaroid .ph.polaroid-picture img{
+ position:static;
+ display:block;
+ width:100%;
+ height:100%;
+ aspect-ratio:340 / 431;
+ object-fit:cover;
+ object-position:center center;
+ filter:saturate(.96) contrast(.99);
+}
+.page-face .taped-polaroid .ph.polaroid-picture::after{
+ content:"";
+ position:absolute;
+ inset:0;
+ background:linear-gradient(145deg,#fff4da16,transparent 42%,#493b2b0d);
+ box-shadow:inset 0 0 8px #2d20191f;
+ pointer-events:none;
+}
+.page-face .taped-polaroid figcaption{
+ display:flex;
+ flex-wrap:wrap;
+ justify-content:center;
+ align-items:baseline;
+ gap:9px;
+ min-height:39px;
+ padding:8px 4px 2px;
+ color:#574638;
+ text-shadow:0 1px 0 #fff;
+ font:italic 21px/1.15 'Cormorant Garamond',Georgia,serif;
+}
+.page-face .taped-polaroid figcaption small{
+ color:#806f62;
+ font:12px 'Special Elite',monospace;
+}
+.page-face .taped-polaroid + .stats{
+ justify-content:center;
+ flex-wrap:wrap;
+ gap:8px 15px;
+ margin:17px auto 0;
+}
+@media(max-width:790px){
+ .page-face .pola.taped-polaroid{
+  width:min(87%,275px);
+  margin:14px auto 15px;
+  padding:8px 8px 6px;
+ }
+ .page-face .taped-polaroid::before,
+ .page-face .taped-polaroid::after{
+  width:55px;height:20px;top:-12px;
+ }
+ .page-face .taped-polaroid::before{left:-14px}
+ .page-face .taped-polaroid::after{right:-14px;top:-7px}
+ .page-face .taped-polaroid figcaption{
+  min-height:29px;
+  font-size:clamp(13px,2.7vw,17px);
+  padding:6px 2px 2px;
+  gap:5px;
+ }
+ .page-face .taped-polaroid figcaption small{font-size:9px}
+ .page-face .taped-polaroid + .stats{
+  gap:5px 12px;
+  margin:11px auto 0;
+  font-size:clamp(11px,1.7vw,14px);
+ }
+}
+@media(max-width:440px){
+ .page-face .pola.taped-polaroid{
+  width:min(93%,215px);
+  margin:11px auto 12px;
+  padding:7px 7px 5px;
+ }
+ .page-face .taped-polaroid::before,
+ .page-face .taped-polaroid::after{
+  width:43px;height:17px;
+ }
+ .page-face .taped-polaroid figcaption{font-size:13px;min-height:25px}
+ .page-face .taped-polaroid figcaption small{font-size:8px}
+}
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
 <section id="shelf-view" class="shelf-view" aria-label="Bookshelf">
@@ -2293,7 +2433,7 @@ body::after{
 </section>
 </div></main><script>
 const $=(s,c=document)=>c.querySelector(s),pad=n=>String(n).padStart(2,'0'); /* ---------- EDIT YOUR CONTENT HERE ---------- */ const NAME='Aldryl<br>Labaguis'; const W=[ ['PTs & Products Compilation','All machine problems, activities, seatwork and recitation outputs in one PDF, with Java screenshots.','#','Open PDF'], ['Project Documentation','Goals, design and a walkthrough of my project code.','#','Open PDF'], ['Video Project Presentation','A recorded demo of my project. Paste your YouTube or Drive link.','#','Watch video'], ['Work Experience / Internships','Add your role, company and dates.','#','Edit me'], ['Seminars & Trainings','List the seminars you attended, with speakers and dates.','#','Edit me'], ['Organization & Community','Your orgs, roles and outreach activities, in or out of campus.','#','Edit me'], ['Awards & Recognitions','Dean’s list, contests, certificates.','#','Edit me'], ['Other JRU Experience','Anything else you want to share about your journey at JRU.','#','Edit me']]; const RF=[ ['Prelim','We began with how a program is structured, then variables, data types, input/output and operators. A missing semicolon could eat an entire afternoon, but reading error messages slowly turned frustration into calm debugging.','[Edit: your favorite activity and biggest struggle.]'], ['Midterm','Decision-making and repetition changed everything: if–else, switch, loops and nested loops. Patterns and number problems taught me to trace my code line by line before running it.','[Edit: a machine problem you were proud of.]'], ['Final','Arrays and methods taught me to break big problems into small reusable pieces, and the project let me combine everything from the semester.','[Edit: how you grew and your plans for Programming 2.]']]; /* -------------------------------------------- */ const pn=n=>`<div class="pn">— ${pad(n)} —</div>`; const li=(w,i,o)=>`<li><b>${pad(i+o+1)}</b><div><h3>${w[0]}</h3><p>${w[1]}</p><a href="${w[2]}" target="_blank" rel="noopener">${w[3]} →</a></div></li>`; const ph='<img src="photo.png" alt="" onerror="this.remove()">'; const PG=[ // reading order: F0,B0,F1,B1,...
-['cover cover-main-refined',`<div class="sun"></div>${ph}<div class="ct"><small>E‑PORTFOLIO · CP1 · JRU</small><h1>${NAME}</h1></div><img class="cover-sticker sticker-cat" src="assets/gothic-cat.svg" alt="" aria-hidden="true"><div class="stamp">Computer<br>Programming 1<br>2026</div>`], ['',`<h2>Hello &amp;<br>welcome.</h2><p class="lead">This volume introduces me and my portfolio. My projects and reflections are each in their own books. Flip through this one or choose a section:</p><div class="toc"><button data-go="1">About me</button><button data-go="3">Contact</button></div>${pn(1)}`], ['',`<h2>About me</h2><p>Hello! I’m <mark>Aldryl Labaguis</mark>, a student at Jose Rizal University. Add your course and year level here.</p><p>Write 2–3 sentences about your hobbies, your goals after graduation and what drives you to learn programming.</p><p class="edit">[Edit this page.]</p>${pn(2)}`], ['',`<div class="pola"><div class="ph">Y${ph}</div><span>Aldryl Labaguis, 2026</span></div><div class="stats"><div><b>—</b>programs</div><div><b>—</b>projects</div><div><b>—</b>certificates</div></div>${pn(3)}`], ]; PG.push(
+['cover cover-main-refined',`<div class="sun"></div>${ph}<div class="ct"><small>E‑PORTFOLIO · CP1 · JRU</small><h1>${NAME}</h1></div><img class="cover-sticker sticker-cat" src="assets/gothic-cat.svg" alt="" aria-hidden="true"><div class="stamp">Computer<br>Programming 1<br>2026</div>`], ['',`<h2>Hello &amp;<br>welcome.</h2><p class="lead">This volume introduces me and my portfolio. My projects and reflections are each in their own books. Flip through this one or choose a section:</p><div class="toc"><button data-go="1">About me</button><button data-go="3">Contact</button></div>${pn(1)}`], ['',`<h2>About me</h2><p>Hello! I’m <mark>Aldryl Labaguis</mark>, a student at Jose Rizal University. Add your course and year level here.</p><p>Write 2–3 sentences about your hobbies, your goals after graduation and what drives you to learn programming.</p><p class="edit">[Edit this page.]</p>${pn(2)}`], ['',`<figure class="pola taped-polaroid" aria-label="Photo of Aldryl Labaguis taped onto the page"><div class="ph polaroid-picture"><img src="assets/aldryl-library-portrait.webp" width="340" height="431" loading="lazy" decoding="async" alt="Aldryl Labaguis standing in a library wearing a black sweater and dark blue trousers"></div><figcaption><span>Aldryl Labaguis</span><small>2026</small></figcaption></figure><div class="stats"><div><b>—</b>programs</div><div><b>—</b>projects</div><div><b>—</b>certificates</div></div>${pn(3)}`], ]; PG.push(
  ['',`<h2>Three<br>volumes.</h2><p class="lead">This is the first book in my collection.</p><p>Here you can get to know me and explore my personal portfolio. My academic outputs and my Prelim, Midterm, and Final reflections are kept in two separate books on the bookshelf.</p><p>Close this book to explore <strong>Works &amp; Projects</strong> or <strong>Reflections</strong>.</p>${pn(4)}`],
  ['',`<h2>Let’s<br>connect.</h2><p>Questions, feedback or opportunities? I’d love to hear from you.</p><p><a class="stk" href="mailto:your-email@example.com">your-email@example.com</a></p><p><a class="stk" href="https://github.com/aldryllabaguis" target="_blank" rel="noopener">GitHub</a><a class="stk" href="#">LinkedIn</a></p>${pn(5)}`],
  ['',`<h2 style="margin-top:30%">Thanks for<br>reading.</h2><p>© 2026 Aldryl Labaguis · CP1 · JRU</p><button data-go="0">Back to cover</button>${pn(6)}`],
