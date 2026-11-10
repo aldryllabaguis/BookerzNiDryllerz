@@ -207,6 +207,7 @@ const WORKS_PG=[
  function openDetail(i){
   clearTimeout(closeTimer);selected=i;markSelected();populateDetail();
   readerView.hidden=true;detail.hidden=false;scene.classList.remove('is-reading');
+  void detail.offsetWidth; // Ensure opening animation starts from the closed cover
   requestAnimationFrame(()=>scene.classList.add('is-detail'));
  }
  function returnShelf(){
@@ -288,6 +289,7 @@ const WORKS_PG=[
   $('#reader-title').textContent=books[selected].title;
   reader=makeReader(books[selected]);
   scene.classList.remove('is-detail');
+  void readerView.offsetWidth;
   requestAnimationFrame(()=>scene.classList.add('is-reading'));
  }
  function closeReader(){
