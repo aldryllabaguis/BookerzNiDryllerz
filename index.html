@@ -435,7 +435,7 @@ button:focus-visible{outline:2px solid #dec2a3;outline-offset:5px}
  #shelf-track .shelf-book .book-3d{transition:none!important}
 }
 
-/* Larger physical books with the MAIN PORTFOLIO prominently facing the viewer. */
+/* Larger physical books with the ABOUT ME prominently facing the viewer. */
 #shelf-track{
   gap:clamp(18px,2.5vw,32px);
   min-height:660px;
@@ -676,7 +676,7 @@ button:focus-visible{outline:2px solid #dec2a3;outline-offset:5px}
 
 /* FULLER BOOKSHELF: larger covers and a wider stage, with the existing
    book arrangement, 3D physics, pointer interactions and materials unchanged.
-   The centered Main Portfolio stays the featured (largest) volume. */
+   The centered About Me stays the featured (largest) volume. */
 @media(min-width:1101px){
  #showcase{
   width:min(1500px,100%);
@@ -991,7 +991,7 @@ body::before{
  body::before{background-position:48% center}
 }
 
-/* DISTINCT SIDE-VOLUME COVERS — Main Portfolio is deliberately untouched.
+/* DISTINCT SIDE-VOLUME COVERS — About Me is deliberately untouched.
    Archive II: charcoal cloth, crimson binding detail, torn parchment title.
    Journal III: forest-green embossed leather, bronze ornamentation. */
 :is(.display-cover,.page-face.cover).cover-works{
@@ -1183,7 +1183,7 @@ body::before{
  :is(.display-cover,.page-face.cover).cover-reflections .cover-journal-crest{top:8%;padding:4px 0}
 }
 
-/* MAIN PORTFOLIO REFINEMENT — original burgundy gothic cover retained.
+/* ABOUT ME REFINEMENT — original burgundy gothic cover retained.
    Polish its spacing, subtle leather sheen, border, and original stickers.
    Works & Projects and Reflections are intentionally unaffected. */
 :is(.display-cover,.page-face.cover).cover-main-refined{
@@ -2013,7 +2013,7 @@ body::after{
 }
 
 /* LARGER READING SPREAD — increase the full book and the type together.
-   Works & Projects, Main Portfolio and Reflections use one shared reader.
+   Works & Projects, About Me and Reflections use one shared reader.
    All page-turn physics, content, covers and original image files stay intact. */
 .reader-stage#reader-stage{
  width:min(1050px,100%);
@@ -2275,7 +2275,7 @@ body::after{
  <button type="button" id="detail-close" class="close-detail" aria-label="Close book details">×</button>
  <div class="detail-grid"><div class="focus-stage" id="focus-stage">
    <div class="focus-book" id="focus-book" tabindex="0" role="group" aria-roledescription="3D book" aria-describedby="focus-drag-hint" aria-label="Interactive 3D book — drag to rotate">
-    <div class="focus-rear-cover" aria-hidden="true"><span class="focus-rear-ornament">✦</span><span class="focus-rear-name">ALDRYL LABAGUIS</span><strong id="focus-rear-title">Main Portfolio</strong><span class="focus-rear-bottom">PERSONAL COLLECTION · 2026</span></div>
+    <div class="focus-rear-cover" aria-hidden="true"><span class="focus-rear-ornament">✦</span><span class="focus-rear-name">ALDRYL LABAGUIS</span><strong id="focus-rear-title">About Me</strong><span class="focus-rear-bottom">PERSONAL COLLECTION · 2026</span></div>
     <div class="focus-pages-top" aria-hidden="true"></div><div class="focus-pages-bottom" aria-hidden="true"></div><div class="focus-pages-right" aria-hidden="true"></div>
     <div class="focus-spine"></div><div class="focus-binding-core" aria-hidden="true"></div><div class="focus-binding-gutter" aria-hidden="true"></div><div class="focus-pageblock"></div><div id="focus-inside" class="focus-inside"></div>
     <div class="focus-cover-hinge"><div id="focus-front" class="focus-front"></div><div class="focus-back"><small>ALDRYL LABAGUIS</small><strong>Volume of Memories</strong></div></div>
@@ -2295,7 +2295,7 @@ body::after{
  ['',`<h2>Three<br>volumes.</h2><p class="lead">This is the first book in my collection.</p><p>Here you can get to know me and explore my personal portfolio. My academic outputs and my Prelim, Midterm, and Final reflections are kept in two separate books on the bookshelf.</p><p>Close this book to explore <strong>Works &amp; Projects</strong> or <strong>Reflections</strong>.</p>${pn(4)}`],
  ['',`<h2>Let’s<br>connect.</h2><p>Questions, feedback or opportunities? I’d love to hear from you.</p><p><a class="stk" href="mailto:your-email@example.com">your-email@example.com</a></p><p><a class="stk" href="https://github.com/aldryllabaguis" target="_blank" rel="noopener">GitHub</a><a class="stk" href="#">LinkedIn</a></p>${pn(5)}`],
  ['',`<h2 style="margin-top:30%">Thanks for<br>reading.</h2><p>© 2026 Aldryl Labaguis · CP1 · JRU</p><button data-go="0">Back to cover</button>${pn(6)}`],
- ['bk bk-main',`<div class="reader-back-design"><span class="reader-back-flourish">✦</span><small>VOLUME I · THE END</small><strong>Main Portfolio</strong><span class="reader-back-divider"></span><span class="reader-back-signature">ALDRYL LABAGUIS</span><span class="reader-back-year">PERSONAL COLLECTION · 2026</span></div>`]);
+ ['bk bk-main',`<div class="reader-back-design"><span class="reader-back-flourish">✦</span><small>VOLUME I · THE END</small><strong>About Me</strong><span class="reader-back-divider"></span><span class="reader-back-signature">ALDRYL LABAGUIS</span><span class="reader-back-year">PERSONAL COLLECTION · 2026</span></div>`]);
 const WORKS_PG=[
  ['cover cover-works',`<div class="ct"><small>VOLUME II · SELECTED WORKS</small><h1>Works<br>&amp; Projects</h1><p class="works-subtitle">A collection by Aldryl Labaguis</p></div><img class="cover-sticker sticker-cat" src="assets/gothic-cat.svg" alt="" aria-hidden="true"><div class="stamp">Volume<br>Two<br>2026</div><span class="cover-archive-label" aria-hidden="true">EST. 2026<br>ARCHIVE / 02</span>`],
  ['',`<h2>Selected<br>works.</h2><p class="lead">A separate volume for academic outputs, projects, presentations and other work.</p><div class="toc"><button data-mini-go="1">Browse works</button></div>${pn(1)}`],
@@ -2321,14 +2321,14 @@ const REFLECTIONS_PG=[
 (function(){
  const books=[
   {title:'Works & Projects',subtitle:'Volume II · Selected Works',desc:'A collection of academic outputs, project documentation, presentations, and achievements from my studies.',chapters:['Selected Works','Academics & Outputs','More Works','End of Volume'],pages:WORKS_PG},
-  {title:'Main Portfolio',subtitle:'Volume I · E-Portfolio',desc:'My personal introduction, background, and contact details in Computer Programming 1.',chapters:['Welcome','About Me','Three Volumes','Contact'],pages:PG},
+  {title:'About Me',subtitle:'Volume I · E-Portfolio',desc:'My personal introduction, background, and contact details in Computer Programming 1.',chapters:['Welcome','About Me','Three Volumes','Contact'],pages:PG},
   {title:'Reflections',subtitle:'Volume III · Personal Reflections',desc:'My Prelim, Midterm, and Final reflections from Computer Programming 1, collected in their own volume.',chapters:['Introduction','Prelim','Midterm','Final','Looking Back'],pages:REFLECTIONS_PG}
  ];
  const scene=$('#scene'),shelf=$('#shelf-view'),detail=$('#detail-view'),readerView=$('#reader-view');
  let selected=1,reader=null,closeTimer=0;
  function cover(b){
   // Each volume has its own hardcover finish, shared by shelf and detail.
-  const finish=b.title==='Works & Projects'?' cover-works':b.title==='Reflections'?' cover-reflections':b.title==='Main Portfolio'?' cover-main-refined':'';
+  const finish=b.title==='Works & Projects'?' cover-works':b.title==='Reflections'?' cover-reflections':b.title==='About Me'?' cover-main-refined':'';
   return '<div class="display-cover'+finish+'">'+b.pages[0][1]+'</div>';
  }
  function card(b,i){
