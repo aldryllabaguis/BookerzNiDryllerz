@@ -71,45 +71,59 @@ ol a{color:#74332f}
 @media(max-width:760px){body{background:#4d3829}#flat{background:#4d3829}.no-3d #flat{background:#4d3829}}
 
 
-/* Immersive old-library room: real-looking book spines, deep shelves and a foreground reading table. */
+/* Candlelit reading-room scene: bookshelves behind, a wooden table and candlelight around the book. */
 body::after{
+ content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
  background:
-  /* tabletop in the foreground */
-  linear-gradient(180deg,transparent 0 64%,#24160f 64.2%,#55351f 65%,#9a7048 68%,#68472d 100%),
-  repeating-linear-gradient(2deg,transparent 0 18px,#3b2415 19px,#b18452 20px,#4b2d1b 22px,transparent 25px),
-  /* rows of leather-bound books */
+  /* warm pools of candlelight on the table and shelves */
+  radial-gradient(ellipse 18% 34% at 13% 69%,#f4bd69a8 0%,#d88c3e44 38%,transparent 76%),
+  radial-gradient(ellipse 18% 34% at 87% 68%,#f4bd69a0 0%,#d88c3e40 38%,transparent 76%),
+  radial-gradient(ellipse 42% 55% at 50% 70%,#d69a5833 0%,transparent 75%),
+  /* candle flames */
+  radial-gradient(ellipse 8px 17px at 12.5% 53%,#fff5c9 0 28%,#ffb64e 52%,#d66a20 72%,transparent 100%),
+  radial-gradient(ellipse 8px 17px at 87.5% 53%,#fff5c9 0 28%,#ffb64e 52%,#d66a20 72%,transparent 100%),
+  /* ivory candle bodies */
+  linear-gradient(90deg,transparent 0 10.9%,#f1dfb8 11.3%,#fff0cf 12.4%,#b98b55 13.5%,transparent 13.9% 85.9%,#b98b55 86.3%,#fff0cf 87.4%,#f1dfb8 88.5%,transparent 88.9%),
+  /* tabletop edge and rich walnut surface */
+  linear-gradient(180deg,transparent 0 62%,#1b100b 62.2%,#4b2b19 63%,#a47749 65%,#704627 100%),
+  repeating-linear-gradient(2deg,transparent 0 14px,#3d2415 15px,#a27648 16px,#56351f 18px,transparent 22px),
+  /* individually colored leather book spines */
   repeating-linear-gradient(90deg,
-   #251710 0 8px,#68452d 9px 14px,#321e16 15px 19px,#875d3c 20px 26px,
-   #3d241b 27px 35px,#9a7048 36px 40px,#281912 41px 47px,#62412b 48px 58px,
-   #351e17 59px 66px,#795236 67px 74px,#291a14 75px 83px),
+   #21140f 0 7px,#71472d 8px 13px,#b18a55 14px 15px,#3a2118 16px 22px,
+   #784b32 23px 31px,#d0aa70 32px 33px,#2a1812 34px 41px,#8b5937 42px 49px,
+   #d0aa70 50px 51px,#3d2419 52px 61px,#986744 62px 69px,#b28b57 70px 71px,
+   #281710 72px 80px,#65412c 81px 91px),
+  /* thick horizontal shelves */
   repeating-linear-gradient(180deg,
-   transparent 0 142px,#24170f 143px 151px,#9b7047 152px 157px,#2a1a12 158px 166px,
-   transparent 167px 292px),
-  radial-gradient(ellipse at 50% 35%,#9a7550 0%,#65452f 42%,#241812 100%);
- background-size:100% 100%,100% 100%,100% 64%,100% 64%,100% 100%;
+   transparent 0 137px,#21140e 138px 147px,#95683e 148px 155px,#4a2b19 156px 164px,
+   transparent 165px 278px),
+  /* shadowy library wall */
+  radial-gradient(ellipse at 50% 35%,#765236 0%,#40291c 58%,#1b120d 100%);
+ background-size:100% 100%,100% 100%,100% 100%,100% 100%,100% 100%,100% 100%,100% 100%,100% 100%,100% 64%,100% 64%,100% 100%;
  background-position:center;
- background-repeat:no-repeat,repeat,repeat-x,repeat, no-repeat;
- box-shadow:inset 0 0 170px #100905d9;
+ background-repeat:no-repeat;
+ box-shadow:inset 0 0 150px #100905bb;
 }
 @media(min-width:761px){
- body{background:#261911}
- #desk{filter:drop-shadow(0 30px 34px #100905d9)}
- #desk::before{bottom:-7%;height:15%;background:radial-gradient(ellipse,#090503dd,transparent 72%);filter:blur(20px)}
+ body{background:#21150f}
+ #desk{filter:drop-shadow(0 28px 32px #0d0705cc)}
+ #desk::before{bottom:-7%;height:15%;background:radial-gradient(ellipse,#090503e8,transparent 72%);filter:blur(20px)}
 }
 @media(max-width:760px){
- body{background:#342317}
+ body{background:#281a11}
  body::after{
   background:
-   linear-gradient(180deg,transparent 0 65%,#24160f 65.2%,#8a603c 69%,#53351f 100%),
-   repeating-linear-gradient(90deg,#281912 0 9px,#765033 10px 16px,#392219 17px 25px,#8b603d 26px 31px),
-   repeating-linear-gradient(180deg,transparent 0 130px,#21150e 131px 143px,transparent 144px 260px),
-   radial-gradient(ellipse at 50% 30%,#795638,#251810 100%);
-  background-size:100% 100%,100% 65%,100% 65%,100% 100%;
-  background-repeat:no-repeat,repeat-x,repeat, no-repeat;
+   radial-gradient(ellipse 25% 25% at 12% 69%,#e9a74c77,transparent 75%),
+   radial-gradient(ellipse 25% 25% at 88% 69%,#e9a74c77,transparent 75%),
+   linear-gradient(180deg,transparent 0 62%,#1b100b 62.2%,#8c6039 66%,#57351f 100%),
+   repeating-linear-gradient(90deg,#21140f 0 8px,#71472d 9px 15px,#3a2118 16px 23px,#986744 24px 31px,#281710 32px 40px),
+   repeating-linear-gradient(180deg,transparent 0 130px,#21140e 131px 143px,#95683e 144px 151px,transparent 152px 260px),
+   radial-gradient(ellipse at 50% 30%,#765236,#1b120d 100%);
+  background-size:100% 100%,100% 100%,100% 100%,100% 62%,100% 62%,100% 100%;
+  background-repeat:no-repeat, no-repeat, no-repeat, repeat-x, repeat, no-repeat;
  }
  #flat{position:relative;z-index:1}
 }
-
 </style></head><body> <div id="hint">drag the book · click the page edges · or use ← →</div> <div id="desk"><div id="book"></div></div> <div id="nav"></div><main id="flat"></main> <script> const $=(s,c=document)=>c.querySelector(s),pad=n=>String(n).padStart(2,'0'); /* ---------- EDIT YOUR CONTENT HERE ---------- */ const NAME='Aldryl<br>Labaguis'; const W=[ ['PTs & Products Compilation','All machine problems, activities, seatwork and recitation outputs in one PDF, with Java screenshots.','#','Open PDF'], ['Project Documentation','Goals, design and a walkthrough of my project code.','#','Open PDF'], ['Video Project Presentation','A recorded demo of my project. Paste your YouTube or Drive link.','#','Watch video'], ['Work Experience / Internships','Add your role, company and dates.','#','Edit me'], ['Seminars & Trainings','List the seminars you attended, with speakers and dates.','#','Edit me'], ['Organization & Community','Your orgs, roles and outreach activities, in or out of campus.','#','Edit me'], ['Awards & Recognitions','Dean’s list, contests, certificates.','#','Edit me'], ['Other JRU Experience','Anything else you want to share about your journey at JRU.','#','Edit me']]; const RF=[ ['Prelim','We began with how a program is structured, then variables, data types, input/output and operators. A missing semicolon could eat an entire afternoon, but reading error messages slowly turned frustration into calm debugging.','[Edit: your favorite activity and biggest struggle.]'], ['Midterm','Decision-making and repetition changed everything: if–else, switch, loops and nested loops. Patterns and number problems taught me to trace my code line by line before running it.','[Edit: a machine problem you were proud of.]'], ['Final','Arrays and methods taught me to break big problems into small reusable pieces, and the project let me combine everything from the semester.','[Edit: how you grew and your plans for Programming 2.]']]; /* -------------------------------------------- */ const pn=n=>`<div class="pn">— ${pad(n)} —</div>`; const li=(w,i,o)=>`<li><b>${pad(i+o+1)}</b><div><h3>${w[0]}</h3><p>${w[1]}</p><a href="${w[2]}" target="_blank" rel="noopener">${w[3]} →</a></div></li>`; const ph='<img src="photo.png" alt="" onerror="this.remove()">'; const PG=[ // reading order: F0,B0,F1,B1,...
 ['cover',`<div class="sun"></div>${ph}<div class="ct"><small>E‑PORTFOLIO · CP1 · JRU</small><h1>${NAME}</h1></div><div class="stamp">Computer<br>Programming 1<br>2026</div>`], ['',`<h2>Hello &amp;<br>welcome.</h2><p class="lead">This notebook holds what I built, what I learned and what I struggled with in Computer Programming 1. Flip through it, or jump to:</p><div class="toc"><button data-go="1">About me</button><button data-go="2">Academics &amp; works</button><button data-go="3">Term reflections</button><button data-go="5">Contact</button></div>${pn(1)}`], ['',`<h2>About me</h2><p>Hello! I’m <mark>Aldryl Labaguis</mark>, a student at Jose Rizal University. Add your course and year level here.</p><p>Write 2–3 sentences about your hobbies, your goals after graduation and what drives you to learn programming.</p><p class="edit">[Edit this page.]</p>${pn(2)}`], ['',`<div class="pola"><div class="ph">Y${ph}</div><span>Aldryl Labaguis, 2026</span></div><div class="stats"><div><b>—</b>programs</div><div><b>—</b>projects</div><div><b>—</b>certificates</div></div>${pn(3)}`], ['',`<h2>Works</h2><p style="margin-top:-8px">Academics &amp; relevant works</p><ol>${W.slice(0,4).map((w,i)=>li(w,i,0)).join('')}</ol>${pn(4)}`], ['',`<ol style="margin-top:6px">${W.slice(4).map((w,i)=>li(w,i,4)).join('')}</ol>${pn(5)}`], ]; RF.forEach((r,i)=>PG.splice(6+i,0,['',`<div class="num">${pad(i+1)}</div><h2>${r[0]}<br>term</h2><p class="body">${r[1]}</p><p class="edit">${r[2]}</p>${pn(6+i)}`])); PG.push(['',`<h2>Let’s<br>connect.</h2><p>Questions, feedback or opportunities? I’d love to hear from you.</p><p><a class="stk" href="mailto:your-email@example.com">your-email@example.com</a></p><p><a class="stk" href="https://github.com/aldryllabaguis" target="_blank" rel="noopener">GitHub</a><a class="stk" href="#">LinkedIn</a></p>${pn(9)}`], ['',`<h2 style="margin-top:30%">Thanks for<br>reading.</h2><p>© 2026 Aldryl Labaguis · CP1 · JRU</p><button data-go="0">Back to cover</button>${pn(10)}`], ['bk','<h1>fin.</h1>']); const L=PG.length/2,bk=$('#book'),desk=$('#desk'),leaves=[]; for(let i=0;i<L;i++){const d=document.createElement('div');d.className='leaf';d.innerHTML=`<div class="face ${PG[2*i][0]}">${PG[2*i][1]}</div><div class="face back ${PG[2*i+1][0]}">${PG[2*i+1][1]}</div>`;bk.append(d);leaves.push(d)} $('#flat').innerHTML=PG.map(f=>`<section class="face ${f[0]}">${f[1]}</section>`).join(''); $('#nav').innerHTML=[['Cover',0],['About',1],['Works',2],['Reflections',3],['Contact',5]].map(n=>`<button data-go="${n[1]}">${n[0]}</button>`).join('');
 // Frame-rate-independent, Vivaldi/Chromium-safe 3D page turning.
