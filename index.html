@@ -2109,6 +2109,157 @@ body::after{
   font-size:clamp(22px,6vw,30px);
  }
 }
+
+/* LARGER OPENED BOOK DETAIL VIEW — all three volumes.
+   Resize the physical 3D spread and the side-panel typography together.
+   Preserve the shared spine, hinged cover, drag rotation and reader layout. */
+@media(min-width:791px){
+ .detail-grid{
+  grid-template-columns:minmax(0,1.15fr) minmax(350px,.85fr);
+  gap:clamp(18px,2.5vw,40px);
+  min-height:740px;
+  padding-top:58px;
+ }
+ .focus-stage#focus-stage{
+  --focus-view-width:clamp(225px,min(25vw,37svh),355px);
+  min-height:min(630px,calc(100svh - 100px));
+ }
+ .scene.is-detail{min-height:760px}
+}
+.detail-text{
+ min-width:0;
+ max-width:630px;
+}
+.detail-kicker{
+ font-size:clamp(12px,1vw,15px);
+ letter-spacing:.14em;
+}
+.detail-text h2{
+ font-size:clamp(3.1rem,5.1vw,5.35rem);
+ line-height:1.06;
+ margin:18px 0 17px;
+}
+.detail-text p{
+ font-size:clamp(21px,1.7vw,25px);
+ line-height:1.55;
+ max-width:580px;
+ margin-bottom:22px;
+}
+.detail-text .detail-by{
+ font-size:clamp(13px,1.05vw,16px)!important;
+ margin-bottom:20px!important;
+}
+.detail-meta{
+ font-size:clamp(12px,1.06vw,15px);
+ gap:18px;
+ margin:25px 0 32px;
+ flex-wrap:wrap;
+ line-height:1.5;
+}
+.detail-meta span{padding-right:18px}
+.detail-actions .action{
+ font-size:clamp(12px,1vw,15px);
+ padding:15px 25px;
+}
+.detail-nav{
+ font-size:clamp(12px,1vw,15px);
+ gap:19px;
+}
+.focus-stage#focus-stage .focus-drag-hint button{
+ font-size:clamp(10px,.9vw,13px);
+ padding:10px 15px 8px;
+}
+#focus-book .focus-inside{
+ padding:clamp(23px,2.3vw,35px) clamp(19px,2vw,31px);
+}
+#focus-book .focus-inside .inside-top{
+ font-size:clamp(10px,.9vw,13px);
+}
+#focus-book .focus-inside h3{
+ font-size:clamp(32px,3.15vw,45px);
+ margin:clamp(22px,2.8vw,39px) 0 18px;
+}
+#focus-book .focus-inside li{
+ font-size:clamp(16px,1.3vw,19px);
+ padding:11px 0;
+}
+#focus-book .focus-inside .inside-bottom{
+ font-size:clamp(10px,.85vw,13px);
+ bottom:20px;
+}
+#focus-book .focus-back{
+ font-size:clamp(23px,2.1vw,30px);
+}
+#focus-book .focus-rear-cover strong{
+ font-size:clamp(31px,3vw,49px);
+}
+@media(max-width:790px){
+ .detail-grid{
+  grid-template-columns:minmax(0,1fr);
+  padding-top:42px;
+  gap:23px;
+ }
+ .focus-stage#focus-stage{
+  --focus-view-width:clamp(155px,min(46vw,35svh,calc((100vw - 36px)/2)),260px);
+  min-height:clamp(350px,73vw,510px);
+  padding:16px 3px 10px;
+  gap:20px;
+ }
+ .focus-stage#focus-stage .focus-book#focus-book{
+  left:calc(var(--focus-view-width) * .43);
+ }
+ .detail-text{
+  width:100%;
+  max-width:620px;
+  margin:0 auto;
+ }
+ .detail-text h2{
+  font-size:clamp(3rem,7vw,4.2rem);
+  margin:13px 0 15px;
+ }
+ .detail-text p{
+  font-size:clamp(19px,2.8vw,23px);
+  line-height:1.52;
+ }
+ .detail-kicker{
+  font-size:12px;
+ }
+ .detail-text .detail-by{font-size:13px!important}
+ .detail-meta{font-size:12px;gap:12px;margin:19px 0 24px}
+ .detail-meta span{padding-right:12px}
+ .detail-actions .action{font-size:13px;padding:13px 22px}
+ .detail-nav{font-size:12px}
+ #focus-book .focus-inside{
+  padding:clamp(16px,3vw,24px) clamp(12px,2.5vw,20px);
+ }
+ #focus-book .focus-inside h3{
+  font-size:clamp(27px,4.5vw,35px);
+  margin:20px 0 12px;
+ }
+ #focus-book .focus-inside li{
+  font-size:clamp(12px,2.1vw,16px);
+  padding:7px 0;
+ }
+ #focus-book .focus-inside .inside-bottom{font-size:10px}
+ #focus-book .focus-back{font-size:21px}
+ #focus-book .focus-rear-cover strong{font-size:clamp(22px,4.3vw,35px)}
+}
+@media(max-width:440px){
+ .detail-grid{gap:12px}
+ .focus-stage#focus-stage{
+  min-height:330px;
+  gap:17px;
+ }
+ .detail-text h2{font-size:clamp(2.9rem,10vw,3.5rem)}
+ .detail-text p{font-size:19px}
+ .detail-text .detail-by{font-size:12px!important}
+ .detail-meta{font-size:11px;gap:9px}
+ .detail-actions .action{font-size:12px}
+ #focus-book .focus-inside h3{font-size:26px;margin:12px 0 9px}
+ #focus-book .focus-inside li{font-size:12px;padding:5px 0}
+ #focus-book .focus-inside .inside-top{font-size:9px}
+ #focus-book .focus-inside .inside-bottom{font-size:9px}
+}
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
 <section id="shelf-view" class="shelf-view" aria-label="Bookshelf">
