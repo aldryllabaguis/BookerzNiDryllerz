@@ -484,12 +484,12 @@ const REFLECTIONS_PG=[
 
 (function(){
  const books=[
-  {title:'Main Portfolio',subtitle:'Volume I · E-Portfolio',desc:'My personal introduction, background, and contact details in Computer Programming 1.',chapters:['Welcome','About Me','Three Volumes','Contact'],pages:PG},
   {title:'Works & Projects',subtitle:'Volume II · Selected Works',desc:'A collection of academic outputs, project documentation, presentations, and achievements from my studies.',chapters:['Selected Works','Academics & Outputs','More Works','End of Volume'],pages:WORKS_PG},
+  {title:'Main Portfolio',subtitle:'Volume I · E-Portfolio',desc:'My personal introduction, background, and contact details in Computer Programming 1.',chapters:['Welcome','About Me','Three Volumes','Contact'],pages:PG},
   {title:'Reflections',subtitle:'Volume III · Personal Reflections',desc:'My Prelim, Midterm, and Final reflections from Computer Programming 1, collected in their own volume.',chapters:['Introduction','Prelim','Midterm','Final','Looking Back'],pages:REFLECTIONS_PG}
  ];
  const scene=$('#scene'),shelf=$('#shelf-view'),detail=$('#detail-view'),readerView=$('#reader-view');
- let selected=0,reader=null,closeTimer=0;
+ let selected=1,reader=null,closeTimer=0;
  function cover(b){return '<div class="display-cover">'+b.pages[0][1]+'</div>'}
  function card(b,i){
   return '<button type="button" class="shelf-book" data-select="'+i+'" aria-label="Explore '+b.title+'">'+
