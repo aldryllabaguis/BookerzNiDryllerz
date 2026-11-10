@@ -793,13 +793,73 @@ button:focus-visible{outline:2px solid #dec2a3;outline-offset:5px}
  #shelf-track .shelf-book .display-cover .ct h1{font-size:clamp(1.2rem,4.45vw,1.8rem)}
  #shelf-track .shelf-book:nth-child(2) .display-cover .ct h1{font-size:clamp(1.35rem,4.8vw,2rem)}
 }
+
+/* SIDE NAVIGATION — matches the reference's floating circular chevrons,
+   vertically centered at either side of the three books. */
+.shelf-stage{
+ position:relative;
+ width:100%;
+}
+.shelf-stage .shelf-side-nav{
+ position:absolute;
+ inset:0;
+ z-index:20;
+ display:block;
+ pointer-events:none;
+}
+.shelf-stage .shelf-side-nav .round-control{
+ position:absolute;
+ top:50%;
+ width:45px;
+ height:45px;
+ display:grid;
+ place-items:center;
+ border:1px solid rgba(255,255,255,.72);
+ border-radius:50%;
+ background:#f4f2ed;
+ color:#242530;
+ box-shadow:0 5px 16px #0006;
+ font:26px/1 Georgia,serif;
+ padding:0 0 3px;
+ cursor:pointer;
+ pointer-events:auto;
+ transform:translateY(-50%);
+ transition:background .2s ease,transform .2s ease,box-shadow .2s ease;
+}
+.shelf-stage .shelf-side-nav .round-control:hover,
+.shelf-stage .shelf-side-nav .round-control:focus-visible{
+ background:#fffaf2;
+ box-shadow:0 7px 22px #0009;
+ transform:translateY(-50%) scale(1.08);
+}
+.shelf-stage .shelf-side-nav #shelf-prev{left:clamp(0px,.6vw,9px)}
+.shelf-stage .shelf-side-nav #shelf-next{right:clamp(0px,.6vw,9px)}
+.shelf-footer{justify-content:center}
+@media(max-width:790px){
+ .shelf-stage .shelf-side-nav .round-control{
+  width:38px;
+  height:38px;
+  font-size:22px;
+ }
+ .shelf-stage .shelf-side-nav #shelf-prev{left:0}
+ .shelf-stage .shelf-side-nav #shelf-next{right:0}
+}
+@media(prefers-reduced-motion:reduce){
+ .shelf-stage .shelf-side-nav .round-control{transition:none}
+}
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
 <section id="shelf-view" class="shelf-view" aria-label="Bookshelf">
  <header class="shelf-head"><span>ALDRYL LABAGUIS · PERSONAL COLLECTION</span><span class="head-count" id="head-count">01 / 03</span></header>
  <div class="shelf-title"><span class="eyebrow">A COLLECTION IN THREE VOLUMES</span><h1>My Bookshelf</h1><p>Explore my story, works, and projects</p></div>
- <div class="shelf-track" id="shelf-track"></div>
- <footer class="shelf-footer"><span>SELECT A BOOK TO EXPLORE</span><nav class="shelf-nav" aria-label="Browse books"><button type="button" class="round-control" id="shelf-prev" aria-label="Previous book">‹</button><button type="button" class="round-control" id="shelf-next" aria-label="Next book">›</button></nav></footer>
+ <div class="shelf-stage">
+  <div class="shelf-track" id="shelf-track"></div>
+  <nav class="shelf-nav shelf-side-nav" aria-label="Browse books">
+   <button type="button" class="round-control" id="shelf-prev" aria-label="Previous book">‹</button>
+   <button type="button" class="round-control" id="shelf-next" aria-label="Next book">›</button>
+  </nav>
+ </div>
+ <footer class="shelf-footer"><span>SELECT A BOOK TO EXPLORE</span></footer>
 </section>
 <section id="detail-view" class="detail-view" hidden aria-label="Selected book">
  <button type="button" id="detail-close" class="close-detail" aria-label="Close book details">×</button>
