@@ -959,6 +959,12 @@ button:focus-visible{outline:2px solid #dec2a3;outline-offset:5px}
  .focus-stage{min-height:385px}
  .focus-book{width:min(65vw,260px);height:min(94vw,375px)}
 }
+/* Raise the book in the opened detail view slightly without modifying
+   its transforms, so the flight animation uses the new landing position. */
+.detail-view .focus-book{top:-18px}
+@media(max-width:790px){
+ .detail-view .focus-book{top:-10px}
+}
 @media(prefers-reduced-motion:reduce){
  .scene.is-opening .shelf-book,
  .scene.is-returning .shelf-book,
