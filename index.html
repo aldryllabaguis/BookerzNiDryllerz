@@ -966,9 +966,9 @@ button:focus-visible{outline:2px solid #dec2a3;outline-offset:5px}
  .scene.is-detail.is-closing .focus-cover-hinge{transition:none!important}
 }
 
-/* COZY READING ROOM BACKGROUND — warm blurred gothic library interior.
-   The photo is a separate optimized asset, so all books, hover layers,
-   interactive covers, and their transitions remain completely untouched. */
+/* ORIGINAL COZY READING ROOM IMAGE — unchanged full-resolution PNG.
+   No image recompression, artificial blur, gradient darkening, or CSS filter.
+   Responsive background-cover simply fits the same source to the viewport. */
 html{background:#140c09!important}
 body{
  position:relative;
@@ -978,22 +978,17 @@ body{
 body::before{
  content:"";
  position:fixed;
- inset:-18px;
+ inset:0;
  z-index:0;
  pointer-events:none;
- background:
-  linear-gradient(180deg,rgba(8,6,8,.64) 0%,rgba(14,9,9,.41) 29%,rgba(14,8,8,.42) 60%,rgba(7,5,6,.67) 100%),
-  url("assets/reading-room-bg.jpg") center center / cover no-repeat;
- filter:blur(4px);
+ background-image:url("assets/reading-room-original.png");
+ background-position:center center;
+ background-repeat:no-repeat;
+ background-size:cover;
 }
 #showcase{position:relative;z-index:1}
 @media(max-width:790px){
- body::before{
-  background-position:center center,48% center;
-  background-image:
-   linear-gradient(180deg,rgba(8,5,8,.75),rgba(11,7,7,.47) 48%,rgba(8,5,6,.72)),
-   url("assets/reading-room-bg.jpg");
- }
+ body::before{background-position:48% center}
 }
 
 /* DISTINCT SIDE-VOLUME COVERS — Main Portfolio is deliberately untouched.
