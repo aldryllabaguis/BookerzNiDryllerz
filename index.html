@@ -832,7 +832,7 @@ button:focus-visible{outline:2px solid #dec2a3;outline-offset:5px}
  transform-origin:center center;
  perspective:1400px;
  will-change:left,top,width,height,transform;
- filter:drop-shadow(12px 20px 15px #0009);
+ /* Avoid a parent filter: it would flatten the book's 3D front/back. */
 }
 .book-transition-ghost .display-cover{
  position:absolute;
