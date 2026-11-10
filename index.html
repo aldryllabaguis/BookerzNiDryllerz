@@ -2397,6 +2397,20 @@ body::after{
  .page-face .taped-polaroid figcaption{font-size:13px;min-height:25px}
  .page-face .taped-polaroid figcaption small{font-size:8px}
 }
+
+/* Match the large opened-book title to its own hardcover color.
+   Volume I (About Me) keeps its burgundy/rose accent.
+   Volume II uses the charcoal archive's weathered silver-gray;
+   Volume III uses the forest-green journal's muted sage.
+   Lift the values slightly for legibility against the dark library. */
+#detail-view[data-volume="0"] #detail-title{
+ color:#c4c3be;
+ text-shadow:0 2px 3px rgba(0,0,0,.9),0 5px 19px rgba(0,0,0,.82),0 0 18px rgba(158,165,164,.16);
+}
+#detail-view[data-volume="2"] #detail-title{
+ color:#a2c1a9;
+ text-shadow:0 2px 3px rgba(0,0,0,.9),0 5px 19px rgba(0,0,0,.82),0 0 18px rgba(61,108,81,.24);
+}
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
 <section id="shelf-view" class="shelf-view" aria-label="Bookshelf">
@@ -2617,6 +2631,8 @@ const REFLECTIONS_PG=[
  });
  function populateDetail(){
   const b=books[selected];
+  // The title beside the book uses a color from that volume's hardcover.
+  detail.dataset.volume=String(selected);
   resetFocusView(true);
   focusBook.dataset.volume=String(selected);
   focusBook.setAttribute('aria-label','Interactive 3D '+b.title+' book — drag to rotate, use arrow keys, or double-click to reset');
