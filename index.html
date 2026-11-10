@@ -668,6 +668,12 @@ button:focus-visible{outline:2px solid #dec2a3;outline-offset:5px}
 @media(prefers-reduced-motion:reduce){
   #shelf-track .idle-float{animation:none!important;will-change:auto}
 }
+
+/* Duplicate shelf captions are intentionally omitted. Titles remain printed on
+   the cover; below-book text would otherwise overlap the tilted 3D books. */
+#shelf-track .shelf-book-title,
+#shelf-track .shelf-book-sub,
+#shelf-track .shelf-book-open{display:none!important}
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
 <section id="shelf-view" class="shelf-view" aria-label="Bookshelf">
@@ -727,8 +733,7 @@ const REFLECTIONS_PG=[
  function card(b,i){
   return '<button type="button" class="shelf-book" data-select="'+i+'" aria-label="Explore '+b.title+'">'+
    '<span class="idle-float"><span class="book-3d"><span class="book-backboard" aria-hidden="true"></span><span class="book-top" aria-hidden="true"></span><span class="book-bottom" aria-hidden="true"></span><span class="book-edge" aria-hidden="true"></span><span class="book-spine" aria-hidden="true"></span>'+cover(b)+'</span></span>'+
-   '<span class="shelf-book-title">'+b.title+'</span><span class="shelf-book-sub">'+b.subtitle+'</span>'+
-   '<span class="shelf-book-open">EXPLORE BOOK ↗</span></button>';
+   '</button>';
  }
  $('#shelf-track').innerHTML=books.map(card).join('');
  function markSelected(){
