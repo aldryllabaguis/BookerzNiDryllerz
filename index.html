@@ -153,6 +153,96 @@ button:focus-visible{outline:2px solid #dec2a3;outline-offset:5px}
  .shelf-book{width:47%;flex:0 1 47%}
  .shelf-book .book-3d{width:clamp(122px,34vw,150px);height:clamp(190px,50vw,229px)}
 }
+
+/* Reference-matched hover motion: three fanned 3D books, no backing cards. */
+#shelf-track{
+  perspective:1650px;
+  perspective-origin:50% 45%;
+  isolation:isolate;
+  overflow:visible;
+}
+#shelf-track .shelf-book{
+  --rest-y:0deg;
+  --rest-z:0deg;
+  position:relative;
+  z-index:1;
+  background:transparent;
+  box-shadow:none;
+  border:0;
+  overflow:visible;
+  isolation:auto;
+  transition:z-index 0s;
+}
+#shelf-track .shelf-book:nth-child(1){--rest-y:-13deg;--rest-z:-6deg;z-index:1}
+#shelf-track .shelf-book:nth-child(2){--rest-y:0deg;--rest-z:0deg;z-index:2}
+#shelf-track .shelf-book:nth-child(3){--rest-y:13deg;--rest-z:6deg;z-index:1}
+#shelf-track .shelf-book:nth-child(2) .book-3d{width:clamp(155px,18vw,213px);height:clamp(240px,27vw,320px)}
+#shelf-track .shelf-book .book-3d,
+#shelf-track .shelf-book:nth-child(2) .book-3d,
+#shelf-track .shelf-book:nth-child(3) .book-3d{
+  transform:perspective(1100px) rotateY(var(--rest-y)) rotateZ(var(--rest-z)) translate3d(0,0,0);
+  transform-origin:center center;
+  transform-style:preserve-3d;
+  transition:transform .72s cubic-bezier(.22,1,.36,1),filter .72s cubic-bezier(.22,1,.36,1);
+  filter:drop-shadow(12px 16px 10px #02050b9c);
+  will-change:transform;
+}
+#shelf-track .shelf-book:is(:hover,:focus-visible){z-index:10}
+#shelf-track .shelf-book:is(:hover,:focus-visible) .book-3d,
+#shelf-track .shelf-book:nth-child(2):is(:hover,:focus-visible) .book-3d,
+#shelf-track .shelf-book:nth-child(3):is(:hover,:focus-visible) .book-3d{
+  transform:perspective(1100px) translate3d(0,-19px,36px) rotateY(var(--hover-y,0deg)) rotateX(var(--hover-x,0deg)) rotateZ(0deg) scale(1.065);
+  filter:drop-shadow(18px 26px 15px #02050bc9);
+}
+#shelf-track .shelf-book:is(:hover,:focus-visible) .book-spine{
+  transition:opacity .35s;
+  opacity:.9;
+}
+/* The paper OPEN tag sits on the cover — never on a rectangular background panel. */
+#shelf-track .shelf-book .hover-open{
+  position:absolute;
+  left:50%;
+  top:53%;
+  display:grid;
+  place-items:center;
+  min-width:66px;
+  min-height:33px;
+  padding:8px 14px 7px;
+  color:#282327;
+  background:#f4ebd9;
+  border:0;
+  clip-path:polygon(0% 8%,10% 5%,19% 0%,31% 4%,45% 1%,58% 5%,73% 1%,84% 5%,100% 2%,96% 17%,99% 37%,97% 58%,100% 79%,97% 96%,82% 98%,66% 95%,51% 100%,33% 97%,20% 99%,7% 94%,2% 98%,3% 80%,0% 62%,2% 43%);
+  font:700 11px/1 'Special Elite',monospace;
+  letter-spacing:.08em;
+  white-space:nowrap;
+  pointer-events:none;
+  z-index:15;
+  opacity:0;
+  transform:translate(-50%,-45%) rotate(-3deg) scale(.8) translateZ(15px);
+  transition:opacity .25s ease,transform .5s cubic-bezier(.18,.9,.24,1.2);
+  backface-visibility:hidden;
+}
+#shelf-track .shelf-book:is(:hover,:focus-visible) .hover-open{
+  opacity:1;
+  transform:translate(-50%,-50%) rotate(-3deg) scale(1) translateZ(15px);
+}
+#shelf-track .shelf-book .book-3d::before,
+#shelf-track .shelf-book .book-3d::after{content:none}
+@media(max-width:790px){
+ #shelf-track .shelf-book:nth-child(2) .book-3d{width:clamp(130px,31vw,200px);height:clamp(205px,46vw,286px)}
+}
+@media(max-width:440px){
+ #shelf-track .shelf-book:nth-child(2) .book-3d{width:clamp(122px,34vw,150px);height:clamp(190px,50vw,229px)}
+}
+@media(hover:none){
+ #shelf-track .shelf-book .hover-open{display:none}
+ #shelf-track .shelf-book .book-3d{will-change:auto}
+}
+@media(prefers-reduced-motion:reduce){
+ #shelf-track .shelf-book .book-3d,
+ #shelf-track .shelf-book .hover-open{transition:none}
+ #shelf-track .shelf-book .book-3d{will-change:auto}
+}
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
 <section id="shelf-view" class="shelf-view" aria-label="Bookshelf">
@@ -211,7 +301,7 @@ const REFLECTIONS_PG=[
  function cover(b){return '<div class="display-cover">'+b.pages[0][1]+'</div>'}
  function card(b,i){
   return '<button type="button" class="shelf-book" data-select="'+i+'" aria-label="Explore '+b.title+'">'+
-   '<span class="book-3d"><span class="book-edge"></span><span class="book-spine"></span>'+cover(b)+'</span>'+
+   '<span class="book-3d"><span class="book-edge"></span><span class="book-spine"></span>'+cover(b)+'<span class="hover-open" aria-hidden="true">OPEN</span></span>'+
    '<span class="shelf-book-title">'+b.title+'</span><span class="shelf-book-sub">'+b.subtitle+'</span>'+
    '<span class="shelf-book-open">EXPLORE BOOK ↗</span></button>';
  }
@@ -329,6 +419,22 @@ const REFLECTIONS_PG=[
   populateDetail();requestAnimationFrame(()=>scene.classList.add('is-detail'));
   setTimeout(()=>{readerView.hidden=true},600);
  }
+ // Gentle perspective tilt follows the pointer, as in the reference showcase.
+ document.querySelectorAll('#shelf-track .shelf-book').forEach(card=>{
+  const shape=card.querySelector('.book-3d');
+  card.addEventListener('pointermove',event=>{
+   if(event.pointerType==='touch')return;
+   const rect=shape.getBoundingClientRect();
+   const x=Math.max(-1,Math.min(1,(event.clientX-rect.left)/rect.width*2-1));
+   const y=Math.max(-1,Math.min(1,(event.clientY-rect.top)/rect.height*2-1));
+   shape.style.setProperty('--hover-y',(x*8).toFixed(2)+'deg');
+   shape.style.setProperty('--hover-x',(-y*5).toFixed(2)+'deg');
+  });
+  card.addEventListener('pointerleave',()=>{
+   shape.style.removeProperty('--hover-y');
+   shape.style.removeProperty('--hover-x');
+  });
+ });
  $('#shelf-track').addEventListener('click',e=>{
   const card=e.target.closest('[data-select]');if(card)openDetail(+card.dataset.select);
  });
