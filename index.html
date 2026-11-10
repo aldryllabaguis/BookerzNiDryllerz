@@ -527,6 +527,135 @@ button:focus-visible{outline:2px solid #dec2a3;outline-offset:5px}
  #shelf-track .shelf-book:nth-child(2) .display-cover .ct h1{font-size:clamp(1.2rem,4.7vw,1.7rem)}
  #shelf-track .shelf-book:nth-child(2) .shelf-book-title{font-size:20px}
 }
+
+/* BLACK LEATHER GOTHIC EDITION — real-looking dark binding and fine leather grain.
+   Applies to the shelf covers, animated opening covers, and flipbook covers only. */
+:root{
+ --gothic-leather:#111013;
+ --gothic-leather-deep:#08080b;
+ --gothic-pewter:#9f958b;
+ --gothic-foil:#c5af8d;
+}
+.display-cover,
+.page-face.cover,
+.focus-front{
+ background-color:#131116!important;
+ background-image:
+   radial-gradient(ellipse 92% 62% at 30% 20%,rgba(110,102,103,.15) 0%,transparent 72%),
+   radial-gradient(ellipse 90% 65% at 80% 88%,rgba(0,0,0,.63) 0%,transparent 75%),
+   linear-gradient(102deg,#09090c 0%,#252227 8%,#18161c 20%,#0e0e13 58%,#090a0e 100%)!important;
+ background-size:100% 100%!important;
+ border:3px double #a9977c!important;
+ box-shadow:
+   inset 0 0 0 4px #111015,
+   inset 0 0 0 5px #746957,
+   inset 0 0 0 9px #111015,
+   inset 8px 0 18px -13px #d2c5b444,
+   inset -13px 0 25px -15px #000,
+   inset 0 0 44px #000b!important;
+}
+.display-cover,
+.page-face.cover,
+.focus-front{isolation:isolate}
+.display-cover::before,
+.page-face.cover::before{
+ content:"";
+ position:absolute;
+ inset:0;
+ z-index:1;
+ pointer-events:none;
+ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='leather'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.62' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23leather)'/%3E%3C/svg%3E");
+ background-size:140px 140px;
+ opacity:.14;
+ filter:grayscale(1) contrast(1.4);
+ mix-blend-mode:soft-light;
+}
+.display-cover::after,
+.page-face.cover::after{
+ content:"";
+ position:absolute;
+ inset:0;
+ z-index:2;
+ pointer-events:none;
+ background:
+   linear-gradient(90deg,#d8c5a21c 0%,transparent 3%,transparent 96%,#0009 100%),
+   linear-gradient(180deg,#e4d6b316 0%,transparent 5%,transparent 94%,#0008 100%);
+ box-shadow:inset 0 0 27px #0009;
+}
+.display-cover .ct,
+.page-face.cover .ct{
+ z-index:5;
+ background:linear-gradient(175deg,rgba(14,12,17,.91),rgba(27,24,29,.88))!important;
+ border-top:1px solid #8b7d69!important;
+ border-bottom:1px solid #8b7d69!important;
+ box-shadow:0 2px 11px #0006,inset 0 1px 0 #fff1!important;
+}
+.display-cover .ct h1,
+.page-face.cover .ct h1{
+ color:#fff!important;
+ -webkit-text-fill-color:#fff!important;
+ text-shadow:0 1px 1px #000,0 3px 8px #000a!important;
+}
+.display-cover .ct small,.page-face.cover .ct small{
+ color:#d4c6b8!important;
+}
+.display-cover img.cover-sticker,
+.page-face.cover img.cover-sticker{z-index:4}
+.display-cover img.sticker-skull,
+.page-face.cover img.sticker-skull{filter:brightness(0) invert(1)!important}
+.display-cover .stamp,
+.page-face.cover .stamp{
+ z-index:5;
+ border:1px solid #807260!important;
+ background:#101015d6!important;
+ color:#eee6dc!important;
+}
+#shelf-track .book-backboard{
+ background-color:#111015!important;
+ background-image:
+  radial-gradient(ellipse at 28% 18%,#55505a29,transparent 56%),
+  linear-gradient(115deg,#08090c,#201d23 43%,#0a0a0d 100%)!important;
+ border:3px double #a09079!important;
+ box-shadow:inset 0 0 0 5px #141319,inset 0 0 0 6px #776b58,inset 0 0 26px #000d!important;
+}
+#shelf-track .shelf-book .book-spine,
+.focus-spine{
+ background:
+  linear-gradient(90deg,#030407 0%,#16141a 12%,#38323a 27%,#1b1a20 42%,#29262e 53%,#141419 79%,#050609 100%)!important;
+ border:1px solid #17161b!important;
+ box-shadow:
+  inset 3px 0 7px #000d,
+  inset -2px 0 6px #000b,
+  inset 7px 0 2px -6px #aa96846e,
+  inset -7px 0 2px -6px #aa968450!important;
+}
+#shelf-track .shelf-book .book-edge,
+#shelf-track .book-top,
+#shelf-track .book-bottom,
+.focus-pageblock{
+ border-color:#8f806b!important;
+ background-color:#e0d5c2!important;
+ box-shadow:inset 0 1px 7px #66544055!important;
+}
+#shelf-track .shelf-book .book-edge{
+ background:
+   linear-gradient(90deg,#9a8b72 0 2px,transparent 4px calc(100% - 4px),#766651 calc(100% - 2px)),
+   repeating-linear-gradient(0deg,#e7dcc8 0 2px,#c7bba6 2px 3px,#eee3d0 3px 5px)!important;
+}
+#shelf-track .book-top,
+#shelf-track .book-bottom{
+ background:
+   linear-gradient(180deg,#a4947c 0 2px,transparent 4px calc(100% - 4px),#80705c calc(100% - 2px)),
+   repeating-linear-gradient(90deg,#e3d5c0 0 2px,#c9b99f 2px 3px,#ebdec9 3px 5px)!important;
+}
+/* Opening animation still reveals the parchment inside the actual book. */
+.focus-front{border-color:#a9977c!important}
+.focus-back{
+ background:linear-gradient(100deg,#9d8975 0%,#d3c1a4 8%,#ebdfcc 30%,#f2e8d6 100%)!important;
+}
+@media(prefers-reduced-motion:reduce){
+ .display-cover::before,.page-face.cover::before{animation:none}
+}
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
 <section id="shelf-view" class="shelf-view" aria-label="Bookshelf">
