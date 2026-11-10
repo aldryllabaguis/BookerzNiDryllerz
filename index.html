@@ -867,11 +867,13 @@ const REFLECTIONS_PG=[
  const motionBooks=[...document.querySelectorAll('#shelf-track .shelf-book')].map((card,i)=>{
   const shape=card.querySelector('.book-3d'),wrapper=card.querySelector('.idle-float');
   const pp=shape.offsetHeight/(2.14*(i===1?1.32:1.22));
-  // Main Portfolio retains its explicitly requested frontal resting position.
+  // Restore the original shelf poses: left tilted left, center facing
+  // straight forward and slightly raised, right tilted right.
+  // Keep the VengeanceUI idle/hover spring animation unchanged.
   const angles=[
-   {rx:-.045,ry:.4,rz:.185},
+   {rx:-Math.PI/60,ry:-26*Math.PI/180,rz:-4*Math.PI/180},
    {rx:0,ry:0,rz:0},
-   {rx:-.045,ry:-.42,rz:-.17}
+   {rx:-Math.PI/60,ry:26*Math.PI/180,rz:4*Math.PI/180}
   ][i];
   return {
    card,shape,wrapper,
@@ -982,8 +984,10 @@ const REFLECTIONS_PG=[
    const fy=reduced?0:Math.sin(t*.7+book.phase)*.035*ppu;
    const fz=reduced?0:Math.sin(t*.9+book.phase*1.7)*.006;
    wrapper.style.setProperty('transform','translate3d(0,'+fy.toFixed(3)+'px,0) rotateZ('+fz.toFixed(6)+'rad)','important');
+   const baseY=book===motionBooks[1]?-10:0;
+   const baseZ=book===motionBooks[1]?22:0;
    shape.style.setProperty('transform',
-    'perspective(1400px) translate3d(0,'+((drop+lift)*ppu).toFixed(3)+'px,0) '+
+    'perspective(1400px) translate3d(0,'+(baseY+(drop+lift)*ppu).toFixed(3)+'px,'+baseZ+'px) '+
     'rotateX('+(angles.rx+tiltX).toFixed(6)+'rad) '+
     'rotateY('+(angles.ry+tiltY).toFixed(6)+'rad) '+
     'rotateZ('+angles.rz.toFixed(6)+'rad) scale('+scale.toFixed(5)+')','important');
