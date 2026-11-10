@@ -1642,6 +1642,74 @@ body::after{
 #focus-book[data-volume="2"] .focus-binding-gutter{
  background:linear-gradient(90deg,#071912 0%,#29513c 24%,#ab9468 43%,#28513d 68%,#081a14 100%);
 }
+
+/* SOLID HINGED BINDING — correct the actual 3D joint, not a painted gap.
+   Both covers meet on one continuous pivot at the page block's left edge.
+   The flexible-looking front cover opens almost flat, like a real spread.
+   A sidewall spans the full book thickness at the binding for 360° views.
+   Previous focus sizing, rotation, controls and page-reader are untouched. */
+#focus-book .focus-binding-core{
+ position:absolute;
+ top:0;
+ bottom:0;
+ left:-12px;
+ width:24px;
+ z-index:2;
+ pointer-events:none;
+ background:
+  linear-gradient(90deg,#2a171e 0%,#5d3e40 24%,#ae8c70 45%,#67443d 67%,#22171d 100%);
+ border-left:1px solid #b39677;
+ border-right:1px solid #3a252b;
+ box-shadow:inset 2px 0 5px #0009,inset -2px 0 5px #0009;
+ transform-origin:center center;
+ transform:rotateY(90deg);
+ backface-visibility:visible;
+}
+#focus-book[data-volume="0"] .focus-binding-core{
+ background:linear-gradient(90deg,#111217,#51464a 26%,#a69886 48%,#514147 75%,#121216);
+ border-color:#91867d;
+}
+#focus-book[data-volume="2"] .focus-binding-core{
+ background:linear-gradient(90deg,#091b14,#28543d 28%,#ab9368 49%,#244b38 73%,#071810);
+ border-color:#a18a66;
+}
+#focus-book .focus-binding-gutter{
+ left:-7px;
+ width:15px;
+ transform:translateZ(13px);
+ background:linear-gradient(90deg,
+  #22141b 0%,#4e3036 25%,#a78c72 46%,#533237 68%,#261920 100%);
+}
+#focus-book .focus-pageblock{
+ left:0;
+ right:-5px;
+ transform:translateZ(-1px);
+}
+#focus-book .focus-inside{
+ left:0;
+ transform:translateZ(11px);
+}
+#focus-book .focus-cover-hinge{
+ left:0;
+ right:0;
+ transform-origin:0 50%;
+ transform-style:preserve-3d;
+ transform:translateZ(11px) rotateY(0deg);
+}
+.scene.is-detail:not(.is-closing) #focus-book .focus-cover-hinge{
+ transform:translateZ(11px) rotateY(-172deg);
+}
+.scene.is-detail.is-closing #focus-book .focus-cover-hinge{
+ transform:translateZ(11px) rotateY(0deg)!important;
+}
+#focus-book .focus-front,
+#focus-book .focus-back{
+ backface-visibility:hidden!important;
+ -webkit-backface-visibility:hidden!important;
+}
+#focus-book .focus-back{
+ transform:rotateY(180deg) translateZ(1px);
+}
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
 <section id="shelf-view" class="shelf-view" aria-label="Bookshelf">
@@ -1658,7 +1726,7 @@ body::after{
    <div class="focus-book" id="focus-book" tabindex="0" role="group" aria-roledescription="3D book" aria-describedby="focus-drag-hint" aria-label="Interactive 3D book — drag to rotate">
     <div class="focus-rear-cover" aria-hidden="true"><span class="focus-rear-ornament">✦</span><span class="focus-rear-name">ALDRYL LABAGUIS</span><strong id="focus-rear-title">Main Portfolio</strong><span class="focus-rear-bottom">PERSONAL COLLECTION · 2026</span></div>
     <div class="focus-pages-top" aria-hidden="true"></div><div class="focus-pages-bottom" aria-hidden="true"></div><div class="focus-pages-right" aria-hidden="true"></div>
-    <div class="focus-spine"></div><div class="focus-binding-gutter" aria-hidden="true"></div><div class="focus-pageblock"></div><div id="focus-inside" class="focus-inside"></div>
+    <div class="focus-spine"></div><div class="focus-binding-core" aria-hidden="true"></div><div class="focus-binding-gutter" aria-hidden="true"></div><div class="focus-pageblock"></div><div id="focus-inside" class="focus-inside"></div>
     <div class="focus-cover-hinge"><div id="focus-front" class="focus-front"></div><div class="focus-back"><small>ALDRYL LABAGUIS</small><strong>Volume of Memories</strong></div></div>
    </div>
    <div class="focus-drag-hint" id="focus-drag-hint"><span>✥ DRAG TO ROTATE · 360° VIEW</span><button type="button" id="focus-reset" aria-label="Reset book rotation">RESET VIEW ↺</button></div>
