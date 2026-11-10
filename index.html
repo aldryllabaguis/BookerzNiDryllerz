@@ -298,6 +298,143 @@ button:focus-visible{outline:2px solid #dec2a3;outline-offset:5px}
    font-size:clamp(1.15rem,4vw,1.55rem);
  }
 }
+
+/* TRUE 3D HARDCOVER THICKNESS — constructed as an actual six-sided volume.
+   Unlike the old overlaid rectangles, every extra surface lives on the edge of the book. */
+#shelf-track .shelf-book .book-3d{
+  --book-depth:44px;
+  position:relative;
+  transform-style:preserve-3d!important;
+  perspective:none;
+  filter:none!important; /* A filter on this element flattens CSS 3D children. */
+  overflow:visible;
+  backface-visibility:visible;
+  transition:transform .8s cubic-bezier(.22,.85,.2,1)!important;
+}
+#shelf-track .shelf-book:nth-child(1){--rest-y:-26deg;--rest-z:-4deg;--hover-base:-30deg}
+#shelf-track .shelf-book:nth-child(2){--rest-y:-18deg;--rest-z:0deg;--hover-base:-26deg}
+#shelf-track .shelf-book:nth-child(3){--rest-y:26deg;--rest-z:4deg;--hover-base:30deg}
+#shelf-track .shelf-book .book-3d,
+#shelf-track .shelf-book:nth-child(2) .book-3d,
+#shelf-track .shelf-book:nth-child(3) .book-3d{
+  transform:perspective(1400px) rotateY(var(--rest-y)) rotateX(-3deg) rotateZ(var(--rest-z))!important;
+  filter:none!important;
+}
+#shelf-track .shelf-book:is(:hover,:focus-visible) .book-3d,
+#shelf-track .shelf-book:nth-child(2):is(:hover,:focus-visible) .book-3d,
+#shelf-track .shelf-book:nth-child(3):is(:hover,:focus-visible) .book-3d{
+  transform:perspective(1400px) translate3d(0,-19px,30px) rotateY(calc(var(--hover-base) + var(--hover-y,0deg))) rotateX(calc(-4deg + var(--hover-x,0deg))) rotateZ(0deg) scale(1.04)!important;
+  filter:none!important;
+}
+/* Real front and rear boards: both exactly book-sized, never an unwanted floating panel. */
+#shelf-track .shelf-book .display-cover{
+  transform:translateZ(22px)!important;
+  backface-visibility:hidden!important;
+  box-shadow:inset 0 0 0 5px #21161a,inset 0 0 0 7px #8d7358,1px 1px 2px #150d12!important;
+}
+#shelf-track .book-backboard{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(125deg,#2a1a21,#583238 60%,#1c1319);
+  border:3px double #9d8368;
+  transform:translateZ(-22px) rotateY(180deg);
+  backface-visibility:visible;
+  box-shadow:0 10px 24px #02050bb3;
+  pointer-events:none;
+}
+/* Right: visibly layered cream pages. Left: a thick, curved leather spine. */
+#shelf-track .shelf-book .book-edge{
+  position:absolute!important;
+  inset:auto!important;
+  top:6px!important;
+  bottom:6px!important;
+  right:-22px!important;
+  width:44px!important;
+  height:calc(100% - 12px)!important;
+  background:
+   linear-gradient(90deg,#9a846a 0 3px,transparent 5px calc(100% - 5px),#6f5845 calc(100% - 3px)),
+   repeating-linear-gradient(0deg,#e9ddc9 0 2px,#bbab92 2px 3px,#efe2cd 3px 5px)!important;
+  border:1px solid #9e8971!important;
+  border-right:2px solid #806b56!important;
+  transform:rotateY(90deg)!important;
+  transform-origin:center center!important;
+  box-shadow:inset -5px 0 7px #61503c55!important;
+  pointer-events:none;
+}
+#shelf-track .shelf-book .book-spine{
+  position:absolute!important;
+  inset:auto!important;
+  left:-22px!important;
+  top:0!important;
+  width:44px!important;
+  height:100%!important;
+  border-radius:5px!important;
+  border:1px solid #382126!important;
+  transform:rotateY(-90deg)!important;
+  transform-origin:center center!important;
+  background:
+    linear-gradient(90deg,#1c1216,#67423a 17%,#965f50 44%,#633b37 72%,#1b141a),
+    #4d302f!important;
+  box-shadow:inset 5px 0 8px #140c1090,inset -5px 0 9px #140c1080!important;
+  pointer-events:none;
+}
+/* Paper top and bottom close the geometry and show the book's thickness. */
+#shelf-track .book-top,
+#shelf-track .book-bottom{
+  position:absolute;
+  left:4px;
+  width:calc(100% - 8px);
+  height:44px;
+  background:
+    linear-gradient(0deg,#7d6752 0 3px,transparent 5px calc(100% - 5px),#e7d9c3 calc(100% - 3px)),
+    repeating-linear-gradient(90deg,#d9c6a8 0 2px,#f0e5d5 2px 4px,#b9a48b 4px 5px);
+  border:1px solid #a18b71;
+  box-shadow:inset 0 1px 5px #55412e66;
+  pointer-events:none;
+}
+#shelf-track .book-top{
+  top:-22px;
+  transform:rotateX(90deg);
+}
+#shelf-track .book-bottom{
+  bottom:-22px;
+  transform:rotateX(-90deg);
+}
+/* Keep the paper OPEN cue in front of the hardcover surface. */
+#shelf-track .shelf-book .hover-open{
+  transform:translate(-50%,-45%) translateZ(29px) rotate(-3deg) scale(.8);
+}
+#shelf-track .shelf-book:is(:hover,:focus-visible) .hover-open{
+  transform:translate(-50%,-50%) translateZ(29px) rotate(-3deg) scale(1);
+}
+/* The same thick-bound finish is used on the enlarged opening-book preview. */
+.focus-book{transform-style:preserve-3d}
+.focus-spine{left:-17px!important;width:19px!important;background:linear-gradient(90deg,#24141d,#986a54 48%,#2b1c23)!important}
+.focus-pageblock{inset:5px -12px 5px 8px!important;border-right:9px solid #9f8970!important;box-shadow:inset -6px 0 9px #86705650!important}
+@media(max-width:790px){
+ #shelf-track .shelf-book .book-3d{--book-depth:34px}
+ #shelf-track .shelf-book .book-edge{right:-17px!important;width:34px!important}
+ #shelf-track .shelf-book .book-spine{left:-17px!important;width:34px!important}
+ #shelf-track .book-top,#shelf-track .book-bottom{height:34px}
+ #shelf-track .book-top{top:-17px}
+ #shelf-track .book-bottom{bottom:-17px}
+ #shelf-track .shelf-book .display-cover{transform:translateZ(17px)!important}
+ #shelf-track .book-backboard{transform:translateZ(-17px) rotateY(180deg)}
+ #shelf-track .shelf-book .hover-open{transform:translate(-50%,-45%) translateZ(23px) rotate(-3deg) scale(.8)}
+ #shelf-track .shelf-book:is(:hover,:focus-visible) .hover-open{transform:translate(-50%,-50%) translateZ(23px) rotate(-3deg)}
+}
+@media(max-width:440px){
+ #shelf-track .shelf-book .book-edge{right:-15px!important;width:30px!important}
+ #shelf-track .shelf-book .book-spine{left:-15px!important;width:30px!important}
+ #shelf-track .book-top,#shelf-track .book-bottom{height:30px}
+ #shelf-track .book-top{top:-15px}
+ #shelf-track .book-bottom{bottom:-15px}
+ #shelf-track .shelf-book .display-cover{transform:translateZ(15px)!important}
+ #shelf-track .book-backboard{transform:translateZ(-15px) rotateY(180deg)}
+}
+@media(prefers-reduced-motion:reduce){
+ #shelf-track .shelf-book .book-3d{transition:none!important}
+}
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
 <section id="shelf-view" class="shelf-view" aria-label="Bookshelf">
@@ -356,7 +493,7 @@ const REFLECTIONS_PG=[
  function cover(b){return '<div class="display-cover">'+b.pages[0][1]+'</div>'}
  function card(b,i){
   return '<button type="button" class="shelf-book" data-select="'+i+'" aria-label="Explore '+b.title+'">'+
-   '<span class="book-3d"><span class="book-edge"></span><span class="book-spine"></span>'+cover(b)+'<span class="hover-open" aria-hidden="true">OPEN</span></span>'+
+   '<span class="book-3d"><span class="book-backboard" aria-hidden="true"></span><span class="book-top" aria-hidden="true"></span><span class="book-bottom" aria-hidden="true"></span><span class="book-edge" aria-hidden="true"></span><span class="book-spine" aria-hidden="true"></span>'+cover(b)+'<span class="hover-open" aria-hidden="true">OPEN</span></span>'+
    '<span class="shelf-book-title">'+b.title+'</span><span class="shelf-book-sub">'+b.subtitle+'</span>'+
    '<span class="shelf-book-open">EXPLORE BOOK ↗</span></button>';
  }
