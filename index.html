@@ -592,6 +592,41 @@ button:focus-visible{outline:2px solid #dec2a3;outline-offset:5px}
 .focus-spine{
   box-shadow:inset 5px 0 8px #140c168c,inset -5px 0 9px #140c1680,inset 1px 0 0 #fff1,inset -1px 0 0 #0004!important;
 }
+
+/* Cursor-follow OPEN paper tag — detached from all 3D book transforms. */
+.cursor-open-tag{
+  position:fixed;
+  left:0;
+  top:0;
+  z-index:9999;
+  display:grid;
+  place-items:center;
+  min-width:68px;
+  min-height:34px;
+  padding:9px 15px 7px;
+  background:#f4ebd9;
+  color:#292529;
+  border:0;
+  clip-path:polygon(0% 8%,10% 5%,19% 0%,31% 4%,45% 1%,58% 5%,73% 1%,84% 5%,100% 2%,96% 17%,99% 37%,97% 58%,100% 79%,97% 96%,82% 98%,66% 95%,51% 100%,33% 97%,20% 99%,7% 94%,2% 98%,3% 80%,0% 62%,2% 43%);
+  font:700 11px/1 'Special Elite',monospace;
+  letter-spacing:.08em;
+  white-space:nowrap;
+  pointer-events:none;
+  user-select:none;
+  opacity:0;
+  visibility:hidden;
+  scale:.85;
+  transform:translate3d(-500px,-500px,0) translate(-50%,-50%) rotate(-3deg);
+  transition:opacity .18s ease,scale .22s cubic-bezier(.2,.85,.25,1.25),visibility .18s;
+  will-change:transform;
+}
+.cursor-open-tag.is-visible{
+  opacity:1;
+  visibility:visible;
+  scale:1;
+}
+@media(hover:none){.cursor-open-tag{display:none}}
+@media(prefers-reduced-motion:reduce){.cursor-open-tag{transition:none}}
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
 <section id="shelf-view" class="shelf-view" aria-label="Bookshelf">
@@ -650,7 +685,7 @@ const REFLECTIONS_PG=[
  function cover(b){return '<div class="display-cover">'+b.pages[0][1]+'</div>'}
  function card(b,i){
   return '<button type="button" class="shelf-book" data-select="'+i+'" aria-label="Explore '+b.title+'">'+
-   '<span class="book-3d"><span class="book-backboard" aria-hidden="true"></span><span class="book-top" aria-hidden="true"></span><span class="book-bottom" aria-hidden="true"></span><span class="book-edge" aria-hidden="true"></span><span class="book-spine" aria-hidden="true"></span>'+cover(b)+'<span class="hover-open" aria-hidden="true">OPEN</span></span>'+
+   '<span class="book-3d"><span class="book-backboard" aria-hidden="true"></span><span class="book-top" aria-hidden="true"></span><span class="book-bottom" aria-hidden="true"></span><span class="book-edge" aria-hidden="true"></span><span class="book-spine" aria-hidden="true"></span>'+cover(b)+'</span>'+
    '<span class="shelf-book-title">'+b.title+'</span><span class="shelf-book-sub">'+b.subtitle+'</span>'+
    '<span class="shelf-book-open">EXPLORE BOOK ↗</span></button>';
  }
@@ -675,6 +710,7 @@ const REFLECTIONS_PG=[
   $('#detail-index').textContent='0'+(selected+1)+' / 0'+books.length;
  }
  function openDetail(i){
+  hideOpenCursor();
   clearTimeout(closeTimer);selected=i;markSelected();populateDetail();
   readerView.hidden=true;detail.hidden=false;scene.classList.remove('is-reading');
   void detail.offsetWidth; // Ensure opening animation starts from the closed cover
@@ -768,9 +804,42 @@ const REFLECTIONS_PG=[
   populateDetail();requestAnimationFrame(()=>scene.classList.add('is-detail'));
   setTimeout(()=>{readerView.hidden=true},600);
  }
- // Gentle perspective tilt follows the pointer, as in the reference showcase.
+ // A single screen-space label follows the actual pointer, independently of
+ // the 3D rotating cover. This avoids fixed-center labels and perspective drift.
+ const cursorOpen=document.createElement('span');
+ cursorOpen.className='cursor-open-tag';
+ cursorOpen.textContent='OPEN';
+ cursorOpen.setAttribute('aria-hidden','true');
+ document.body.append(cursorOpen);
+ const cursorReduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
+ let cursorX=0,cursorY=0,cursorTargetX=0,cursorTargetY=0,cursorFrame=0,cursorBook=null;
+ function paintOpenCursor(){
+  const ease=cursorReduceMotion.matches?1:.4;
+  cursorX+=(cursorTargetX-cursorX)*ease;
+  cursorY+=(cursorTargetY-cursorY)*ease;
+  cursorOpen.style.transform='translate3d('+cursorX.toFixed(2)+'px,'+cursorY.toFixed(2)+'px,0) translate(-50%,-50%) rotate(-3deg)';
+  if(Math.abs(cursorTargetX-cursorX)+Math.abs(cursorTargetY-cursorY)>.3){
+   cursorFrame=requestAnimationFrame(paintOpenCursor);
+  }else{cursorFrame=0}
+ }
+ function placeOpenCursor(card,x,y){
+  const first=cursorBook!==card;
+  cursorBook=card;
+  cursorTargetX=x+13;
+  cursorTargetY=y+16;
+  if(first){cursorX=cursorTargetX;cursorY=cursorTargetY}
+  if(!cursorFrame)cursorFrame=requestAnimationFrame(paintOpenCursor);
+  cursorOpen.classList.add('is-visible');
+ }
+ function hideOpenCursor(card){
+  if(card&&cursorBook!==card)return;
+  cursorBook=null;
+  cursorOpen.classList.remove('is-visible');
+  if(cursorFrame){cancelAnimationFrame(cursorFrame);cursorFrame=0}
+ }
  document.querySelectorAll('#shelf-track .shelf-book').forEach(card=>{
   const shape=card.querySelector('.book-3d');
+  // Keep the original 3D tilt; the OPEN tag is separate from the transform.
   card.addEventListener('pointermove',event=>{
    if(event.pointerType==='touch')return;
    const rect=shape.getBoundingClientRect();
@@ -782,8 +851,26 @@ const REFLECTIONS_PG=[
   card.addEventListener('pointerleave',()=>{
    shape.style.removeProperty('--hover-y');
    shape.style.removeProperty('--hover-x');
+   hideOpenCursor(card);
   });
+  shape.addEventListener('pointerenter',event=>{
+   if(event.pointerType!=='touch')placeOpenCursor(card,event.clientX,event.clientY);
+  });
+  shape.addEventListener('pointermove',event=>{
+   if(event.pointerType!=='touch')placeOpenCursor(card,event.clientX,event.clientY);
+  });
+  shape.addEventListener('pointerleave',()=>hideOpenCursor(card));
+  shape.addEventListener('pointercancel',()=>hideOpenCursor(card));
+  // Keyboard users see the OPEN cue centered on their focused cover.
+  card.addEventListener('focus',()=>{
+   if(!card.matches(':focus-visible'))return;
+   const rect=shape.getBoundingClientRect();
+   placeOpenCursor(card,rect.left+rect.width/2,rect.top+rect.height/2);
+  });
+  card.addEventListener('blur',()=>hideOpenCursor(card));
  });
+ window.addEventListener('scroll',()=>hideOpenCursor(),{passive:true});
+ window.addEventListener('blur',()=>hideOpenCursor());
  $('#shelf-track').addEventListener('click',e=>{
   const card=e.target.closest('[data-select]');if(card)openDetail(+card.dataset.select);
  });
