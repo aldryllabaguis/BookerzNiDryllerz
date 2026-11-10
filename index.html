@@ -1277,26 +1277,6 @@ body::before{
  }
 }
 
-/* Restore the original gothic cat artwork on all volumes, without restoring
-   bat or skull stickers. Keep cat clear of the stamps and book titles. */
-:is(.display-cover,.page-face.cover).cover-main-refined .sticker-cat{
- display:block!important;
- left:auto!important;right:8%!important;
- bottom:7%!important;width:19%!important;
- opacity:1!important;transform:rotate(-6deg)!important;
-}
-:is(.display-cover,.page-face.cover).cover-works .sticker-cat{
- display:block!important;
- left:auto!important;right:9%!important;
- bottom:8%!important;width:20%!important;
- opacity:1!important;transform:rotate(7deg)!important;
-}
-:is(.display-cover,.page-face.cover).cover-reflections .sticker-cat{
- display:block!important;
- left:8%!important;right:auto!important;
- bottom:9%!important;width:19%!important;
- opacity:1!important;transform:rotate(-8deg)!important;
-}
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
 <section id="shelf-view" class="shelf-view" aria-label="Bookshelf">
@@ -1338,7 +1318,7 @@ const WORKS_PG=[
 
 
 const REFLECTIONS_PG=[
- ['cover cover-reflections',`<div class="ct"><small>VOLUME III · PERSONAL REFLECTIONS</small><h1>My<br>Reflections</h1><p class="works-subtitle">A learning journey by Aldryl Labaguis</p></div><img class="cover-sticker sticker-cat" src="assets/gothic-cat.svg" alt="" aria-hidden="true"><div class="stamp">Volume<br>Three<br>2026</div><span class="cover-journal-crest" aria-hidden="true">✦&nbsp; III &nbsp;✦</span>`],
+ ['cover cover-reflections',`<div class="ct"><small>VOLUME III · PERSONAL REFLECTIONS</small><h1>My<br>Reflections</h1><p class="works-subtitle">A learning journey by Aldryl Labaguis</p></div><div class="stamp">Volume<br>Three<br>2026</div><span class="cover-journal-crest" aria-hidden="true">✦&nbsp; III &nbsp;✦</span>`],
  ['',`<h2>Learning<br>&amp; growing.</h2><p class="lead">These are my reflections throughout Computer Programming 1.</p><p>From learning the basics to tackling more complex problems, each term has helped me improve as a programmer.</p><div class="toc"><button data-go="1">Read reflections</button></div>${pn(1)}`],
  ...RF.map((r,i)=>['',`<div class="num">${pad(i+1)}</div><h2>${r[0]}<br>term</h2><p class="body">${r[1]}</p><p class="edit">${r[2]}</p>${pn(i+2)}`]),
  ['',`<h2>Looking<br>back.</h2><p>Each term gave me new challenges and helped me practice problem-solving, patience, and logical thinking.</p><p>The lessons in this volume are part of my growth as a Computer Programming student.</p>${pn(5)}`],
