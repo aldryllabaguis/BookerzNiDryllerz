@@ -435,6 +435,98 @@ button:focus-visible{outline:2px solid #dec2a3;outline-offset:5px}
 @media(prefers-reduced-motion:reduce){
  #shelf-track .shelf-book .book-3d{transition:none!important}
 }
+
+/* Larger physical books with the MAIN PORTFOLIO prominently facing the viewer. */
+#shelf-track{
+  gap:clamp(18px,2.5vw,32px);
+  min-height:660px;
+  align-items:center;
+  justify-content:center;
+  padding:20px 0 24px;
+}
+#shelf-track .shelf-book{
+  width:300px;
+  flex:0 0 auto;
+}
+#shelf-track .shelf-book .book-3d,
+#shelf-track .shelf-book:nth-child(3) .book-3d{
+  width:290px;
+  height:440px;
+}
+#shelf-track .shelf-book:nth-child(2){
+  --rest-y:0deg;
+  --rest-z:0deg;
+  --hover-base:0deg;
+  width:356px;
+  z-index:4;
+}
+#shelf-track .shelf-book:nth-child(2) .book-3d{
+  width:342px;
+  height:512px;
+  transform:perspective(1500px) translate3d(0,-10px,22px) rotateY(0deg) rotateX(0deg) rotateZ(0deg)!important;
+}
+#shelf-track .shelf-book:nth-child(2):is(:hover,:focus-visible) .book-3d{
+  transform:perspective(1500px) translate3d(0,-28px,45px) rotateY(var(--hover-y,0deg)) rotateX(var(--hover-x,0deg)) rotateZ(0deg) scale(1.035)!important;
+}
+#shelf-track .shelf-book .display-cover .ct h1{
+  font-size:clamp(2.05rem,3vw,3.05rem);
+  line-height:1.07;
+}
+#shelf-track .shelf-book:nth-child(2) .display-cover .ct h1{
+  font-size:clamp(2.4rem,3.5vw,3.65rem);
+}
+#shelf-track .shelf-book:nth-child(2) .shelf-book-title{
+  font-size:26px;
+}
+@media(max-width:1100px) and (min-width:791px){
+ #shelf-track{gap:clamp(12px,1.6vw,22px);min-height:530px}
+ #shelf-track .shelf-book{width:26vw;max-width:265px}
+ #shelf-track .shelf-book:nth-child(2){width:30vw;max-width:320px}
+ #shelf-track .shelf-book .book-3d,
+ #shelf-track .shelf-book:nth-child(3) .book-3d{
+   width:24vw;max-width:255px;
+   height:36.5vw;max-height:385px;
+ }
+ #shelf-track .shelf-book:nth-child(2) .book-3d{
+   width:28vw;max-width:302px;
+   height:42vw;max-height:455px;
+ }
+ #shelf-track .shelf-book .display-cover .ct h1{font-size:clamp(1.85rem,3vw,2.65rem)}
+ #shelf-track .shelf-book:nth-child(2) .display-cover .ct h1{font-size:clamp(2.1rem,3.6vw,3.05rem)}
+}
+@media(max-width:790px){
+ #shelf-track{gap:26px 18px;min-height:0;padding:20px 0;flex-wrap:wrap}
+ #shelf-track .shelf-book{width:min(45%,248px);flex:0 1 45%;max-width:none}
+ #shelf-track .shelf-book:nth-child(2){width:min(48%,270px);flex:0 1 48%;max-width:none}
+ #shelf-track .shelf-book .book-3d,
+ #shelf-track .shelf-book:nth-child(3) .book-3d{
+   width:min(35vw,215px);
+   height:min(53vw,322px);
+ }
+ #shelf-track .shelf-book:nth-child(2) .book-3d{
+   width:min(40vw,244px);
+   height:min(60vw,366px);
+ }
+ #shelf-track .shelf-book .display-cover .ct h1{font-size:clamp(1.35rem,4vw,2.25rem)}
+ #shelf-track .shelf-book:nth-child(2) .display-cover .ct h1{font-size:clamp(1.5rem,4.5vw,2.6rem)}
+}
+@media(max-width:440px){
+ #shelf-track{gap:25px 8px}
+ #shelf-track .shelf-book{width:46%;flex:0 1 46%}
+ #shelf-track .shelf-book:nth-child(2){width:49%;flex:0 1 49%}
+ #shelf-track .shelf-book .book-3d,
+ #shelf-track .shelf-book:nth-child(3) .book-3d{
+   width:35vw;
+   height:53vw;
+ }
+ #shelf-track .shelf-book:nth-child(2) .book-3d{
+   width:39vw;
+   height:59vw;
+ }
+ #shelf-track .shelf-book .display-cover .ct h1{font-size:clamp(1.05rem,4.2vw,1.5rem)}
+ #shelf-track .shelf-book:nth-child(2) .display-cover .ct h1{font-size:clamp(1.2rem,4.7vw,1.7rem)}
+ #shelf-track .shelf-book:nth-child(2) .shelf-book-title{font-size:20px}
+}
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
 <section id="shelf-view" class="shelf-view" aria-label="Bookshelf">
