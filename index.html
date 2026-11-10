@@ -628,69 +628,45 @@ button:focus-visible{outline:2px solid #dec2a3;outline-offset:5px}
 @media(hover:none){.cursor-open-tag{display:none}}
 @media(prefers-reduced-motion:reduce){.cursor-open-tag{transition:none}}
 
-/* VISIBLE THREE-BOOK IDLE MOTION — float, rock and slowly yaw even with no cursor.
-   Animate the outer wrapper so the inner hardcover remains fully 3D
-   and the existing cursor tilt / book-open transitions are unaffected. */
+/* VENGEANCE UI MOTION: same sine-wave idle math and spring parameters as
+   the original Three.js BooksShowcase. The JS frame loop drives the animation
+   directly; obsolete CSS bounces/transitions must not override it. */
+#shelf-track{transform-style:preserve-3d!important}
 #shelf-track .shelf-book .idle-float{
   display:block;
   position:relative;
   width:max-content;
-  max-width:none;
   height:auto;
   flex:none;
-  transform-origin:50% 55%;
   transform-style:preserve-3d;
-  animation:bookIdleFloatCenter 4.8s ease-in-out infinite alternate both;
-  will-change:transform;
-  backface-visibility:visible;
-}
-#shelf-track .shelf-book:nth-child(1) .idle-float{
-  animation-name:bookIdleFloatLeft;
-  animation-duration:5.4s;
-  animation-delay:-1.4s;
-}
-#shelf-track .shelf-book:nth-child(2) .idle-float{
-  animation-name:bookIdleFloatCenter;
-  animation-duration:4.8s;
-  animation-delay:-2.1s;
-}
-#shelf-track .shelf-book:nth-child(3) .idle-float{
-  animation-name:bookIdleFloatRight;
-  animation-duration:5.8s;
-  animation-delay:-3.4s;
-}
-/* Asymmetric curved keyframes keep the movement more organic than a rigid bob.
-   The 20–35px vertical travel and 3–12 degree 3D yaw should read clearly at desktop size. */
-@keyframes bookIdleFloatLeft{
-  0%   {transform:translate3d(-6px,15px,0) rotateY(-9deg) rotateX(2deg) rotateZ(-2deg)}
-  28%  {transform:translate3d(-2px,2px,0) rotateY(-4deg) rotateX(0deg) rotateZ(-.6deg)}
-  62%  {transform:translate3d(4px,-13px,0) rotateY(6deg) rotateX(-2.5deg) rotateZ(1.5deg)}
-  100% {transform:translate3d(8px,-19px,0) rotateY(10deg) rotateX(-3deg) rotateZ(2.3deg)}
-}
-@keyframes bookIdleFloatCenter{
-  0%   {transform:translate3d(-3px,17px,0) rotateY(-6deg) rotateX(2.8deg) rotateZ(-1.4deg)}
-  33%  {transform:translate3d(1px,4px,0) rotateY(-1deg) rotateX(.6deg) rotateZ(-.3deg)}
-  68%  {transform:translate3d(2px,-12px,0) rotateY(4deg) rotateX(-1.7deg) rotateZ(.8deg)}
-  100% {transform:translate3d(0,-24px,0) rotateY(7deg) rotateX(-2.7deg) rotateZ(1.3deg)}
-}
-@keyframes bookIdleFloatRight{
-  0%   {transform:translate3d(7px,-19px,0) rotateY(9deg) rotateX(-3deg) rotateZ(2.2deg)}
-  32%  {transform:translate3d(3px,-7px,0) rotateY(4deg) rotateX(-1.2deg) rotateZ(.5deg)}
-  68%  {transform:translate3d(-3px,8px,0) rotateY(-5deg) rotateX(1.8deg) rotateZ(-1deg)}
-  100% {transform:translate3d(-8px,16px,0) rotateY(-11deg) rotateX(3.2deg) rotateZ(-2.5deg)}
-}
-/* Stop drifting while the user controls a specific book, preserving its current position.
-   Once the pointer leaves, the other volumes continue their staggered motion. */
-#shelf-track .shelf-book:is(:hover,:focus-visible) .idle-float,
-.scene:is(.is-detail,.is-reading) #shelf-track .idle-float{
-  animation-play-state:paused;
-}
-@media(prefers-reduced-motion:reduce){
- #shelf-track .shelf-book .idle-float{
+  transform-origin:50% 50%;
   animation:none!important;
-  transform:none!important;
-  will-change:auto;
- }
+  transition:none!important;
+  will-change:transform;
+}
+#shelf-track .shelf-book .book-3d,
+#shelf-track .shelf-book:nth-child(2) .book-3d,
+#shelf-track .shelf-book:nth-child(3) .book-3d{
+  transform-style:preserve-3d!important;
+  transition:none!important;
+  animation:none!important;
+  will-change:transform;
+}
+.cursor-open-tag{
+  min-width:0;
+  min-height:0;
+  padding:16px 38px 18px;
+  font-size:15px;
+  font-weight:700;
+  border-radius:0;
+  transform-origin:center center;
+  clip-path:polygon(0% .9%,8.3% .8%,16.7% 6.3%,25% 3.8%,33.3% 5.5%,41.7% 2.7%,50% 5.2%,58.3% .4%,66.7% 5.9%,75% 6.5%,83.3% 1%,91.7% 6.4%,100% .7%,97.7% 20%,97% 40%,99.6% 60%,98.7% 80%,100% 96.5%,91.7% 99.8%,83.3% 95.6%,75% 94.9%,66.7% 96.6%,58.3% 93.5%,50% 97.9%,41.7% 99.5%,33.3% 93.2%,25% 93.6%,16.7% 93.2%,8.3% 93.1%,0% 93.5%,.2% 80%,1.1% 60%,3.9% 40%,3.8% 20%);
+  background:repeating-linear-gradient(92deg,rgba(90,74,40,.03) 0 2px,transparent 2px 6px),radial-gradient(125% 150% at 28% 0%,#fffdf7 0%,#f8f2e3 58%,#ede4cf 100%);
+  filter:drop-shadow(0 2px 1px #0003) drop-shadow(0 14px 26px #0006);
+}
+.cursor-open-tag.is-visible{scale:1}
+@media(prefers-reduced-motion:reduce){
+  #shelf-track .idle-float{animation:none!important;will-change:auto}
 }
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
@@ -869,73 +845,153 @@ const REFLECTIONS_PG=[
   populateDetail();requestAnimationFrame(()=>scene.classList.add('is-detail'));
   setTimeout(()=>{readerView.hidden=true},600);
  }
- // A single screen-space label follows the actual pointer, independently of
- // the 3D rotating cover. This avoids fixed-center labels and perspective drift.
+ // MOTION PORT from VengeanceUI's original Three.js BooksShowcase.
+ // SPRING presets, spring integration, idle time/frequency, lift, hover tilt,
+ // scale, pointer parallax and OPEN label spring use the source values.
+ const TAU=Math.PI*2;
+ const SPRING={
+  POSITION:{k:17,d:6.8},
+  TILT:{k:120,d:13},
+  PARALLAX:{k:60,d:10},
+  PILL:{k:190,d:23}
+ };
+ class Spring{
+  constructor(v,preset){this.v=v;this.t=v;this.vel=0;this.k=preset.k;this.d=preset.d}
+  set(v){this.v=v;this.t=v;this.vel=0;return this}
+  update(dt){const a=this.k*(this.t-this.v)-this.d*this.vel;this.vel+=a*dt;this.v+=this.vel*dt;return this.v}
+ }
+ const cm=(v,a,b)=>Math.max(a,Math.min(b,v));
+ const motionReduce=window.matchMedia('(prefers-reduced-motion: reduce)');
+ const motionRoot=$('#showcase');
+ const motionTrack=$('#shelf-track');
+ const motionBooks=[...document.querySelectorAll('#shelf-track .shelf-book')].map((card,i)=>{
+  const shape=card.querySelector('.book-3d'),wrapper=card.querySelector('.idle-float');
+  const pp=shape.offsetHeight/(2.14*(i===1?1.32:1.22));
+  // Main Portfolio retains its explicitly requested frontal resting position.
+  const angles=[
+   {rx:-.045,ry:.4,rz:.185},
+   {rx:0,ry:0,rz:0},
+   {rx:-.045,ry:-.42,rz:-.17}
+  ][i];
+  return {
+   card,shape,wrapper,
+   phase:Math.random()*TAU,ppu:pp,angles,
+   tiltX:new Spring(0,SPRING.TILT),
+   tiltY:new Spring(0,SPRING.TILT),
+   lift:new Spring(0,SPRING.TILT),
+   scale:new Spring(1,SPRING.POSITION),
+   // Same lower-to-slot entrance as the reference: 240ms stagger.
+   entrance:new Spring(-3.9,SPRING.POSITION),
+   entered:false,enterAt:performance.now()+240+i*150
+  };
+ });
  const cursorOpen=document.createElement('span');
  cursorOpen.className='cursor-open-tag';
  cursorOpen.textContent='OPEN';
  cursorOpen.setAttribute('aria-hidden','true');
  document.body.append(cursorOpen);
- const cursorReduceMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
- let cursorX=0,cursorY=0,cursorTargetX=0,cursorTargetY=0,cursorFrame=0,cursorBook=null;
- function paintOpenCursor(){
-  const ease=cursorReduceMotion.matches?1:.4;
-  cursorX+=(cursorTargetX-cursorX)*ease;
-  cursorY+=(cursorTargetY-cursorY)*ease;
-  cursorOpen.style.transform='translate3d('+cursorX.toFixed(2)+'px,'+cursorY.toFixed(2)+'px,0) translate(-50%,-50%) rotate(-3deg)';
-  if(Math.abs(cursorTargetX-cursorX)+Math.abs(cursorTargetY-cursorY)>.3){
-   cursorFrame=requestAnimationFrame(paintOpenCursor);
-  }else{cursorFrame=0}
- }
- function placeOpenCursor(card,x,y){
-  const first=cursorBook!==card;
-  cursorBook=card;
-  cursorTargetX=x+13;
-  cursorTargetY=y+16;
-  if(first){cursorX=cursorTargetX;cursorY=cursorTargetY}
-  if(!cursorFrame)cursorFrame=requestAnimationFrame(paintOpenCursor);
+ const pillX=new Spring(0,SPRING.PILL);
+ const pillY=new Spring(0,SPRING.PILL);
+ const parX=new Spring(0,SPRING.PARALLAX);
+ const parY=new Spring(0,SPRING.PARALLAX);
+ let cursorBook=null,pointerX=0,pointerY=0,knownPointer=false,manualHover=false;
+ function placeOpenCursor(book,x,y){
+  const start=!cursorBook;
+  cursorBook=book;pointerX=x;pointerY=y;knownPointer=true;
+  if(start){pillX.set(x);pillY.set(y+34)}
   cursorOpen.classList.add('is-visible');
  }
- function hideOpenCursor(card){
-  if(card&&cursorBook!==card)return;
-  cursorBook=null;
-  cursorOpen.classList.remove('is-visible');
-  if(cursorFrame){cancelAnimationFrame(cursorFrame);cursorFrame=0}
+ function hideOpenCursor(book){
+  if(book&&cursorBook!==book)return;
+  cursorBook=null;cursorOpen.classList.remove('is-visible');
  }
- document.querySelectorAll('#shelf-track .shelf-book').forEach(card=>{
-  const shape=card.querySelector('.book-3d');
-  // Keep the original 3D tilt; the OPEN tag is separate from the transform.
-  card.addEventListener('pointermove',event=>{
-   if(event.pointerType==='touch')return;
-   const rect=shape.getBoundingClientRect();
-   const x=Math.max(-1,Math.min(1,(event.clientX-rect.left)/rect.width*2-1));
-   const y=Math.max(-1,Math.min(1,(event.clientY-rect.top)/rect.height*2-1));
-   shape.style.setProperty('--hover-y',(x*8).toFixed(2)+'deg');
-   shape.style.setProperty('--hover-x',(-y*5).toFixed(2)+'deg');
-  });
-  card.addEventListener('pointerleave',()=>{
-   shape.style.removeProperty('--hover-y');
-   shape.style.removeProperty('--hover-x');
-   hideOpenCursor(card);
-  });
-  shape.addEventListener('pointerenter',event=>{
-   if(event.pointerType!=='touch')placeOpenCursor(card,event.clientX,event.clientY);
-  });
-  shape.addEventListener('pointermove',event=>{
-   if(event.pointerType!=='touch')placeOpenCursor(card,event.clientX,event.clientY);
-  });
-  shape.addEventListener('pointerleave',()=>hideOpenCursor(card));
-  shape.addEventListener('pointercancel',()=>hideOpenCursor(card));
-  // Keyboard users see the OPEN cue centered on their focused cover.
+ motionBooks.forEach(book=>{
+  const {card,shape}=book;
+  // Hover is attached to the real cover, never the empty card area.
+  shape.addEventListener('pointerenter',e=>{if(e.pointerType!=='touch')placeOpenCursor(book,e.clientX,e.clientY)});
+  shape.addEventListener('pointermove',e=>{if(e.pointerType!=='touch')placeOpenCursor(book,e.clientX,e.clientY)});
+  shape.addEventListener('pointerleave',()=>hideOpenCursor(book));
+  shape.addEventListener('pointercancel',()=>hideOpenCursor(book));
+  card.addEventListener('pointerleave',()=>hideOpenCursor(book));
   card.addEventListener('focus',()=>{
    if(!card.matches(':focus-visible'))return;
    const rect=shape.getBoundingClientRect();
-   placeOpenCursor(card,rect.left+rect.width/2,rect.top+rect.height/2);
+   placeOpenCursor(book,rect.left+rect.width/2,rect.top+rect.height/2);
   });
-  card.addEventListener('blur',()=>hideOpenCursor(card));
+  card.addEventListener('blur',()=>hideOpenCursor(book));
  });
  window.addEventListener('scroll',()=>hideOpenCursor(),{passive:true});
  window.addEventListener('blur',()=>hideOpenCursor());
+ // Frame update mirrors the source's 30 fps physics time step.
+ let motionFrame=0,lastMotion=0,elapsedMotion=0,isInViewport=true;
+ const frameInterval=1000/30;
+ const motionObserver=new IntersectionObserver(entries=>{
+  isInViewport=entries[0]?.isIntersecting??true;
+  if(isInViewport&&!motionFrame)motionFrame=requestAnimationFrame(animateBooks);
+ },{rootMargin:'160px'});
+ motionObserver.observe(motionRoot);
+ function animateBooks(now){
+  motionFrame=0;
+  if(document.hidden||!isInViewport){lastMotion=0;return}
+  if(!lastMotion)lastMotion=now-frameInterval;
+  const diff=now-lastMotion;
+  if(diff<frameInterval-1){motionFrame=requestAnimationFrame(animateBooks);return}
+  lastMotion=now;
+  const dt=Math.min(diff/1000,.05);
+  elapsedMotion+=dt;
+  const t=elapsedMotion;
+  const reduced=motionReduce.matches;
+  const w=Math.max(1,motionRoot.clientWidth),h=Math.max(1,motionRoot.clientHeight);
+  const box=motionRoot.getBoundingClientRect();
+  const ndcX=knownPointer?cm((pointerX-box.left)/w*2-1,-1,1):0;
+  const ndcY=knownPointer?cm(-((pointerY-box.top)/h*2-1),-1,1):0;
+  parX.t=reduced?0:ndcX*.02;
+  parY.t=reduced?0:-ndcY*.012;
+  motionTrack.style.setProperty('transform','rotateY('+parX.update(dt)+'rad) rotateX('+parY.update(dt)+'rad)','important');
+  motionBooks.forEach(book=>{
+   const {shape,wrapper,angles}=book;
+   const isHovered=cursorBook===book&&scene.classList.contains('is-detail')===false&&scene.classList.contains('is-reading')===false;
+   if(!book.entered&&now>=book.enterAt){book.entered=true;book.entrance.t=0}
+   if(reduced){book.entrance.set(0)}
+   const rect=shape.getBoundingClientRect();
+   const x=rect.left+rect.width/2,y=rect.top+rect.height/2;
+   // Original normalized pointer math + clamps from tickBook().
+   const dxN=(pointerX-x)/(w*.25);
+   const dyN=(y-pointerY)/(h*.3);
+   book.tiltY.t=isHovered?cm(dxN*.28,-.15,.15):0;
+   book.tiltX.t=isHovered?cm(-dyN*.1,-.09,.1):0;
+   book.lift.t=isHovered?.3:0;
+   book.scale.t=isHovered?1.09:1;
+   const tiltY=book.tiltY.update(dt);
+   const tiltX=book.tiltX.update(dt);
+   const lift=book.lift.update(dt);
+   const scale=book.scale.update(dt);
+   const drop=book.entrance.update(dt);
+   const ppu=shape.offsetHeight/(2.14*(book===motionBooks[1]?1.32:1.22));
+   book.ppu=ppu;
+   // Original source:
+   // b.float.position.y = sin(t*.7 + phase)*.035
+   // b.float.rotation.z = sin(t*.9 + phase*1.7)*.006
+   const fy=reduced?0:Math.sin(t*.7+book.phase)*.035*ppu;
+   const fz=reduced?0:Math.sin(t*.9+book.phase*1.7)*.006;
+   wrapper.style.setProperty('transform','translate3d(0,'+fy.toFixed(3)+'px,0) rotateZ('+fz.toFixed(6)+'rad)','important');
+   shape.style.setProperty('transform',
+    'perspective(1400px) translate3d(0,'+((drop+lift)*ppu).toFixed(3)+'px,0) '+
+    'rotateX('+(angles.rx+tiltX).toFixed(6)+'rad) '+
+    'rotateY('+(angles.ry+tiltY).toFixed(6)+'rad) '+
+    'rotateZ('+angles.rz.toFixed(6)+'rad) scale('+scale.toFixed(5)+')','important');
+  });
+  if(cursorBook){
+   const tx=pointerX,ty=pointerY+34;
+   pillX.t=tx;pillY.t=ty;
+   cursorOpen.style.transform='translate3d('+pillX.update(dt).toFixed(2)+'px,'+pillY.update(dt).toFixed(2)+'px,0) translate(-50%,-50%) rotate(-1.6deg)';
+  }
+  motionFrame=requestAnimationFrame(animateBooks);
+ }
+ motionFrame=requestAnimationFrame(animateBooks);
+ document.addEventListener('visibilitychange',()=>{
+  if(!document.hidden&&!motionFrame)motionFrame=requestAnimationFrame(animateBooks);
+ });
  $('#shelf-track').addEventListener('click',e=>{
   const card=e.target.closest('[data-select]');if(card)openDetail(+card.dataset.select);
  });
