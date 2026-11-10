@@ -1272,6 +1272,55 @@ body::before{
  }
 }
 
+
+/* READING ROOM LEGIBILITY & ATMOSPHERE — CSS lighting only.
+   The original full-resolution assets/reading-room-original.png is untouched:
+   no recompression, replacement, resizing, or image blur.
+   A separate transparent layer adds a cinematic vignette and contrast. */
+body::after{
+ content:"";
+ position:fixed;
+ inset:0;
+ z-index:0;
+ pointer-events:none;
+ background:
+  radial-gradient(ellipse 62% 54% at 53% 51%,rgba(7,4,8,.20) 0%,rgba(7,4,8,.13) 52%,rgba(5,3,6,.48) 100%),
+  linear-gradient(180deg,rgba(6,4,7,.57) 0%,rgba(7,5,8,.32) 24%,rgba(8,5,8,.16) 53%,rgba(6,4,7,.31) 76%,rgba(5,3,6,.59) 100%);
+}
+#showcase{position:relative;z-index:1}
+.shelf-head{
+ color:#f2dfce;
+ text-shadow:0 1px 3px rgba(0,0,0,.95),0 2px 14px rgba(0,0,0,.9);
+}
+.shelf-title .eyebrow{
+ color:#ead4ba;
+ text-shadow:0 1px 5px rgba(0,0,0,.95),0 2px 14px rgba(0,0,0,.85);
+}
+.shelf-title h1{
+ color:#fff1df;
+ text-shadow:0 2px 2px rgba(0,0,0,.86),0 7px 24px rgba(0,0,0,.86),0 0 38px rgba(13,6,8,.7);
+}
+.shelf-title p{
+ color:#f4e2d1;
+ text-shadow:0 2px 5px rgba(0,0,0,.9),0 3px 14px rgba(0,0,0,.82);
+}
+#shelf-view .shelf-title .shelf-prompt{
+ color:#f8e7d5;
+ text-shadow:0 1px 5px #000,0 3px 15px rgba(0,0,0,.9);
+}
+.detail-text h2{
+ text-shadow:0 2px 4px rgba(0,0,0,.85),0 5px 20px rgba(0,0,0,.8);
+}
+.detail-text p,.detail-kicker,.detail-by,.detail-meta,.detail-nav,.reader-top h2,.reader-tip{
+ text-shadow:0 2px 5px rgba(0,0,0,.9),0 3px 15px rgba(0,0,0,.7);
+}
+@media(max-width:790px){
+ body::after{
+  background:
+   radial-gradient(ellipse 85% 65% at 50% 48%,rgba(7,4,8,.19),rgba(5,3,6,.43) 100%),
+   linear-gradient(180deg,rgba(6,4,7,.62),rgba(7,5,8,.29) 28%,rgba(6,4,7,.25) 68%,rgba(5,3,6,.61));
+ }
+}
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
 <section id="shelf-view" class="shelf-view" aria-label="Bookshelf">
