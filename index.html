@@ -1187,6 +1187,95 @@ body::before{
  #shelf-track .shelf-book .display-cover.cover-reflections .ct h1{font-size:clamp(1.3rem,4.5vw,1.85rem)!important}
  :is(.display-cover,.page-face.cover).cover-reflections .cover-journal-crest{top:8%;padding:4px 0}
 }
+
+/* MAIN PORTFOLIO REFINEMENT — original burgundy gothic cover retained.
+   Polish its spacing, subtle leather sheen, border, and original stickers.
+   Works & Projects and Reflections are intentionally unaffected. */
+:is(.display-cover,.page-face.cover).cover-main-refined{
+ background:
+   radial-gradient(ellipse at 43% 28%,rgba(130,80,91,.25),transparent 65%),
+   repeating-linear-gradient(101deg,rgba(255,255,255,.012) 0 1px,transparent 1px 9px),
+   radial-gradient(ellipse at 45% 35%,#493139 0%,#241a22 64%,#120f15 100%)!important;
+ border-color:#bda078!important;
+}
+/* Preserve the side-by-side book depth and its current outer hardcover geometry. */
+#shelf-track .shelf-book:nth-child(2) .display-cover.cover-main-refined{
+ box-shadow:
+  inset 0 0 0 5px #21161a,
+  inset 0 0 0 7px #a68c67,
+  inset 0 0 24px rgba(0,0,0,.18),
+  1px 1px 2px #150d12!important;
+}
+:is(.display-cover,.page-face.cover).cover-main-refined .ct{
+ top:26%!important;
+ left:9%!important;
+ right:9%!important;
+ padding:clamp(13px,2vw,21px) 7px clamp(12px,1.6vw,19px)!important;
+ background:linear-gradient(180deg,rgba(57,24,31,.93),rgba(36,18,25,.95))!important;
+ border-top:1px solid #c6a374!important;
+ border-bottom:1px solid #c6a374!important;
+ box-shadow:0 6px 17px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.04)!important;
+}
+:is(.display-cover,.page-face.cover).cover-main-refined .ct small{
+ color:#dfc7a3!important;
+ letter-spacing:.10em!important;
+}
+:is(.display-cover,.page-face.cover).cover-main-refined .ct h1{
+ color:#fffaf4!important;
+ -webkit-text-fill-color:#fffaf4!important;
+ letter-spacing:.01em!important;
+ text-shadow:0 2px 1px #0007,0 5px 12px #0008!important;
+}
+#shelf-track .shelf-book:nth-child(2) .display-cover.cover-main-refined .ct h1{
+ font-size:clamp(2.5rem,3.45vw,3.85rem)!important;
+ line-height:1.05!important;
+}
+:is(.display-cover,.page-face.cover).cover-main-refined .sticker-skull{
+ top:8%!important;
+ right:8%!important;
+ width:12%!important;
+ filter:brightness(0) invert(1) drop-shadow(0 2px 3px #0008)!important;
+}
+:is(.display-cover,.page-face.cover).cover-main-refined .sticker-cat{
+ width:18%!important;
+ left:9%!important;
+ bottom:6%!important;
+ transform:rotate(-6deg)!important;
+}
+:is(.display-cover,.page-face.cover).cover-main-refined .sticker-bat{
+ width:35%!important;
+ right:8%!important;
+ bottom:6%!important;
+ transform:rotate(-4deg)!important;
+}
+:is(.display-cover,.page-face.cover).cover-main-refined .stamp{
+ bottom:7%!important;
+ left:9%!important;
+ transform:rotate(-6deg)!important;
+ background:rgba(28,18,22,.86)!important;
+ border-color:#b39268!important;
+ box-shadow:0 4px 9px #0006;
+}
+#shelf-track .shelf-book:nth-child(2) .book-spine{
+ background:linear-gradient(90deg,#140f14,#5d3941 27%,#a36a56 47%,#4a2d34 76%,#120e12)!important;
+}
+#shelf-track .shelf-book:nth-child(2) .book-backboard{
+ background:linear-gradient(120deg,#3a252d,#1a1319 62%,#120e14)!important;
+ border-color:#b5946b!important;
+}
+@media(max-width:790px){
+ #shelf-track .shelf-book:nth-child(2) .display-cover.cover-main-refined .ct h1{
+  font-size:clamp(1.65rem,4.7vw,2.85rem)!important;
+ }
+ :is(.display-cover,.page-face.cover).cover-main-refined .ct{
+  padding:clamp(8px,1.4vw,14px) 5px!important;
+ }
+}
+@media(max-width:440px){
+ #shelf-track .shelf-book:nth-child(2) .display-cover.cover-main-refined .ct h1{
+  font-size:clamp(1.35rem,4.8vw,2rem)!important;
+ }
+}
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
 <section id="shelf-view" class="shelf-view" aria-label="Bookshelf">
@@ -1209,7 +1298,7 @@ body::before{
  <div class="reader-stage" id="reader-stage"><div class="reader-pages" id="reader-pages"></div></div><nav class="reader-controls" aria-label="Page controls"><button type="button" id="reader-prev">← Previous</button><span id="reader-count">Cover</span><button type="button" id="reader-next">Next →</button></nav><p class="reader-tip">DRAG A PAGE OR CLICK THE PAGE EDGES TO TURN</p>
 </section>
 </div></main><script>const $=(s,c=document)=>c.querySelector(s),pad=n=>String(n).padStart(2,'0'); /* ---------- EDIT YOUR CONTENT HERE ---------- */ const NAME='Aldryl<br>Labaguis'; const W=[ ['PTs & Products Compilation','All machine problems, activities, seatwork and recitation outputs in one PDF, with Java screenshots.','#','Open PDF'], ['Project Documentation','Goals, design and a walkthrough of my project code.','#','Open PDF'], ['Video Project Presentation','A recorded demo of my project. Paste your YouTube or Drive link.','#','Watch video'], ['Work Experience / Internships','Add your role, company and dates.','#','Edit me'], ['Seminars & Trainings','List the seminars you attended, with speakers and dates.','#','Edit me'], ['Organization & Community','Your orgs, roles and outreach activities, in or out of campus.','#','Edit me'], ['Awards & Recognitions','Dean’s list, contests, certificates.','#','Edit me'], ['Other JRU Experience','Anything else you want to share about your journey at JRU.','#','Edit me']]; const RF=[ ['Prelim','We began with how a program is structured, then variables, data types, input/output and operators. A missing semicolon could eat an entire afternoon, but reading error messages slowly turned frustration into calm debugging.','[Edit: your favorite activity and biggest struggle.]'], ['Midterm','Decision-making and repetition changed everything: if–else, switch, loops and nested loops. Patterns and number problems taught me to trace my code line by line before running it.','[Edit: a machine problem you were proud of.]'], ['Final','Arrays and methods taught me to break big problems into small reusable pieces, and the project let me combine everything from the semester.','[Edit: how you grew and your plans for Programming 2.]']]; /* -------------------------------------------- */ const pn=n=>`<div class="pn">— ${pad(n)} —</div>`; const li=(w,i,o)=>`<li><b>${pad(i+o+1)}</b><div><h3>${w[0]}</h3><p>${w[1]}</p><a href="${w[2]}" target="_blank" rel="noopener">${w[3]} →</a></div></li>`; const ph='<img src="photo.png" alt="" onerror="this.remove()">'; const PG=[ // reading order: F0,B0,F1,B1,...
-['cover',`<div class="sun"></div>${ph}<div class="ct"><small>E‑PORTFOLIO · CP1 · JRU</small><h1>${NAME}</h1></div><img class="cover-sticker sticker-cat" src="assets/gothic-cat.svg" alt="" aria-hidden="true"><img class="cover-sticker sticker-bat" src="assets/gothic-bat.svg" alt="" aria-hidden="true"><img class="cover-sticker sticker-skull" src="assets/gothic-skull.svg" alt="" aria-hidden="true"><div class="stamp">Computer<br>Programming 1<br>2026</div>`], ['',`<h2>Hello &amp;<br>welcome.</h2><p class="lead">This volume introduces me and my portfolio. My projects and reflections are each in their own books. Flip through this one or choose a section:</p><div class="toc"><button data-go="1">About me</button><button data-go="3">Contact</button></div>${pn(1)}`], ['',`<h2>About me</h2><p>Hello! I’m <mark>Aldryl Labaguis</mark>, a student at Jose Rizal University. Add your course and year level here.</p><p>Write 2–3 sentences about your hobbies, your goals after graduation and what drives you to learn programming.</p><p class="edit">[Edit this page.]</p>${pn(2)}`], ['',`<div class="pola"><div class="ph">Y${ph}</div><span>Aldryl Labaguis, 2026</span></div><div class="stats"><div><b>—</b>programs</div><div><b>—</b>projects</div><div><b>—</b>certificates</div></div>${pn(3)}`], ]; PG.push(
+['cover cover-main-refined',`<div class="sun"></div>${ph}<div class="ct"><small>E‑PORTFOLIO · CP1 · JRU</small><h1>${NAME}</h1></div><img class="cover-sticker sticker-cat" src="assets/gothic-cat.svg" alt="" aria-hidden="true"><img class="cover-sticker sticker-bat" src="assets/gothic-bat.svg" alt="" aria-hidden="true"><img class="cover-sticker sticker-skull" src="assets/gothic-skull.svg" alt="" aria-hidden="true"><div class="stamp">Computer<br>Programming 1<br>2026</div>`], ['',`<h2>Hello &amp;<br>welcome.</h2><p class="lead">This volume introduces me and my portfolio. My projects and reflections are each in their own books. Flip through this one or choose a section:</p><div class="toc"><button data-go="1">About me</button><button data-go="3">Contact</button></div>${pn(1)}`], ['',`<h2>About me</h2><p>Hello! I’m <mark>Aldryl Labaguis</mark>, a student at Jose Rizal University. Add your course and year level here.</p><p>Write 2–3 sentences about your hobbies, your goals after graduation and what drives you to learn programming.</p><p class="edit">[Edit this page.]</p>${pn(2)}`], ['',`<div class="pola"><div class="ph">Y${ph}</div><span>Aldryl Labaguis, 2026</span></div><div class="stats"><div><b>—</b>programs</div><div><b>—</b>projects</div><div><b>—</b>certificates</div></div>${pn(3)}`], ]; PG.push(
  ['',`<h2>Three<br>volumes.</h2><p class="lead">This is the first book in my collection.</p><p>Here you can get to know me and explore my personal portfolio. My academic outputs and my Prelim, Midterm, and Final reflections are kept in two separate books on the bookshelf.</p><p>Close this book to explore <strong>Works &amp; Projects</strong> or <strong>Reflections</strong>.</p>${pn(4)}`],
  ['',`<h2>Let’s<br>connect.</h2><p>Questions, feedback or opportunities? I’d love to hear from you.</p><p><a class="stk" href="mailto:your-email@example.com">your-email@example.com</a></p><p><a class="stk" href="https://github.com/aldryllabaguis" target="_blank" rel="noopener">GitHub</a><a class="stk" href="#">LinkedIn</a></p>${pn(5)}`],
  ['',`<h2 style="margin-top:30%">Thanks for<br>reading.</h2><p>© 2026 Aldryl Labaguis · CP1 · JRU</p><button data-go="0">Back to cover</button>${pn(6)}`],
@@ -1245,8 +1334,8 @@ const REFLECTIONS_PG=[
  const scene=$('#scene'),shelf=$('#shelf-view'),detail=$('#detail-view'),readerView=$('#reader-view');
  let selected=1,reader=null,closeTimer=0;
  function cover(b){
-  // Main Portfolio retains its original cover, unchanged.
-  const finish=b.title==='Works & Projects'?' cover-works':b.title==='Reflections'?' cover-reflections':'';
+  // Each volume has its own hardcover finish, shared by shelf and detail.
+  const finish=b.title==='Works & Projects'?' cover-works':b.title==='Reflections'?' cover-reflections':b.title==='Main Portfolio'?' cover-main-refined':'';
   return '<div class="display-cover'+finish+'">'+b.pages[0][1]+'</div>';
  }
  function card(b,i){
