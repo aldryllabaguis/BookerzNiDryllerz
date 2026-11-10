@@ -920,6 +920,13 @@ const REFLECTIONS_PG=[
   });
   card.addEventListener('blur',()=>hideOpenCursor(book));
  });
+ motionRoot.addEventListener('pointermove',e=>{
+  if(e.pointerType==='touch')return;
+  pointerX=e.clientX;pointerY=e.clientY;knownPointer=true;
+ },{passive:true});
+ motionRoot.addEventListener('pointerleave',()=>{
+  knownPointer=false;hideOpenCursor();
+ });
  window.addEventListener('scroll',()=>hideOpenCursor(),{passive:true});
  window.addEventListener('blur',()=>hideOpenCursor());
  // Frame update mirrors the source's 30 fps physics time step.
