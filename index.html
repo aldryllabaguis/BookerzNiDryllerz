@@ -246,6 +246,58 @@ button:focus-visible{outline:2px solid #dec2a3;outline-offset:5px}
 
 /* The hover reference shows one OPEN label directly over the cover. */
 #shelf-track .shelf-book .shelf-book-open{display:none!important}
+
+/* Match the scale and proportions of the books in the reference video.
+   At desktop widths, each book is approximately 270px wide by 405-420px tall. */
+#shelf-track{
+  min-height:540px;
+  gap:clamp(18px,2.4vw,38px);
+  padding:14px 0 18px;
+  align-items:center;
+  justify-content:center;
+}
+#shelf-track .shelf-book{
+  width:clamp(220px,28vw,300px);
+  flex:0 1 auto;
+  min-width:0;
+}
+#shelf-track .shelf-book .book-3d,
+#shelf-track .shelf-book:nth-child(2) .book-3d,
+#shelf-track .shelf-book:nth-child(3) .book-3d{
+  width:clamp(192px,26vw,270px);
+  height:clamp(287px,39vw,405px);
+}
+#shelf-track .shelf-book:nth-child(2) .book-3d{
+  width:clamp(200px,26.5vw,278px);
+  height:clamp(305px,40vw,420px);
+}
+#shelf-track .shelf-book-title{margin-top:18px}
+#shelf-track .shelf-book .display-cover .ct h1{
+  font-size:clamp(1.75rem,2.9vw,2.75rem);
+}
+@media(max-width:790px){
+ #shelf-track{min-height:0;gap:24px 18px;padding:18px 0 20px;flex-wrap:wrap}
+ #shelf-track .shelf-book{width:min(44%,240px);flex:0 1 44%}
+ #shelf-track .shelf-book .book-3d,
+ #shelf-track .shelf-book:nth-child(2) .book-3d,
+ #shelf-track .shelf-book:nth-child(3) .book-3d{
+   width:clamp(135px,32vw,220px);
+   height:clamp(205px,48vw,330px);
+ }
+}
+@media(max-width:440px){
+ #shelf-track{gap:22px 8px}
+ #shelf-track .shelf-book{width:47%;flex:0 1 47%}
+ #shelf-track .shelf-book .book-3d,
+ #shelf-track .shelf-book:nth-child(2) .book-3d,
+ #shelf-track .shelf-book:nth-child(3) .book-3d{
+   width:clamp(122px,34vw,150px);
+   height:clamp(190px,50vw,229px);
+ }
+ #shelf-track .shelf-book .display-cover .ct h1{
+   font-size:clamp(1.15rem,4vw,1.55rem);
+ }
+}
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
 <section id="shelf-view" class="shelf-view" aria-label="Bookshelf">
