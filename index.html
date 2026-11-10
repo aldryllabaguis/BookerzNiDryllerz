@@ -995,6 +995,198 @@ body::before{
    url("assets/reading-room-bg.jpg");
  }
 }
+
+/* DISTINCT SIDE-VOLUME COVERS — Main Portfolio is deliberately untouched.
+   Archive II: charcoal cloth, crimson binding detail, torn parchment title.
+   Journal III: forest-green embossed leather, bronze ornamentation. */
+:is(.display-cover,.page-face.cover).cover-works{
+ background:
+  linear-gradient(90deg,transparent 0 5.5%,#8b363a 5.8% 6.4%,#371a1e 6.6% 7.4%,transparent 7.7%),
+  radial-gradient(ellipse 65% 45% at 15% 3%,#7e78722a,transparent 100%),
+  radial-gradient(ellipse 72% 44% at 88% 98%,#000a,transparent 95%),
+  repeating-linear-gradient(112deg,#e2d9c307 0 1px,transparent 1px 7px),
+  linear-gradient(145deg,#303235 0%,#1e1e23 42%,#0e1014 100%)!important;
+ border-color:#938a7f!important;
+}
+:is(.display-cover,.page-face.cover).cover-works .ct{
+ top:23%!important;
+ left:11%!important;
+ right:9%!important;
+ padding:clamp(11px,2vw,21px) 8px clamp(12px,2vw,20px)!important;
+ background:
+  radial-gradient(ellipse at 20% 8%,#fff6db9c,transparent 65%),
+  linear-gradient(165deg,#dfd0b8,#bcab90 65%,#ae9b82)!important;
+ border:1px solid #f3e2bd!important;
+ border-bottom:3px solid #8c4748!important;
+ clip-path:polygon(1% 0,13% 2%,25% 0,40% 1%,53% 0,68% 1%,82% 0,99% 2%,100% 97%,89% 99%,71% 98%,57% 100%,41% 98%,23% 99%,0 98%);
+ box-shadow:7px 9px 16px #0009,0 2px 0 #5f3531!important;
+ transform:rotate(-2deg);
+}
+:is(.display-cover,.page-face.cover).cover-works .ct small{
+ color:#702f34!important;
+ font:700 clamp(7px,.62vw,10px)/1.4 'Special Elite',monospace!important;
+ letter-spacing:.07em!important;
+}
+:is(.display-cover,.page-face.cover).cover-works .ct h1{
+ color:#2a1a1d!important;
+ -webkit-text-fill-color:#2a1a1d!important;
+ font-family:'IM Fell English',Georgia,serif!important;
+ font-style:italic!important;
+ font-weight:700!important;
+ text-shadow:0 1px 0 #f1dec6!important;
+}
+#shelf-track .shelf-book .display-cover.cover-works .ct h1{
+ font-size:clamp(2rem,3.3vw,3.55rem)!important;
+ line-height:1.02!important;
+}
+:is(.display-cover,.page-face.cover).cover-works .works-subtitle{
+ color:#593c38!important;
+ font-weight:700;
+}
+:is(.display-cover,.page-face.cover).cover-works .cover-archive-label{
+ position:absolute;
+ top:8%;left:12%;
+ z-index:6;
+ color:#d0c6b7;
+ font:700 clamp(7px,.7vw,10px)/1.3 'Special Elite',monospace;
+ letter-spacing:.13em;
+ text-align:left;
+ transform:rotate(-3deg);
+ text-shadow:1px 2px 3px #000;
+}
+:is(.display-cover,.page-face.cover).cover-works .sticker-skull{
+ right:9%!important;top:7%!important;
+ width:14%!important;
+ filter:brightness(0) invert(.9) drop-shadow(1px 1px 1px #000)!important;
+}
+:is(.display-cover,.page-face.cover).cover-works .sticker-cat{
+ width:22%!important;left:12%!important;bottom:5%!important;
+ opacity:.85;
+ transform:rotate(-12deg)!important;
+}
+:is(.display-cover,.page-face.cover).cover-works .sticker-bat{
+ width:43%!important;right:6%!important;bottom:5%!important;
+ transform:rotate(-9deg)!important;
+ opacity:.78;
+}
+:is(.display-cover,.page-face.cover).cover-works .stamp{
+ bottom:8%!important;left:9%!important;
+ border-color:#a95c5b!important;
+ background:#24181cd9!important;
+ color:#f1dfd3!important;
+ transform:rotate(8deg)!important;
+}
+#shelf-track .shelf-book:nth-child(1) .book-spine{
+ background:linear-gradient(90deg,#0c0d10,#49353a 25%,#954447 46%,#2a2124 74%,#08090b)!important;
+}
+#shelf-track .shelf-book:nth-child(1) .book-backboard{
+ background:linear-gradient(115deg,#28282c,#101115 65%,#08090c)!important;
+ border-color:#999086!important;
+}
+
+/* Reflections: a calmer, antique green leather-bound diary with a
+   soft arched title cartouche, stamped gold crest and fine double borders. */
+:is(.display-cover,.page-face.cover).cover-reflections{
+ background:
+  radial-gradient(ellipse 80% 55% at 24% 21%,#67887930,transparent 84%),
+  radial-gradient(ellipse 70% 58% at 80% 92%,#030b0bb3,transparent 90%),
+  repeating-linear-gradient(96deg,#f1debc05 0 1px,transparent 1px 10px),
+  linear-gradient(135deg,#29453a 0%,#152b24 46%,#071a17 100%)!important;
+ border-color:#bca275!important;
+ box-shadow:inset 0 0 0 5px #12261e,inset 0 0 0 7px #a58d5e,inset 0 0 40px #000b!important;
+}
+:is(.display-cover,.page-face.cover).cover-reflections .ct{
+ top:30%!important;
+ left:10%!important;
+ right:10%!important;
+ padding:clamp(17px,3vw,28px) 5px clamp(15px,2vw,23px)!important;
+ background:linear-gradient(145deg,#18382fd9,#091e19ed 80%)!important;
+ border:2px double #c2a67c!important;
+ border-radius:46% 46% 5px 5px / 16% 16% 5px 5px;
+ outline:1px solid #bea77b6b;
+ outline-offset:5px;
+ box-shadow:inset 0 0 0 5px #162b25,inset 0 0 0 6px #ad8f6255,0 6px 16px #0007!important;
+}
+:is(.display-cover,.page-face.cover).cover-reflections .ct small{
+ color:#d4b980!important;
+ font:700 clamp(7px,.59vw,10px)/1.6 'Special Elite',monospace!important;
+ letter-spacing:.09em!important;
+}
+:is(.display-cover,.page-face.cover).cover-reflections .ct h1{
+ color:#f0e5c9!important;
+ font-family:'IM Fell English',Georgia,serif!important;
+ font-style:italic!important;
+ font-weight:600!important;
+ text-shadow:0 3px 8px #000d,0 0 15px #e3ba6a25!important;
+}
+#shelf-track .shelf-book .display-cover.cover-reflections .ct h1{
+ font-size:clamp(2.15rem,3.2vw,3.65rem)!important;
+ line-height:1.04!important;
+}
+:is(.display-cover,.page-face.cover).cover-reflections .works-subtitle{
+ color:#d9c9a4!important;
+ font-style:italic;
+}
+:is(.display-cover,.page-face.cover).cover-reflections .cover-journal-crest{
+ position:absolute;
+ top:11%;left:50%;
+ transform:translateX(-50%);
+ display:block;
+ width:34%;
+ padding:9px 0 7px;
+ border-top:1px solid #cdb78c;
+ border-bottom:1px solid #cdb78c;
+ color:#ead4a5;
+ font:700 clamp(11px,1.2vw,19px)/1 'IM Fell English',Georgia,serif;
+ letter-spacing:.09em;
+ text-align:center;
+ text-shadow:0 2px 6px #000;
+ z-index:6;
+}
+:is(.display-cover,.page-face.cover).cover-reflections .sticker-cat,
+:is(.display-cover,.page-face.cover).cover-reflections .sticker-bat{
+ display:none!important;
+}
+:is(.display-cover,.page-face.cover).cover-reflections .sticker-skull{
+ width:13%!important;
+ top:auto!important;
+ bottom:18%!important;
+ right:43%!important;
+ opacity:.75;
+ filter:brightness(0) invert(1) drop-shadow(0 2px 3px #0007)!important;
+}
+:is(.display-cover,.page-face.cover).cover-reflections .stamp{
+ bottom:5%!important;
+ left:50%!important;
+ transform:translateX(-50%)!important;
+ text-align:center!important;
+ max-width:none!important;
+ background:#10251edb!important;
+ color:#ead7b4!important;
+ border:1px solid #ad966a!important;
+ padding:6px 12px!important;
+ letter-spacing:.08em;
+}
+#shelf-track .shelf-book:nth-child(3) .book-spine{
+ background:linear-gradient(90deg,#071a14,#28513f 27%,#b09768 48%,#173b2c 76%,#081a15)!important;
+}
+#shelf-track .shelf-book:nth-child(3) .book-backboard{
+ background:linear-gradient(120deg,#294a39,#10271e 60%,#091711)!important;
+ border-color:#b39b70!important;
+}
+@media(max-width:790px){
+ :is(.display-cover,.page-face.cover).cover-works .ct{padding:10px 4px 11px!important}
+ #shelf-track .shelf-book .display-cover.cover-works .ct h1{font-size:clamp(1.4rem,4vw,2.6rem)!important}
+ :is(.display-cover,.page-face.cover).cover-reflections .ct{padding:10px 4px 12px!important}
+ #shelf-track .shelf-book .display-cover.cover-reflections .ct h1{font-size:clamp(1.45rem,4.2vw,2.6rem)!important}
+}
+@media(max-width:440px){
+ :is(.display-cover,.page-face.cover).cover-works .ct{top:24%!important}
+ #shelf-track .shelf-book .display-cover.cover-works .ct h1{font-size:clamp(1.25rem,4.4vw,1.8rem)!important}
+ :is(.display-cover,.page-face.cover).cover-reflections .ct{top:29%!important}
+ #shelf-track .shelf-book .display-cover.cover-reflections .ct h1{font-size:clamp(1.3rem,4.5vw,1.85rem)!important}
+ :is(.display-cover,.page-face.cover).cover-reflections .cover-journal-crest{top:8%;padding:4px 0}
+}
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
 <section id="shelf-view" class="shelf-view" aria-label="Bookshelf">
@@ -1023,7 +1215,7 @@ body::before{
  ['',`<h2 style="margin-top:30%">Thanks for<br>reading.</h2><p>© 2026 Aldryl Labaguis · CP1 · JRU</p><button data-go="0">Back to cover</button>${pn(6)}`],
  ['bk','<h1>fin.</h1>']);
 const WORKS_PG=[
- ['cover',`<div class="ct"><small>VOLUME II · SELECTED WORKS</small><h1>Works<br>&amp; Projects</h1><p class="works-subtitle">A collection by Aldryl Labaguis</p></div><img class="cover-sticker sticker-cat" src="assets/gothic-cat.svg" alt="" aria-hidden="true"><img class="cover-sticker sticker-bat" src="assets/gothic-bat.svg" alt="" aria-hidden="true"><img class="cover-sticker sticker-skull" src="assets/gothic-skull.svg" alt="" aria-hidden="true"><div class="stamp">Volume<br>Two<br>2026</div>`],
+ ['cover cover-works',`<div class="ct"><small>VOLUME II · SELECTED WORKS</small><h1>Works<br>&amp; Projects</h1><p class="works-subtitle">A collection by Aldryl Labaguis</p></div><img class="cover-sticker sticker-cat" src="assets/gothic-cat.svg" alt="" aria-hidden="true"><img class="cover-sticker sticker-bat" src="assets/gothic-bat.svg" alt="" aria-hidden="true"><img class="cover-sticker sticker-skull" src="assets/gothic-skull.svg" alt="" aria-hidden="true"><div class="stamp">Volume<br>Two<br>2026</div><span class="cover-archive-label" aria-hidden="true">EST. 2026<br>ARCHIVE / 02</span>`],
  ['',`<h2>Selected<br>works.</h2><p class="lead">A separate volume for academic outputs, projects, presentations and other work.</p><div class="toc"><button data-mini-go="1">Browse works</button></div>${pn(1)}`],
  ['',`<h2>Academics<br>&amp; outputs</h2><ol>${W.slice(0,4).map((w,i)=>li(w,i,0)).join('')}</ol>${pn(2)}`],
  ['',`<h2>More<br>works</h2><ol style="margin-top:6px">${W.slice(4).map((w,i)=>li(w,i,4)).join('')}</ol>${pn(3)}`],
@@ -1036,7 +1228,7 @@ const WORKS_PG=[
 
 
 const REFLECTIONS_PG=[
- ['cover',`<div class="ct"><small>VOLUME III · PERSONAL REFLECTIONS</small><h1>My<br>Reflections</h1><p class="works-subtitle">A learning journey by Aldryl Labaguis</p></div><img class="cover-sticker sticker-cat" src="assets/gothic-cat.svg" alt="" aria-hidden="true"><img class="cover-sticker sticker-bat" src="assets/gothic-bat.svg" alt="" aria-hidden="true"><img class="cover-sticker sticker-skull" src="assets/gothic-skull.svg" alt="" aria-hidden="true"><div class="stamp">Volume<br>Three<br>2026</div>`],
+ ['cover cover-reflections',`<div class="ct"><small>VOLUME III · PERSONAL REFLECTIONS</small><h1>My<br>Reflections</h1><p class="works-subtitle">A learning journey by Aldryl Labaguis</p></div><img class="cover-sticker sticker-cat" src="assets/gothic-cat.svg" alt="" aria-hidden="true"><img class="cover-sticker sticker-bat" src="assets/gothic-bat.svg" alt="" aria-hidden="true"><img class="cover-sticker sticker-skull" src="assets/gothic-skull.svg" alt="" aria-hidden="true"><div class="stamp">Volume<br>Three<br>2026</div><span class="cover-journal-crest" aria-hidden="true">✦&nbsp; III &nbsp;✦</span>`],
  ['',`<h2>Learning<br>&amp; growing.</h2><p class="lead">These are my reflections throughout Computer Programming 1.</p><p>From learning the basics to tackling more complex problems, each term has helped me improve as a programmer.</p><div class="toc"><button data-go="1">Read reflections</button></div>${pn(1)}`],
  ...RF.map((r,i)=>['',`<div class="num">${pad(i+1)}</div><h2>${r[0]}<br>term</h2><p class="body">${r[1]}</p><p class="edit">${r[2]}</p>${pn(i+2)}`]),
  ['',`<h2>Looking<br>back.</h2><p>Each term gave me new challenges and helped me practice problem-solving, patience, and logical thinking.</p><p>The lessons in this volume are part of my growth as a Computer Programming student.</p>${pn(5)}`],
@@ -1052,7 +1244,11 @@ const REFLECTIONS_PG=[
  ];
  const scene=$('#scene'),shelf=$('#shelf-view'),detail=$('#detail-view'),readerView=$('#reader-view');
  let selected=1,reader=null,closeTimer=0;
- function cover(b){return '<div class="display-cover">'+b.pages[0][1]+'</div>'}
+ function cover(b){
+  // Main Portfolio retains its original cover, unchanged.
+  const finish=b.title==='Works & Projects'?' cover-works':b.title==='Reflections'?' cover-reflections':'';
+  return '<div class="display-cover'+finish+'">'+b.pages[0][1]+'</div>';
+ }
  function card(b,i){
   return '<button type="button" class="shelf-book" data-select="'+i+'" aria-label="Explore '+b.title+'">'+
    '<span class="idle-float"><span class="book-3d"><span class="book-backboard" aria-hidden="true"></span><span class="book-top" aria-hidden="true"></span><span class="book-bottom" aria-hidden="true"></span><span class="book-edge" aria-hidden="true"></span><span class="book-spine" aria-hidden="true"></span>'+cover(b)+'</span></span>'+
