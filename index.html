@@ -935,6 +935,7 @@ function makeFlipbook(pages,title,kind){
  render();
  return {section,go};
 }
+PG[1][1]=PG[1][1].replace('<button data-book="works">Open Works book</button>','');
 const mainFlip=makeFlipbook(PG,'Volume I · Main Portfolio','main-volume');
 const worksFlip=makeFlipbook(WORKS_PG,'Volume II · Works & Projects','works-volume');
 const desk=$('#desk');desk.innerHTML='';desk.classList.add('side-by-side');desk.append(mainFlip.section,worksFlip.section);
