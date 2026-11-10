@@ -627,6 +627,69 @@ button:focus-visible{outline:2px solid #dec2a3;outline-offset:5px}
 }
 @media(hover:none){.cursor-open-tag{display:none}}
 @media(prefers-reduced-motion:reduce){.cursor-open-tag{transition:none}}
+
+/* RESTING BOOK ANIMATION — subtle independent movement while not hovered.
+   Dedicated wrapper keeps the existing 3D book and mouse-follow OPEN interaction intact. */
+#shelf-track .shelf-book .idle-float{
+  display:block;
+  position:relative;
+  flex:none;
+  width:max-content;
+  max-width:none;
+  height:auto;
+  transform-style:preserve-3d;
+  transform-origin:50% 57%;
+  animation:idleBookBreath 6.7s ease-in-out infinite alternate;
+  will-change:transform;
+}
+/* Each volume feels independently suspended, not like synchronized clones. */
+#shelf-track .shelf-book:nth-child(1) .idle-float{
+  animation-name:idleBookLeft;
+  animation-duration:7.3s;
+  animation-delay:-2.4s;
+}
+#shelf-track .shelf-book:nth-child(2) .idle-float{
+  animation-name:idleBookCenter;
+  animation-duration:6.1s;
+  animation-delay:-.8s;
+}
+#shelf-track .shelf-book:nth-child(3) .idle-float{
+  animation-name:idleBookRight;
+  animation-duration:7.9s;
+  animation-delay:-4.6s;
+}
+@keyframes idleBookLeft{
+  0%{transform:translate3d(-2px,5px,0) rotateZ(-1.05deg) rotateX(-.4deg)}
+  50%{transform:translate3d(1px,-4px,0) rotateZ(.2deg) rotateX(.5deg)}
+  100%{transform:translate3d(4px,-9px,0) rotateZ(1deg) rotateX(1deg)}
+}
+@keyframes idleBookCenter{
+  0%{transform:translate3d(0,4px,0) rotateZ(-.35deg) rotateX(-.6deg)}
+  50%{transform:translate3d(1px,-3px,0) rotateZ(.25deg) rotateX(.4deg)}
+  100%{transform:translate3d(-1px,-8px,0) rotateZ(.45deg) rotateX(.8deg)}
+}
+@keyframes idleBookRight{
+  0%{transform:translate3d(3px,-7px,0) rotateZ(1deg) rotateX(.7deg)}
+  50%{transform:translate3d(0,2px,0) rotateZ(-.2deg) rotateX(-.5deg)}
+  100%{transform:translate3d(-3px,6px,0) rotateZ(-1.1deg) rotateX(-.8deg)}
+}
+@keyframes idleBookBreath{
+  from{transform:translate3d(0,5px,0) rotateZ(-.7deg)}
+  to{transform:translate3d(0,-7px,0) rotateZ(.7deg)}
+}
+/* Hover takes over the inner book with its more responsive cursor tilt.
+   Keep the wrapper steady at its current animation frame to avoid a snap. */
+#shelf-track .shelf-book:is(:hover,:focus-visible) .idle-float,
+.scene:is(.is-detail,.is-reading) #shelf-track .idle-float{
+  animation-play-state:paused;
+}
+@media(prefers-reduced-motion:reduce){
+ #shelf-track .shelf-book .idle-float{
+   animation:none!important;
+   transform:none!important;
+   will-change:auto;
+ }
+}
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
 <section id="shelf-view" class="shelf-view" aria-label="Bookshelf">
@@ -685,7 +748,7 @@ const REFLECTIONS_PG=[
  function cover(b){return '<div class="display-cover">'+b.pages[0][1]+'</div>'}
  function card(b,i){
   return '<button type="button" class="shelf-book" data-select="'+i+'" aria-label="Explore '+b.title+'">'+
-   '<span class="book-3d"><span class="book-backboard" aria-hidden="true"></span><span class="book-top" aria-hidden="true"></span><span class="book-bottom" aria-hidden="true"></span><span class="book-edge" aria-hidden="true"></span><span class="book-spine" aria-hidden="true"></span>'+cover(b)+'</span>'+
+   '<span class="idle-float"><span class="book-3d"><span class="book-backboard" aria-hidden="true"></span><span class="book-top" aria-hidden="true"></span><span class="book-bottom" aria-hidden="true"></span><span class="book-edge" aria-hidden="true"></span><span class="book-spine" aria-hidden="true"></span>'+cover(b)+'</span></span>'+
    '<span class="shelf-book-title">'+b.title+'</span><span class="shelf-book-sub">'+b.subtitle+'</span>'+
    '<span class="shelf-book-open">EXPLORE BOOK ↗</span></button>';
  }
