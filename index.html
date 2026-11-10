@@ -922,6 +922,26 @@ button:focus-visible{outline:2px solid #dec2a3;outline-offset:5px}
  .scene.is-detail.is-closing .focus-cover-hinge,
  .scene.is-detail.is-closing .focus-book{transition:none!important}
 }
+/* Keep the return flight visible from its very first frame.
+   Hide the now-closed detail book to avoid two overlapping covers. */
+.scene.is-returning .shelf-view{
+ opacity:1!important;
+ transform:translateY(0) scale(1)!important;
+ visibility:visible!important;
+ transition:none!important;
+ pointer-events:none;
+}
+.scene.is-returning .detail-view{
+ opacity:0!important;
+ visibility:hidden!important;
+ transition:none!important;
+ pointer-events:none!important;
+}
+.scene.is-opening .shelf-head,
+.scene.is-opening .shelf-title{
+ opacity:0;
+ transition:opacity .42s ease!important;
+}
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
 <section id="shelf-view" class="shelf-view" aria-label="Bookshelf">
@@ -1080,7 +1100,7 @@ const REFLECTIONS_PG=[
    flightTimer=setTimeout(()=>{
     resetBookFlight();
     detail.hidden=true;readerView.hidden=true;reader=null;
-   },1190);
+   },1460);
   },700);
  }
  function switchDetail(delta){
