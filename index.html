@@ -794,69 +794,6 @@ button:focus-visible{outline:2px solid #dec2a3;outline-offset:5px}
  #shelf-track .shelf-book:nth-child(2) .display-cover .ct h1{font-size:clamp(1.35rem,4.8vw,2rem)}
 }
 
-/* SIDE NAVIGATION — matches the reference's floating circular chevrons,
-   vertically centered at either side of the three books. */
-.shelf-stage{
- position:relative;
- width:100%;
-}
-.shelf-stage .shelf-side-nav{
- position:absolute;
- inset:0;
- z-index:20;
- display:block;
- pointer-events:none;
-}
-.shelf-stage .shelf-side-nav .round-control{
- position:absolute;
- top:50%;
- width:45px;
- height:45px;
- display:grid;
- place-items:center;
- border:1px solid rgba(255,255,255,.72);
- border-radius:50%;
- background:#f4f2ed;
- color:#242530;
- box-shadow:0 5px 16px #0006;
- font:26px/1 Georgia,serif;
- padding:0 0 3px;
- cursor:pointer;
- pointer-events:auto;
- transform:translateY(-50%);
- transition:background .2s ease,transform .2s ease,box-shadow .2s ease;
-}
-.shelf-stage .shelf-side-nav .round-control:hover,
-.shelf-stage .shelf-side-nav .round-control:focus-visible{
- background:#fffaf2;
- box-shadow:0 7px 22px #0009;
- transform:translateY(-50%) scale(1.08);
-}
-.shelf-stage .shelf-side-nav #shelf-prev{left:clamp(0px,.6vw,9px)}
-.shelf-stage .shelf-side-nav #shelf-next{right:clamp(0px,.6vw,9px)}
-.shelf-footer{justify-content:center}
-@media(max-width:790px){
- .shelf-stage .shelf-side-nav .round-control{
-  width:38px;
-  height:38px;
-  font-size:22px;
- }
- .shelf-stage .shelf-side-nav #shelf-prev{left:0}
- .shelf-stage .shelf-side-nav #shelf-next{right:0}
-}
-@media(prefers-reduced-motion:reduce){
- .shelf-stage .shelf-side-nav .round-control{transition:none}
-}
-
-/* Arrow selection: raise the active book above its neighbors while spring
-   motion animates its lift, depth, rotation, and slight lateral rearrangement.
-   Its original shelf slot and idle animation stay unchanged. */
-#shelf-track[data-shelf-navigated="true"] .shelf-book[aria-current="true"]{
- z-index:14!important;
-}
-#shelf-track[data-shelf-navigated="true"] .shelf-book:not([aria-current="true"]){
- z-index:1;
-}
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
 <section id="shelf-view" class="shelf-view" aria-label="Bookshelf">
@@ -864,10 +801,6 @@ button:focus-visible{outline:2px solid #dec2a3;outline-offset:5px}
  <div class="shelf-title"><span class="eyebrow">A COLLECTION IN THREE VOLUMES</span><h1>My Bookshelf</h1><p>Explore my story, works, and projects</p></div>
  <div class="shelf-stage">
   <div class="shelf-track" id="shelf-track"></div>
-  <nav class="shelf-nav shelf-side-nav" aria-label="Browse books">
-   <button type="button" class="round-control" id="shelf-prev" aria-label="Previous book">‹</button>
-   <button type="button" class="round-control" id="shelf-next" aria-label="Next book">›</button>
-  </nav>
  </div>
  <footer class="shelf-footer"><span>SELECT A BOOK TO EXPLORE</span></footer>
 </section>
@@ -928,13 +861,6 @@ const REFLECTIONS_PG=[
  function markSelected(){
   $('#head-count').textContent='0'+(selected+1)+' / 0'+books.length;
   document.querySelectorAll('.shelf-book').forEach((el,i)=>el.setAttribute('aria-current',i===selected?'true':'false'));
- }
- function select(delta){
-  selected=(selected+delta+books.length)%books.length;
-  markSelected();
-  animateShelfSelection(delta);
-  const c=document.querySelectorAll('.shelf-book')[selected];
-  c.focus({preventScroll:true});
  }
  function populateDetail(){
   const b=books[selected];
@@ -1081,38 +1007,10 @@ const REFLECTIONS_PG=[
    scale:new Spring(1,SPRING.POSITION),
    // Same lower-to-slot entrance as the reference: 240ms stagger.
    entrance:new Spring(-3.9,SPRING.POSITION),
-   entered:false,enterAt:performance.now()+240+i*150,
-   // Arrow navigation animates its own spring offsets without replacing
-   // the source showcase's continuous floating or mouse tilt.
-   navLift:new Spring(0,SPRING.TILT),
-   navDepth:new Spring(0,SPRING.TILT),
-   navShift:new Spring(0,SPRING.POSITION),
-   navYaw:new Spring(0,SPRING.TILT),
-   navScale:new Spring(1,SPRING.POSITION)
+   entered:false,enterAt:performance.now()+240+i*150
   };
  });
 
- // Animate arrow selection like a spring-driven miniature carousel:
- // the chosen hardcover comes toward the reader and straightens, while
- // the previously selected book settles back into its original shelf slot.
- function animateShelfSelection(direction){
-  if(scene.classList.contains('is-detail')||scene.classList.contains('is-reading'))return;
-  motionTrack.dataset.shelfNavigated='true';
-  hideOpenCursor();
-  motionBooks.forEach((book,i)=>{
-   const chosen=i===selected;
-   const side=i<selected?-1:i>selected?1:0;
-   book.navLift.t=chosen?.26:0;
-   book.navDepth.t=chosen?.20:0;
-   book.navYaw.t=chosen?-book.angles.ry*.82:0;
-   book.navScale.t=chosen?1.075:1;
-   book.navShift.t=chosen?(i===0?.065:i===2?-.065:0):side*.045;
-   // A small directional spring impulse makes every arrow press visible,
-   // including repeated presses while the previous transition is running.
-   book.navShift.vel+=direction*(chosen?.85:.36);
-   if(chosen)book.navLift.vel+=.6;
-  });
- }
  const cursorOpen=document.createElement('span');
  cursorOpen.className='cursor-open-tag';
  cursorOpen.textContent='OPEN';
@@ -1202,11 +1100,6 @@ const REFLECTIONS_PG=[
    const lift=book.lift.update(dt);
    const scale=book.scale.update(dt);
    const drop=book.entrance.update(dt);
-   const navLift=book.navLift.update(dt);
-   const navDepth=book.navDepth.update(dt);
-   const navShift=book.navShift.update(dt);
-   const navYaw=book.navYaw.update(dt);
-   const navScale=book.navScale.update(dt);
    const ppu=shape.offsetHeight/(2.14*(book===motionBooks[1]?1.32:1.22));
    book.ppu=ppu;
    // Original source:
@@ -1218,12 +1111,10 @@ const REFLECTIONS_PG=[
    const baseY=book===motionBooks[1]?-10:0;
    const baseZ=book===motionBooks[1]?22:0;
    shape.style.setProperty('transform',
-    'perspective(1400px) translate3d('+(navShift*ppu).toFixed(3)+'px,'+
-    (baseY+(drop+lift+navLift)*ppu).toFixed(3)+'px,'+
-    (baseZ+navDepth*ppu).toFixed(3)+'px) '+
+    'perspective(1400px) translate3d(0,'+(baseY+(drop+lift)*ppu).toFixed(3)+'px,'+baseZ+'px) '+
     'rotateX('+(angles.rx+tiltX).toFixed(6)+'rad) '+
-    'rotateY('+(angles.ry+tiltY+navYaw).toFixed(6)+'rad) '+
-    'rotateZ('+angles.rz.toFixed(6)+'rad) scale('+(scale*navScale).toFixed(5)+')','important');
+    'rotateY('+(angles.ry+tiltY).toFixed(6)+'rad) '+
+    'rotateZ('+angles.rz.toFixed(6)+'rad) scale('+scale.toFixed(5)+')','important');
   });
   if(cursorBook){
    const tx=pointerX,ty=pointerY+34;
@@ -1239,8 +1130,6 @@ const REFLECTIONS_PG=[
  $('#shelf-track').addEventListener('click',e=>{
   const card=e.target.closest('[data-select]');if(card)openDetail(+card.dataset.select);
  });
- $('#shelf-prev').addEventListener('click',()=>select(-1));
- $('#shelf-next').addEventListener('click',()=>select(1));
  $('#detail-close').addEventListener('click',returnShelf);
  $('#detail-prev').addEventListener('click',()=>switchDetail(-1));
  $('#detail-next').addEventListener('click',()=>switchDetail(1));
