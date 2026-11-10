@@ -2261,8 +2261,211 @@ body::after{
  #focus-book .focus-inside .inside-bottom{font-size:9px}
 }
 
+
+/* LIGHT / DARK THEME SWITCH
+   Uses only CSS lighting and UI color; original book covers, paper textures,
+   3D geometry and uncompressed library photograph remain unchanged. */
+.theme-toggle{
+ position:fixed;
+ right:clamp(12px,2.4vw,29px);
+ bottom:clamp(12px,2.4vw,29px);
+ z-index:10001;
+ display:inline-flex;
+ align-items:center;
+ justify-content:center;
+ gap:9px;
+ min-height:43px;
+ padding:10px 16px;
+ border:1px solid rgba(244,200,171,.72);
+ border-radius:999px;
+ background:rgba(26,16,22,.91);
+ color:#f7d9d4;
+ box-shadow:0 6px 25px #0008,inset 0 1px 0 #fff2;
+ backdrop-filter:blur(11px);
+ -webkit-backdrop-filter:blur(11px);
+ font:12px/1.1 'Special Elite',monospace;
+ letter-spacing:.035em;
+ cursor:pointer;
+ transition:background .25s,color .25s,border-color .25s,transform .2s,box-shadow .25s;
+}
+.theme-toggle:hover{
+ transform:translateY(-2px);
+ background:#54303b;
+ border-color:#f3c9b5;
+}
+.theme-toggle:focus-visible{
+ outline:3px solid #d998a9;
+ outline-offset:4px;
+}
+.theme-toggle-icon{
+ font:23px/1 Georgia,serif;
+ display:inline-block;
+ min-width:22px;
+ text-align:center;
+}
+html[data-theme="light"]{
+ color-scheme:light;
+ background:#f2e7d7!important;
+}
+html[data-theme="light"] body{
+ background:#f2e7d7!important;
+ color:#3e2e28;
+}
+html[data-theme="light"] body::after{
+ background:
+  radial-gradient(ellipse 90% 75% at 52% 46%,rgba(250,241,225,.73),rgba(250,238,218,.81) 67%,rgba(247,232,210,.89) 100%),
+  linear-gradient(180deg,rgba(255,249,239,.86),rgba(250,238,221,.60) 44%,rgba(245,225,204,.80));
+}
+html[data-theme="light"] .theme-toggle{
+ background:rgba(255,249,238,.96);
+ color:#50333a;
+ border-color:#aa776c;
+ box-shadow:0 6px 21px #4b342d35,inset 0 1px 0 #fff;
+}
+html[data-theme="light"] .theme-toggle:hover{
+ background:#f2ddc9;
+ border-color:#82434f;
+}
+/* Bookshelf lettering, including the two rose accents. */
+html[data-theme="light"] .shelf-head{
+ color:#883c52!important;
+ text-shadow:0 1px 1px #fff,0 2px 10px #fffbf0!important;
+}
+html[data-theme="light"] .shelf-title .eyebrow{
+ color:#645044!important;
+ text-shadow:0 1px 3px #fff9ee!important;
+}
+html[data-theme="light"] .shelf-title h1{
+ color:#3e2a2c!important;
+ text-shadow:0 2px 1px #fff5e6,0 5px 14px #fff4e2!important;
+}
+html[data-theme="light"] .shelf-title p{
+ color:#514037!important;
+ text-shadow:0 1px 2px #fffaf0!important;
+}
+html[data-theme="light"] #shelf-view .shelf-title .shelf-prompt{
+ color:#913e55!important;
+ text-shadow:0 1px 2px #fff8ed,0 2px 8px #fffaee!important;
+}
+html[data-theme="light"] .shelf-book-title{
+ color:#3d2b2d;
+ text-shadow:0 1px 3px #fff8ea;
+}
+html[data-theme="light"] .shelf-book-sub,
+html[data-theme="light"] .shelf-footer{
+ color:#574943;
+}
+html[data-theme="light"] .shelf-book-open{color:#85334f;}
+/* The opened 3D hardcover keeps its finish; only surrounding copy changes. */
+html[data-theme="light"] .detail-text{color:#3b2b2b;}
+html[data-theme="light"] .detail-text h2{
+ color:#853e55!important;
+ text-shadow:0 2px 2px #fff9ee,0 4px 14px #fff7eb!important;
+}
+html[data-theme="light"] .detail-text p{
+ color:#483631!important;
+ text-shadow:0 1px 2px #fff9ee!important;
+}
+html[data-theme="light"] .detail-text .detail-by{
+ color:#675047!important;
+ text-shadow:0 1px 2px #fff8ed!important;
+}
+html[data-theme="light"] .detail-kicker{
+ color:#704b50!important;
+ text-shadow:0 1px 2px #fff8ed!important;
+}
+html[data-theme="light"] .detail-meta,
+html[data-theme="light"] .detail-nav{
+ color:#59453f!important;
+ text-shadow:0 1px 2px #fff8ed!important;
+}
+html[data-theme="light"] .detail-meta span{
+ border-right-color:#ad978b;
+}
+html[data-theme="light"] .detail-actions .action{
+ background:#663b4a;
+ color:#fff7f0;
+ border-color:#774b53;
+ box-shadow:0 4px 12px #694b4933;
+}
+html[data-theme="light"] .detail-actions .action:hover{
+ background:#8c5364;
+ color:white;
+}
+html[data-theme="light"] .round-control,
+html[data-theme="light"] .close-detail{
+ background:#f8e9d9;
+ color:#4a3035;
+ border-color:#9e7f73;
+}
+html[data-theme="light"] .round-control:hover,
+html[data-theme="light"] .close-detail:hover{
+ background:#ebc5ba;
+}
+html[data-theme="light"] #focus-stage .focus-drag-hint button{
+ background:#fbede0;
+ color:#673647;
+ border-color:#9a776d;
+ text-shadow:none;
+}
+html[data-theme="light"] #focus-stage .focus-drag-hint button:hover{
+ background:#f1d0ca;
+}
+html[data-theme="light"] .focus-stage::before{
+ background:radial-gradient(ellipse at 50% 48%,rgba(136,85,68,.15),transparent 74%);
+}
+/* Reading-mode toolbar and controls. Interior paper stays cream in both modes. */
+html[data-theme="light"] .reader-view .reader-top h2{
+ color:#503334!important;
+ text-shadow:0 2px 5px #fff7eb!important;
+}
+html[data-theme="light"] .reader-view .reader-top button,
+html[data-theme="light"] .reader-controls button{
+ background:#f9eadb;
+ color:#4e3434;
+ border-color:#ac897a;
+ box-shadow:0 4px 11px #735b4a36;
+}
+html[data-theme="light"] .reader-view .reader-top button:hover,
+html[data-theme="light"] .reader-controls button:not(:disabled):hover{
+ background:#ecc7c4;
+ border-color:#985b61;
+}
+html[data-theme="light"] .reader-controls,
+html[data-theme="light"] .reader-controls #reader-count,
+html[data-theme="light"] .reader-tip{
+ color:#58423c;
+ text-shadow:0 1px 2px #fff8ec!important;
+}
+html[data-theme="light"] .reader-progress{
+ background:#9a7d6f50;
+}
+html[data-theme="light"] .reader-progress>span{
+ background:linear-gradient(90deg,#965d5c,#bf7990);
+}
+html[data-theme="light"] .reader-stage#reader-stage::before{
+ background:radial-gradient(ellipse at center,#d3b5963b,transparent 78%);
+}
+@media(max-width:790px){
+ .theme-toggle{
+  right:12px;
+  bottom:12px;
+  min-height:41px;
+  padding:9px 13px;
+  font-size:11px;
+ }
+ .theme-toggle-icon{font-size:20px;min-width:19px}
+ html[data-theme="light"] body::after{
+  background:
+   linear-gradient(180deg,rgba(255,247,234,.86),rgba(253,242,226,.76) 45%,rgba(247,228,207,.90)),
+   radial-gradient(ellipse at center,rgba(253,240,220,.58),rgba(250,234,215,.81));
+ }
+}
+@media(prefers-reduced-motion:reduce){
+ .theme-toggle{transition:none!important}
+}
 </style></head>
-<body><main id="showcase"><div class="scene" id="scene">
+<body><button type="button" class="theme-toggle" id="theme-toggle" aria-label="Switch to light mode" title="Switch to light mode"><span class="theme-toggle-icon" aria-hidden="true">☀</span><span class="theme-toggle-label">Light mode</span></button><main id="showcase"><div class="scene" id="scene">
 <section id="shelf-view" class="shelf-view" aria-label="Bookshelf">
  <header class="shelf-head"><span>ALDRYL LABAGUIS · PERSONAL COLLECTION</span></header>
  <div class="shelf-title"><span class="eyebrow">A COLLECTION IN THREE VOLUMES</span><h1>My Bookshelf</h1><p>Explore my story, works, and projects</p><p class="shelf-prompt">SELECT A BOOK TO EXPLORE</p></div>
@@ -2290,7 +2493,26 @@ body::after{
 <section id="reader-view" class="reader-view" hidden aria-label="Page reader"><header class="reader-top"><h2 id="reader-title">Portfolio</h2><button type="button" id="reader-close">← Back to book</button></header>
  <div class="reader-stage" id="reader-stage"><div class="reader-pages" id="reader-pages"></div></div><nav class="reader-controls" aria-label="Page controls"><button type="button" id="reader-prev">← Previous</button><span id="reader-count" aria-live="polite">Cover</span><button type="button" id="reader-next">Next →</button></nav><div class="reader-progress" id="reader-progress" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="reader-progress-fill"></span></div><p class="reader-tip">CLICK A PAGE OR DRAG TO TURN · USE ← → KEYS</p>
 </section>
-</div></main><script>const $=(s,c=document)=>c.querySelector(s),pad=n=>String(n).padStart(2,'0'); /* ---------- EDIT YOUR CONTENT HERE ---------- */ const NAME='Aldryl<br>Labaguis'; const W=[ ['PTs & Products Compilation','All machine problems, activities, seatwork and recitation outputs in one PDF, with Java screenshots.','#','Open PDF'], ['Project Documentation','Goals, design and a walkthrough of my project code.','#','Open PDF'], ['Video Project Presentation','A recorded demo of my project. Paste your YouTube or Drive link.','#','Watch video'], ['Work Experience / Internships','Add your role, company and dates.','#','Edit me'], ['Seminars & Trainings','List the seminars you attended, with speakers and dates.','#','Edit me'], ['Organization & Community','Your orgs, roles and outreach activities, in or out of campus.','#','Edit me'], ['Awards & Recognitions','Dean’s list, contests, certificates.','#','Edit me'], ['Other JRU Experience','Anything else you want to share about your journey at JRU.','#','Edit me']]; const RF=[ ['Prelim','We began with how a program is structured, then variables, data types, input/output and operators. A missing semicolon could eat an entire afternoon, but reading error messages slowly turned frustration into calm debugging.','[Edit: your favorite activity and biggest struggle.]'], ['Midterm','Decision-making and repetition changed everything: if–else, switch, loops and nested loops. Patterns and number problems taught me to trace my code line by line before running it.','[Edit: a machine problem you were proud of.]'], ['Final','Arrays and methods taught me to break big problems into small reusable pieces, and the project let me combine everything from the semester.','[Edit: how you grew and your plans for Programming 2.]']]; /* -------------------------------------------- */ const pn=n=>`<div class="pn">— ${pad(n)} —</div>`; const li=(w,i,o)=>`<li><b>${pad(i+o+1)}</b><div><h3>${w[0]}</h3><p>${w[1]}</p><a href="${w[2]}" target="_blank" rel="noopener">${w[3]} →</a></div></li>`; const ph='<img src="photo.png" alt="" onerror="this.remove()">'; const PG=[ // reading order: F0,B0,F1,B1,...
+</div></main><script>
+// Remember the reader's choice without changing the original book artwork.
+const themeToggle=document.getElementById('theme-toggle');
+const themeStorageKey='aldryl-bookshelf-theme';
+let currentTheme='dark';
+try{currentTheme=localStorage.getItem(themeStorageKey)==='light'?'light':'dark'}catch(_){}
+function applyBookTheme(nextMode,remember=false){
+ currentTheme=nextMode==='light'?'light':'dark';
+ document.documentElement.setAttribute('data-theme',currentTheme);
+ const next=currentTheme==='dark'?'light':'dark';
+ const label=next.charAt(0).toUpperCase()+next.slice(1)+' mode';
+ themeToggle.querySelector('.theme-toggle-icon').textContent=next==='light'?'☀':'☾';
+ themeToggle.querySelector('.theme-toggle-label').textContent=label;
+ themeToggle.setAttribute('aria-label','Switch to '+label.toLowerCase());
+ themeToggle.title='Switch to '+label.toLowerCase();
+ if(remember){try{localStorage.setItem(themeStorageKey,currentTheme)}catch(_){}}
+}
+applyBookTheme(currentTheme);
+themeToggle.addEventListener('click',()=>applyBookTheme(currentTheme==='dark'?'light':'dark',true));
+const $=(s,c=document)=>c.querySelector(s),pad=n=>String(n).padStart(2,'0'); /* ---------- EDIT YOUR CONTENT HERE ---------- */ const NAME='Aldryl<br>Labaguis'; const W=[ ['PTs & Products Compilation','All machine problems, activities, seatwork and recitation outputs in one PDF, with Java screenshots.','#','Open PDF'], ['Project Documentation','Goals, design and a walkthrough of my project code.','#','Open PDF'], ['Video Project Presentation','A recorded demo of my project. Paste your YouTube or Drive link.','#','Watch video'], ['Work Experience / Internships','Add your role, company and dates.','#','Edit me'], ['Seminars & Trainings','List the seminars you attended, with speakers and dates.','#','Edit me'], ['Organization & Community','Your orgs, roles and outreach activities, in or out of campus.','#','Edit me'], ['Awards & Recognitions','Dean’s list, contests, certificates.','#','Edit me'], ['Other JRU Experience','Anything else you want to share about your journey at JRU.','#','Edit me']]; const RF=[ ['Prelim','We began with how a program is structured, then variables, data types, input/output and operators. A missing semicolon could eat an entire afternoon, but reading error messages slowly turned frustration into calm debugging.','[Edit: your favorite activity and biggest struggle.]'], ['Midterm','Decision-making and repetition changed everything: if–else, switch, loops and nested loops. Patterns and number problems taught me to trace my code line by line before running it.','[Edit: a machine problem you were proud of.]'], ['Final','Arrays and methods taught me to break big problems into small reusable pieces, and the project let me combine everything from the semester.','[Edit: how you grew and your plans for Programming 2.]']]; /* -------------------------------------------- */ const pn=n=>`<div class="pn">— ${pad(n)} —</div>`; const li=(w,i,o)=>`<li><b>${pad(i+o+1)}</b><div><h3>${w[0]}</h3><p>${w[1]}</p><a href="${w[2]}" target="_blank" rel="noopener">${w[3]} →</a></div></li>`; const ph='<img src="photo.png" alt="" onerror="this.remove()">'; const PG=[ // reading order: F0,B0,F1,B1,...
 ['cover cover-main-refined',`<div class="sun"></div>${ph}<div class="ct"><small>E‑PORTFOLIO · CP1 · JRU</small><h1>${NAME}</h1></div><img class="cover-sticker sticker-cat" src="assets/gothic-cat.svg" alt="" aria-hidden="true"><div class="stamp">Computer<br>Programming 1<br>2026</div>`], ['',`<h2>Hello &amp;<br>welcome.</h2><p class="lead">This volume introduces me and my portfolio. My projects and reflections are each in their own books. Flip through this one or choose a section:</p><div class="toc"><button data-go="1">About me</button><button data-go="3">Contact</button></div>${pn(1)}`], ['',`<h2>About me</h2><p>Hello! I’m <mark>Aldryl Labaguis</mark>, a student at Jose Rizal University. Add your course and year level here.</p><p>Write 2–3 sentences about your hobbies, your goals after graduation and what drives you to learn programming.</p><p class="edit">[Edit this page.]</p>${pn(2)}`], ['',`<div class="pola"><div class="ph">Y${ph}</div><span>Aldryl Labaguis, 2026</span></div><div class="stats"><div><b>—</b>programs</div><div><b>—</b>projects</div><div><b>—</b>certificates</div></div>${pn(3)}`], ]; PG.push(
  ['',`<h2>Three<br>volumes.</h2><p class="lead">This is the first book in my collection.</p><p>Here you can get to know me and explore my personal portfolio. My academic outputs and my Prelim, Midterm, and Final reflections are kept in two separate books on the bookshelf.</p><p>Close this book to explore <strong>Works &amp; Projects</strong> or <strong>Reflections</strong>.</p>${pn(4)}`],
  ['',`<h2>Let’s<br>connect.</h2><p>Questions, feedback or opportunities? I’d love to hear from you.</p><p><a class="stk" href="mailto:your-email@example.com">your-email@example.com</a></p><p><a class="stk" href="https://github.com/aldryllabaguis" target="_blank" rel="noopener">GitHub</a><a class="stk" href="#">LinkedIn</a></p>${pn(5)}`],
