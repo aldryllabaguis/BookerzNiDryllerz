@@ -1321,6 +1321,212 @@ body::after{
    linear-gradient(180deg,rgba(6,4,7,.62),rgba(7,5,8,.29) 28%,rgba(6,4,7,.25) 68%,rgba(5,3,6,.61));
  }
 }
+
+/* INTERACTIVE 3D OPEN BOOK — all three volumes share the same viewer.
+   The hardcover rotates 360° by dragging, with inertia and a gentle hover.
+   All animation is CSS/JS; no source background or cover images are touched. */
+.focus-stage{
+ position:relative;
+ overflow:visible;
+}
+.focus-stage::before{
+ content:"";
+ position:absolute;
+ z-index:0;
+ left:3%;right:3%;
+ top:16%;bottom:10%;
+ pointer-events:none;
+ background:radial-gradient(ellipse at 50% 51%,rgba(211,134,87,.14),rgba(55,30,31,.05) 43%,transparent 72%);
+ filter:blur(22px);
+}
+.focus-book#focus-book{
+ position:relative;
+ z-index:1;
+ cursor:grab;
+ touch-action:none;
+ user-select:none;
+ -webkit-user-select:none;
+ transform-style:preserve-3d!important;
+ /* Filters would flatten the book's nested 3D cover and page geometry. */
+ filter:none!important;
+ outline-offset:12px;
+ will-change:transform;
+}
+.focus-book#focus-book *{
+ -webkit-user-drag:none;
+}
+.focus-book#focus-book.is-grabbing{
+ cursor:grabbing;
+}
+.scene.is-detail:not(.is-closing) .focus-book#focus-book{
+ transform:translate3d(0,var(--focus-bob,0px),0)
+           rotateY(var(--focus-y,-5deg))
+           rotateX(var(--focus-x,1deg))!important;
+ transition:none!important;
+}
+.scene.is-detail.is-closing .focus-book#focus-book{
+ transform:rotateY(-8deg) rotateX(1deg)!important;
+ transition:transform .62s cubic-bezier(.2,.72,.2,1)!important;
+}
+#focus-book .focus-pageblock{
+ transform:translateZ(-1px);
+ box-shadow:0 14px 24px #0007;
+}
+#focus-book .focus-inside{
+ transform:translateZ(11px);
+ backface-visibility:hidden;
+ box-shadow:inset 10px 0 17px -8px #6e5846aa,0 12px 22px #0005;
+}
+#focus-book .focus-cover-hinge{
+ transform:translateZ(13px) rotateY(0deg);
+}
+.scene.is-detail #focus-book .focus-cover-hinge{
+ transform:translateZ(13px) rotateY(-154deg);
+}
+.scene.is-detail.is-closing #focus-book .focus-cover-hinge{
+ transform:translateZ(13px) rotateY(0deg)!important;
+}
+#focus-book .focus-rear-cover{
+ position:absolute;
+ inset:0;
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ justify-content:center;
+ gap:clamp(10px,2vw,21px);
+ padding:20px;
+ transform:translateZ(-13px) rotateY(180deg);
+ backface-visibility:hidden;
+ background:
+  radial-gradient(ellipse at 30% 16%,#966e6a33,transparent 65%),
+  linear-gradient(130deg,#433036,#261c24 52%,#15121b);
+ border:3px double #bda17e;
+ box-shadow:inset 0 0 0 7px #21171f,inset 0 0 0 9px #8e785e,inset 0 0 35px #0008,0 15px 28px #0008;
+ color:#ead8c6;
+ text-align:center;
+ pointer-events:none;
+}
+#focus-book[data-volume="0"] .focus-rear-cover{
+ background:linear-gradient(135deg,#303235,#19191d 62%,#101114);
+ border-color:#b3a397;
+}
+#focus-book[data-volume="2"] .focus-rear-cover{
+ background:linear-gradient(135deg,#2b493c,#152c24 60%,#091812);
+ border-color:#bca579;
+}
+#focus-book .focus-rear-ornament{
+ color:#c8ae85;
+ font:italic clamp(29px,4vw,55px) 'IM Fell English',Georgia,serif;
+ line-height:1;
+}
+#focus-book .focus-rear-name,
+#focus-book .focus-rear-bottom{
+ font:clamp(8px,.9vw,12px)/1.6 'Special Elite',monospace;
+ letter-spacing:.15em;
+ color:#d7c7b0;
+}
+#focus-book .focus-rear-cover strong{
+ max-width:92%;
+ font:italic 600 clamp(27px,2.7vw,44px)/1.13 'IM Fell English',Georgia,serif;
+}
+#focus-book .focus-pages-right,
+#focus-book .focus-pages-top,
+#focus-book .focus-pages-bottom{
+ position:absolute;
+ display:block;
+ pointer-events:none;
+ backface-visibility:hidden;
+ background:
+  linear-gradient(90deg,rgba(93,72,57,.45),transparent 25%,rgba(92,74,58,.36)),
+  repeating-linear-gradient(0deg,#f1e7d5 0 2px,#b9a68c 2px 3px,#e6d8c2 3px 5px);
+ border:1px solid #ad9980;
+ box-shadow:inset 0 0 6px #45342688;
+}
+#focus-book .focus-pages-right{
+ top:4px;
+ right:-12px;
+ width:25px;
+ height:calc(100% - 8px);
+ transform:rotateY(90deg);
+}
+#focus-book .focus-pages-top{
+ top:-12px;
+ left:4px;
+ width:calc(100% - 8px);
+ height:25px;
+ background:
+  linear-gradient(0deg,rgba(85,64,51,.5),transparent 60%),
+  repeating-linear-gradient(90deg,#efe4d0 0 3px,#c8b49b 3px 4px,#e8ddca 4px 7px);
+ transform:rotateX(90deg);
+}
+#focus-book .focus-pages-bottom{
+ bottom:-12px;
+ left:4px;
+ width:calc(100% - 8px);
+ height:25px;
+ background:
+  linear-gradient(0deg,#baa58b66,transparent),
+  repeating-linear-gradient(90deg,#e8ddca 0 3px,#bba88f 3px 4px,#e9dbc5 4px 7px);
+ transform:rotateX(90deg);
+}
+#focus-book .focus-spine{
+ transform:translateZ(-1px);
+ box-shadow:inset 0 0 6px #0006,0 4px 7px #0006;
+}
+.focus-drag-hint{
+ position:absolute;
+ z-index:2;
+ bottom:-13px;
+ left:0;
+ right:0;
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ gap:clamp(10px,2vw,22px);
+ flex-wrap:wrap;
+ color:#f2dece;
+ font:10px/1.55 'Special Elite',monospace;
+ letter-spacing:.075em;
+ text-align:center;
+ text-shadow:0 2px 5px #000,0 4px 12px #000;
+}
+.focus-drag-hint button{
+ background:rgba(25,15,20,.62);
+ color:#ffd5df;
+ border:1px solid rgba(234,180,161,.58);
+ border-radius:999px;
+ padding:7px 11px 5px;
+ cursor:pointer;
+ font:10px/1.3 'Special Elite',monospace;
+ letter-spacing:.035em;
+}
+.focus-drag-hint button:hover,
+.focus-drag-hint button:focus-visible{
+ background:rgba(97,46,55,.76);
+ border-color:#f5b2c5;
+}
+.scene:not(.is-detail) .focus-drag-hint,
+.scene.is-detail.is-closing .focus-drag-hint{
+ opacity:0;
+ pointer-events:none;
+}
+.scene.is-detail:not(.is-closing) .focus-drag-hint{
+ opacity:1;
+ transition:opacity .45s ease 1s;
+}
+@media(max-width:790px){
+ .focus-drag-hint{
+  bottom:-10px;
+  gap:8px;
+  font-size:9px;
+  letter-spacing:0;
+ }
+ .focus-drag-hint button{font-size:9px;padding:6px 9px 5px}
+}
+@media(prefers-reduced-motion:reduce){
+ .scene.is-detail:not(.is-closing) .focus-book#focus-book{transition:none!important}
+ .scene.is-detail:not(.is-closing) .focus-drag-hint{transition:none}
+}
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
 <section id="shelf-view" class="shelf-view" aria-label="Bookshelf">
@@ -1333,7 +1539,15 @@ body::after{
 </section>
 <section id="detail-view" class="detail-view" hidden aria-label="Selected book">
  <button type="button" id="detail-close" class="close-detail" aria-label="Close book details">×</button>
- <div class="detail-grid"><div class="focus-stage"><div class="focus-book"><div class="focus-spine"></div><div class="focus-pageblock"></div><div id="focus-inside" class="focus-inside"></div><div class="focus-cover-hinge"><div id="focus-front" class="focus-front"></div><div class="focus-back"><small>ALDRYL LABAGUIS</small><strong>Volume of Memories</strong></div></div></div></div>
+ <div class="detail-grid"><div class="focus-stage" id="focus-stage">
+   <div class="focus-book" id="focus-book" tabindex="0" role="group" aria-roledescription="3D book" aria-describedby="focus-drag-hint" aria-label="Interactive 3D book — drag to rotate">
+    <div class="focus-rear-cover" aria-hidden="true"><span class="focus-rear-ornament">✦</span><span class="focus-rear-name">ALDRYL LABAGUIS</span><strong id="focus-rear-title">Main Portfolio</strong><span class="focus-rear-bottom">PERSONAL COLLECTION · 2026</span></div>
+    <div class="focus-pages-top" aria-hidden="true"></div><div class="focus-pages-bottom" aria-hidden="true"></div><div class="focus-pages-right" aria-hidden="true"></div>
+    <div class="focus-spine"></div><div class="focus-pageblock"></div><div id="focus-inside" class="focus-inside"></div>
+    <div class="focus-cover-hinge"><div id="focus-front" class="focus-front"></div><div class="focus-back"><small>ALDRYL LABAGUIS</small><strong>Volume of Memories</strong></div></div>
+   </div>
+   <div class="focus-drag-hint" id="focus-drag-hint"><span>✥ DRAG TO ROTATE · 360° VIEW</span><button type="button" id="focus-reset" aria-label="Reset book rotation">RESET VIEW ↺</button></div>
+  </div>
   <div class="detail-text"><span class="detail-kicker" id="detail-kicker"></span><h2 id="detail-title"></h2><p class="detail-by" id="detail-by"></p><p id="detail-description"></p><div class="detail-meta" id="detail-meta"></div>
   <div class="detail-actions"><button type="button" class="action" id="detail-read">Read this book ↗</button></div>
   <nav class="detail-nav" aria-label="Browse selected books"><button type="button" class="round-control" id="detail-prev" aria-label="Previous book">‹</button><span id="detail-index">01 / 03</span><button type="button" class="round-control" id="detail-next" aria-label="Next book">›</button></nav></div>
@@ -1392,8 +1606,150 @@ const REFLECTIONS_PG=[
  function markSelected(){
   document.querySelectorAll('.shelf-book').forEach((el,i)=>el.setAttribute('aria-current',i===selected?'true':'false'));
  }
+
+ // Draggable 360° book viewer, independent of the shelf and page-turn reader.
+ // The existing cover still opens on its own hinge. Dragging turns the entire
+ // hardcover, pages, spine and rear cover together without moving their layout.
+ const focusBook=$('#focus-book');
+ const focusReset=$('#focus-reset');
+ const focusReduce=window.matchMedia('(prefers-reduced-motion: reduce)');
+ const focusPose={
+  x:1,y:-5,targetX:1,targetY:-5,vx:0,vy:0,
+  pointer:null,lastX:0,lastY:0,lastMove:0,
+  dragging:false,lastFrame:0,frame:0
+ };
+ const focusClamp=(value,low,high)=>Math.max(low,Math.min(high,value));
+ function renderFocusView(t=0){
+  const idle=focusPose.dragging||focusReduce.matches?0:1;
+  const x=focusPose.x+(idle*Math.sin(t*.00073)*1.5);
+  const y=focusPose.y+(idle*Math.sin(t*.00051)*2.3);
+  const bob=idle*Math.sin(t*.00115)*-3.2;
+  focusBook.style.setProperty('--focus-x',x.toFixed(3)+'deg');
+  focusBook.style.setProperty('--focus-y',y.toFixed(3)+'deg');
+  focusBook.style.setProperty('--focus-bob',bob.toFixed(3)+'px');
+ }
+ function resetFocusView(immediate=false){
+  focusPose.targetX=1;
+  focusPose.targetY=-5;
+  focusPose.vx=0;
+  focusPose.vy=0;
+  if(immediate){
+   focusPose.x=1;
+   focusPose.y=-5;
+   renderFocusView();
+  }
+ }
+ function animateFocusView(time){
+  focusPose.frame=0;
+  if(document.hidden||detail.hidden||!scene.classList.contains('is-detail')||scene.classList.contains('is-closing')){
+   focusPose.lastFrame=0;
+   return;
+  }
+  const dt=focusPose.lastFrame?Math.min(40,time-focusPose.lastFrame):16;
+  focusPose.lastFrame=time;
+  if(!focusPose.dragging&&!focusReduce.matches){
+   const step=Math.min(2.5,dt/16.67);
+   focusPose.targetY+=focusPose.vy*step;
+   focusPose.targetX=focusClamp(focusPose.targetX+focusPose.vx*step,-36,36);
+   const friction=Math.pow(.86,step);
+   focusPose.vy*=friction;
+   focusPose.vx*=friction;
+   if(Math.abs(focusPose.vy)<.018)focusPose.vy=0;
+   if(Math.abs(focusPose.vx)<.018)focusPose.vx=0;
+  }
+  const easing=focusReduce.matches?1:1-Math.pow(.73,Math.max(.5,dt/16.67));
+  focusPose.x+=(focusPose.targetX-focusPose.x)*easing;
+  focusPose.y+=(focusPose.targetY-focusPose.y)*easing;
+  renderFocusView(time);
+  focusPose.frame=requestAnimationFrame(animateFocusView);
+ }
+ function startFocusView(){
+  if(!focusPose.frame)focusPose.frame=requestAnimationFrame(animateFocusView);
+ }
+ function endFocusDrag(e){
+  if(focusPose.pointer!==e.pointerId)return;
+  if(focusBook.hasPointerCapture?.(e.pointerId))focusBook.releasePointerCapture(e.pointerId);
+  focusPose.pointer=null;
+  focusPose.dragging=false;
+  focusBook.classList.remove('is-grabbing');
+  if(focusReduce.matches||performance.now()-focusPose.lastMove>85){
+   focusPose.vx=0;
+   focusPose.vy=0;
+  }
+ }
+ focusBook.addEventListener('pointerdown',e=>{
+  if(e.button!==0||focusPose.dragging||!scene.classList.contains('is-detail')||scene.classList.contains('is-closing'))return;
+  if(e.target.closest('button,a,input'))return;
+  e.preventDefault();
+  focusPose.pointer=e.pointerId;
+  focusPose.dragging=true;
+  focusPose.lastX=e.clientX;
+  focusPose.lastY=e.clientY;
+  focusPose.lastMove=performance.now();
+  focusPose.targetX=focusPose.x;
+  focusPose.targetY=focusPose.y;
+  focusPose.vx=0;focusPose.vy=0;
+  focusBook.classList.add('is-grabbing');
+  focusBook.setPointerCapture(e.pointerId);
+  startFocusView();
+ });
+ focusBook.addEventListener('pointermove',e=>{
+  if(!focusPose.dragging||focusPose.pointer!==e.pointerId)return;
+  const dx=e.clientX-focusPose.lastX;
+  const dy=e.clientY-focusPose.lastY;
+  focusPose.lastX=e.clientX;
+  focusPose.lastY=e.clientY;
+  focusPose.lastMove=performance.now();
+  focusPose.targetY+=dx*.67;
+  focusPose.targetX=focusClamp(focusPose.targetX-dy*.33,-36,36);
+  focusPose.vy=focusClamp(dx*.13,-4.5,4.5);
+  focusPose.vx=focusClamp(-dy*.055,-1.75,1.75);
+  if(focusReduce.matches){
+   focusPose.x=focusPose.targetX;
+   focusPose.y=focusPose.targetY;
+   renderFocusView();
+  }
+ });
+ focusBook.addEventListener('pointerup',endFocusDrag);
+ focusBook.addEventListener('pointercancel',endFocusDrag);
+ focusBook.addEventListener('lostpointercapture',e=>{
+  if(focusPose.pointer!==e.pointerId)return;
+  focusPose.pointer=null;
+  focusPose.dragging=false;
+  focusPose.vx=0;
+  focusPose.vy=0;
+  focusBook.classList.remove('is-grabbing');
+ });
+ focusBook.addEventListener('dblclick',()=>{
+  resetFocusView();
+  startFocusView();
+ });
+ focusReset.addEventListener('click',()=>{
+  resetFocusView();
+  startFocusView();
+  focusBook.focus({preventScroll:true});
+ });
+ focusBook.addEventListener('keydown',e=>{
+  if(!scene.classList.contains('is-detail')||scene.classList.contains('is-closing'))return;
+  if(['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','r','R'].includes(e.key)){
+   e.preventDefault();e.stopPropagation();
+   if(e.key==='ArrowLeft')focusPose.targetY-=20;
+   if(e.key==='ArrowRight')focusPose.targetY+=20;
+   if(e.key==='ArrowUp')focusPose.targetX=focusClamp(focusPose.targetX+12,-36,36);
+   if(e.key==='ArrowDown')focusPose.targetX=focusClamp(focusPose.targetX-12,-36,36);
+   if(['Home','r','R'].includes(e.key))resetFocusView();
+   startFocusView();
+  }
+ });
+ document.addEventListener('visibilitychange',()=>{
+  if(!document.hidden&&scene.classList.contains('is-detail'))startFocusView();
+ });
  function populateDetail(){
   const b=books[selected];
+  resetFocusView(true);
+  focusBook.dataset.volume=String(selected);
+  focusBook.setAttribute('aria-label','Interactive 3D '+b.title+' book — drag to rotate, use arrow keys, or double-click to reset');
+  $('#focus-rear-title').textContent=b.title;
   $('#focus-front').innerHTML=cover(b);
   $('#focus-inside').innerHTML='<span class="inside-top">ALDRYL LABAGUIS · 2026</span><h3>Contents</h3><ol>'+b.chapters.map((c,i)=>'<li><span>'+c+'</span><span>0'+(i+1)+'</span></li>').join('')+'</ol><span class="inside-bottom">'+b.subtitle+'</span>';
   $('#detail-kicker').textContent=b.subtitle.toUpperCase();
@@ -1494,6 +1850,7 @@ const REFLECTIONS_PG=[
   void detail.offsetWidth;
   if(transitionReduce.matches){
    scene.classList.add('is-detail');
+   startFocusView();
    return;
   }
   const seq=++bookFlightSequence;
@@ -1512,6 +1869,7 @@ const REFLECTIONS_PG=[
   scene.classList.add('is-detail');
   scene.classList.remove('is-opening');
   card.classList.remove('is-chosen');
+  startFocusView();
  }
  function returnShelf(){
   if(scene.classList.contains('is-closing')||
@@ -1519,6 +1877,7 @@ const REFLECTIONS_PG=[
      scene.classList.contains('is-returning'))return;
   clearTimeout(closeTimer);
   if(transitionReduce.matches){
+   resetFocusView(true);
    scene.classList.remove('is-detail','is-reading');
    resetBookFlight();
    closeTimer=setTimeout(()=>{detail.hidden=true;readerView.hidden=true;reader=null},100);
@@ -1526,6 +1885,7 @@ const REFLECTIONS_PG=[
   }
   const seq=++bookFlightSequence;
   clearBookFlight();
+  resetFocusView();
   scene.classList.add('is-closing');
   // Hinged cover closes before the book starts its trip back.
   flightTimer=setTimeout(async()=>{
@@ -1550,7 +1910,7 @@ const REFLECTIONS_PG=[
   clearBookFlight();
   resetBookFlight();
   scene.classList.remove('is-detail');
-  setTimeout(()=>{selected=(selected+delta+books.length)%books.length;markSelected();populateDetail();requestAnimationFrame(()=>scene.classList.add('is-detail'))},240);
+  setTimeout(()=>{selected=(selected+delta+books.length)%books.length;markSelected();populateDetail();requestAnimationFrame(()=>{scene.classList.add('is-detail');startFocusView()})},240);
  }
  function makeReader(b){
   const stage=$('#reader-stage'),pagesEl=$('#reader-pages');
@@ -1625,12 +1985,13 @@ const REFLECTIONS_PG=[
   clearBookFlight();
   scene.classList.remove('is-detail','is-arriving');
   void readerView.offsetWidth;
+  resetFocusView(true);
   requestAnimationFrame(()=>scene.classList.add('is-reading'));
  }
  function closeReader(){
   if(reader){reader.stop();reader=null}
   scene.classList.remove('is-reading');
-  populateDetail();requestAnimationFrame(()=>scene.classList.add('is-detail'));
+  populateDetail();requestAnimationFrame(()=>{scene.classList.add('is-detail');startFocusView()});
   setTimeout(()=>{readerView.hidden=true},600);
  }
  // MOTION PORT from VengeanceUI's original Three.js BooksShowcase.
