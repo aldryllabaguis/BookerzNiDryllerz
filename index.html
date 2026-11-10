@@ -1596,6 +1596,52 @@ body::after{
  }
  .focus-stage#focus-stage .focus-drag-hint span{white-space:normal}
 }
+
+/* CONNECT THE OPEN HARDCOVER AT THE SPINE.
+   Keep the revised viewport sizing, rotation, drag and controls intact.
+   The front hinge and inside page now share the same physical depth,
+   while a continuous leather gutter covers the open-joint seam. */
+#focus-book .focus-spine{
+ transform:translateZ(11px);
+ left:-10px;
+ width:16px;
+}
+#focus-book .focus-pageblock{
+ left:0;
+}
+#focus-book .focus-cover-hinge{
+ transform-origin:left center;
+ transform:translateZ(11px) rotateY(0deg);
+}
+.scene.is-detail:not(.is-closing) #focus-book .focus-cover-hinge{
+ transform:translateZ(11px) rotateY(-145deg);
+}
+.scene.is-detail.is-closing #focus-book .focus-cover-hinge{
+ transform:translateZ(11px) rotateY(0deg)!important;
+}
+#focus-book .focus-binding-gutter{
+ position:absolute;
+ top:0;
+ bottom:0;
+ left:-9px;
+ width:20px;
+ z-index:4;
+ transform:translateZ(12px);
+ transform-origin:center center;
+ pointer-events:none;
+ background:linear-gradient(90deg,
+  #1c1118 0%,#53323a 19%,#99765f 41%,#4e3037 62%,#23151c 100%);
+ border-left:1px solid rgba(179,148,113,.7);
+ border-right:1px solid rgba(30,17,23,.82);
+ box-shadow:inset 2px 0 5px #0c080b8c,inset -2px 0 5px #0c080b88;
+ backface-visibility:visible;
+}
+#focus-book[data-volume="0"] .focus-binding-gutter{
+ background:linear-gradient(90deg,#151519 0%,#3c3a3f 25%,#918078 45%,#343035 70%,#101115 100%);
+}
+#focus-book[data-volume="2"] .focus-binding-gutter{
+ background:linear-gradient(90deg,#071912 0%,#29513c 24%,#ab9468 43%,#28513d 68%,#081a14 100%);
+}
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
 <section id="shelf-view" class="shelf-view" aria-label="Bookshelf">
@@ -1612,7 +1658,7 @@ body::after{
    <div class="focus-book" id="focus-book" tabindex="0" role="group" aria-roledescription="3D book" aria-describedby="focus-drag-hint" aria-label="Interactive 3D book — drag to rotate">
     <div class="focus-rear-cover" aria-hidden="true"><span class="focus-rear-ornament">✦</span><span class="focus-rear-name">ALDRYL LABAGUIS</span><strong id="focus-rear-title">Main Portfolio</strong><span class="focus-rear-bottom">PERSONAL COLLECTION · 2026</span></div>
     <div class="focus-pages-top" aria-hidden="true"></div><div class="focus-pages-bottom" aria-hidden="true"></div><div class="focus-pages-right" aria-hidden="true"></div>
-    <div class="focus-spine"></div><div class="focus-pageblock"></div><div id="focus-inside" class="focus-inside"></div>
+    <div class="focus-spine"></div><div class="focus-binding-gutter" aria-hidden="true"></div><div class="focus-pageblock"></div><div id="focus-inside" class="focus-inside"></div>
     <div class="focus-cover-hinge"><div id="focus-front" class="focus-front"></div><div class="focus-back"><small>ALDRYL LABAGUIS</small><strong>Volume of Memories</strong></div></div>
    </div>
    <div class="focus-drag-hint" id="focus-drag-hint"><span>✥ DRAG TO ROTATE · 360° VIEW</span><button type="button" id="focus-reset" aria-label="Reset book rotation">RESET VIEW ↺</button></div>
