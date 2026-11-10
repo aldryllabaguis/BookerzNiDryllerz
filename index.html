@@ -1710,6 +1710,307 @@ body::after{
 #focus-book .focus-back{
  transform:rotateY(180deg) translateZ(1px);
 }
+
+/* POLISHED READER AND MATCHING BACK COVERS
+   This layer changes the book-view presentation only; source cover art,
+   the bookshelf and the full-resolution reading-room PNG are untouched. */
+.reader-view .reader-top{
+ max-width:930px;
+ margin:14px auto 19px;
+ padding:0 3px;
+}
+.reader-view .reader-top h2{
+ color:#ffe8df;
+ font:italic clamp(24px,2.7vw,35px)/1.1 'IM Fell English',Georgia,serif;
+ text-shadow:0 3px 14px #000d;
+}
+.reader-view .reader-top button{
+ background:rgba(34,20,25,.85);
+ border:1px solid #bea181;
+ color:#f7dfd2;
+ padding:10px 15px;
+ box-shadow:0 3px 15px #0005;
+ transition:background .2s,border-color .2s,transform .2s;
+}
+.reader-view .reader-top button:hover{
+ background:#58363f;
+ border-color:#e5b8a3;
+ transform:translateY(-1px);
+}
+.reader-stage#reader-stage{
+ width:min(900px,100%);
+ height:clamp(435px,53vw,565px);
+ margin:0 auto;
+ perspective:1950px;
+ isolation:isolate;
+}
+.reader-stage#reader-stage::before{
+ content:"";
+ position:absolute;
+ inset:-24px -26px;
+ z-index:-1;
+ background:radial-gradient(ellipse at center,rgba(233,173,122,.13),rgba(52,26,29,.10) 52%,transparent 75%);
+ filter:blur(20px);
+ pointer-events:none;
+}
+.reader-pages#reader-pages{
+ perspective:1950px;
+ filter:drop-shadow(0 18px 22px #000a);
+}
+.reader-pages#reader-pages::before{
+ box-shadow:inset 0 0 15px #59422a40;
+}
+.reader-leaf{
+ transform-style:preserve-3d;
+}
+.reader-leaf .page-face:not(.cover):not(.bk){
+ position:absolute;
+ border:1px solid #bda88b;
+ border-radius:1px 4px 4px 1px;
+ background:
+  radial-gradient(ellipse at 25% 13%,rgba(255,253,245,.65),transparent 68%),
+  repeating-linear-gradient(0deg,rgba(94,69,46,.019) 0 1px,transparent 1px 5px),
+  linear-gradient(98deg,#d9c8ad 0%,#f5ecd9 6%,#f2e8d6 62%,#e2d1b7 100%);
+ box-shadow:inset 8px 0 14px #6b4d352a,inset -5px 0 11px #6b4d351c;
+ padding:clamp(16px,2.4vw,30px);
+ line-height:1.53;
+ scrollbar-color:#aa9075 #eadac4;
+ scrollbar-width:thin;
+ overflow-x:hidden;
+ overflow-y:auto;
+}
+.reader-leaf .page-face.back:not(.bk){
+ background:
+  radial-gradient(ellipse at 80% 15%,rgba(255,253,245,.65),transparent 70%),
+  repeating-linear-gradient(0deg,rgba(94,69,46,.019) 0 1px,transparent 1px 5px),
+  linear-gradient(270deg,#d9c8ad 0%,#f5ecd9 6%,#f2e8d6 62%,#e2d1b7 100%);
+ border-radius:4px 1px 1px 4px;
+ box-shadow:inset -9px 0 16px #6b4d352e,inset 4px 0 10px #6b4d351c;
+}
+.reader-leaf .page-face:not(.cover):not(.bk)::after{
+ content:"";
+ position:sticky;
+ display:block;
+ height:1px;
+ margin-top:-1px;
+ pointer-events:none;
+}
+.reader-leaf .page-face:not(.cover):not(.bk)::before{
+ content:"";
+ position:absolute;
+ inset:0;
+ pointer-events:none;
+ z-index:8;
+ background:linear-gradient(90deg,rgba(54,37,30,.38),rgba(54,37,30,.12) 26%,transparent 67%,rgba(255,247,227,.34));
+ opacity:calc(var(--leaf-fold,0) * .66);
+}
+.reader-leaf .page-face:not(.cover):not(.bk) h2{
+ color:#523239;
+ margin-bottom:16px;
+ line-height:1.12;
+}
+.reader-leaf .page-face:not(.cover):not(.bk) p{
+ margin-bottom:12px;
+}
+.reader-leaf .page-face:not(.cover):not(.bk) h3{
+ color:#794d4b;
+ margin-top:12px;
+}
+.reader-leaf .page-face:not(.cover):not(.bk) a{
+ text-decoration-color:#a37f74;
+ text-underline-offset:3px;
+}
+.reader-leaf .page-face:not(.cover):not(.bk) .pn{
+ color:#947a62;
+ border-top:1px solid #d4c2a9;
+ padding-top:10px;
+ margin-top:17px;
+ letter-spacing:.08em;
+}
+.reader-leaf .page-face:not(.cover):not(.bk) button{
+ border-radius:5px;
+ padding:8px 11px;
+ border:1px solid #795359;
+ background:#473039;
+ color:#fff6e7;
+ cursor:pointer;
+ font:10px 'Special Elite',monospace;
+}
+.reader-leaf .page-face:not(.cover):not(.bk) button:hover{
+ background:#67434b;
+}
+.reader-leaf .page-face.bk{
+ display:grid!important;
+ place-items:center;
+ overflow:hidden;
+ padding:clamp(16px,3vw,30px);
+ border:3px double #bba17e;
+ background:radial-gradient(ellipse at 43% 28%,#493139,#241a22 65%,#120f15)!important;
+ box-shadow:inset 0 0 0 5px #24191f,inset 0 0 0 7px #947a5c,inset 0 0 38px #0009;
+ color:#f4dfc7;
+ text-align:center;
+}
+.reader-leaf .page-face.bk-works{
+ border-color:#938a7f!important;
+ background:
+  linear-gradient(90deg,transparent 0 6%,#8b363a 6% 7%,transparent 7%),
+  radial-gradient(ellipse at 20% 7%,#88837a28,transparent 78%),
+  linear-gradient(145deg,#303235,#1e1e23 48%,#0e1014)!important;
+ box-shadow:inset 0 0 0 5px #18191e,inset 0 0 0 7px #7d7977,inset 0 0 35px #000c;
+}
+.reader-leaf .page-face.bk-reflections{
+ border-color:#bca275!important;
+ background:
+  radial-gradient(ellipse at 25% 21%,#67887930,transparent 78%),
+  linear-gradient(135deg,#29453a,#152b24 48%,#071a17)!important;
+ box-shadow:inset 0 0 0 5px #12261e,inset 0 0 0 7px #a58d5e,inset 0 0 40px #000b;
+}
+.reader-leaf .page-face.bk::before{
+ content:"";
+ position:absolute;
+ inset:11px;
+ border:1px solid rgba(213,179,130,.49);
+ box-shadow:0 0 0 5px rgba(11,9,10,.16);
+ pointer-events:none;
+}
+.reader-leaf .page-face.bk::after{
+ content:"";
+ position:absolute;
+ inset:0;
+ pointer-events:none;
+ opacity:.21;
+ background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.67' numOctaves='2' seed='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+ mix-blend-mode:soft-light;
+}
+.reader-back-design{
+ position:relative;
+ z-index:1;
+ width:100%;
+ display:flex;
+ align-items:center;
+ flex-direction:column;
+ justify-content:center;
+ gap:clamp(10px,2vw,20px);
+ padding:clamp(5px,1.2vw,15px);
+ overflow-wrap:anywhere;
+}
+.reader-back-flourish{
+ color:#d0b28c;
+ font:italic clamp(25px,4vw,49px)/1 'IM Fell English',serif;
+}
+.reader-back-design small,
+.reader-back-signature,
+.reader-back-year{
+ font:clamp(8px,.9vw,11px)/1.55 'Special Elite',monospace;
+ letter-spacing:.10em;
+ color:#dbbfa0;
+}
+.reader-back-design strong{
+ color:#f7e9dc;
+ font:italic 600 clamp(27px,3.6vw,46px)/1.05 'IM Fell English',Georgia,serif;
+ text-shadow:0 3px 11px #0009;
+}
+.reader-back-divider{
+ height:1px;
+ width:48%;
+ background:linear-gradient(90deg,transparent,#ccb18b,transparent);
+ margin:1px 0;
+}
+.reader-leaf .page-face.bk-reflections .reader-back-design strong{
+ color:#e9dbbe;
+}
+.reader-controls{
+ max-width:900px;
+ margin:20px auto 0;
+ gap:clamp(9px,2vw,20px);
+ color:#f3e7db;
+}
+.reader-controls button{
+ min-width:118px;
+ padding:10px 18px;
+ background:rgba(33,19,24,.88);
+ border:1px solid #b59a80;
+ border-radius:25px;
+ color:#f8e5dd;
+ box-shadow:0 3px 12px #0006;
+ transition:transform .18s,border-color .18s,background .18s;
+}
+.reader-controls button:not(:disabled):hover{
+ transform:translateY(-2px);
+ background:#653a48;
+ border-color:#edb4b9;
+}
+.reader-controls button:disabled{
+ opacity:.35;
+ box-shadow:none;
+}
+.reader-controls #reader-count{
+ min-width:130px;
+ text-align:center;
+ color:#f5dbc7;
+ text-shadow:0 2px 8px #000;
+}
+.reader-progress{
+ position:relative;
+ width:min(300px,64%);
+ height:3px;
+ margin:13px auto 0;
+ border-radius:10px;
+ background:rgba(197,157,128,.28);
+ overflow:hidden;
+}
+.reader-progress>span{
+ display:block;
+ height:100%;
+ width:0;
+ background:linear-gradient(90deg,#b98d76,#e7b0b8);
+ border-radius:10px;
+ transition:width .12s linear;
+}
+.reader-tip{
+ margin:12px auto 4px;
+ color:#e2c6b5;
+ letter-spacing:.06em;
+}
+@media(max-width:790px){
+ .reader-stage#reader-stage{
+  height:clamp(390px,65vw,490px);
+ }
+ .reader-view .reader-top{
+  margin:8px auto 13px;
+ }
+ .reader-controls{
+  margin-top:14px;
+ }
+ .reader-leaf .page-face:not(.cover):not(.bk){
+  font-size:clamp(12px,1.6vw,15px);
+  padding:clamp(10px,2vw,18px);
+ }
+ .reader-back-design{gap:12px}
+ .reader-back-design strong{font-size:clamp(23px,4vw,36px)}
+}
+@media(max-width:440px){
+ .reader-stage#reader-stage{
+  height:clamp(365px,105vw,460px);
+ }
+ .reader-leaf .page-face:not(.cover):not(.bk){
+  font-size:12px;
+  padding:11px 9px;
+ }
+ .reader-leaf .page-face:not(.cover):not(.bk) h2{font-size:21px}
+ .reader-view .reader-top h2{font-size:24px}
+ .reader-view .reader-top button{padding:8px 10px;font-size:10px}
+ .reader-controls{gap:8px}
+ .reader-controls button{min-width:87px;padding:9px 11px;font-size:9px}
+ .reader-controls #reader-count{min-width:92px;font-size:9px}
+ .reader-back-design{gap:8px}
+ .reader-back-design strong{font-size:clamp(21px,6vw,30px)}
+ .reader-back-design small,.reader-back-signature,.reader-back-year{font-size:8px;letter-spacing:.02em}
+ .reader-tip{font-size:9px;padding:0 8px;line-height:1.5}
+}
+@media(prefers-reduced-motion:reduce){
+ .reader-progress>span{transition:none!important}
+}
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
 <section id="shelf-view" class="shelf-view" aria-label="Bookshelf">
@@ -1737,21 +2038,21 @@ body::after{
  </div>
 </section>
 <section id="reader-view" class="reader-view" hidden aria-label="Page reader"><header class="reader-top"><h2 id="reader-title">Portfolio</h2><button type="button" id="reader-close">← Back to book</button></header>
- <div class="reader-stage" id="reader-stage"><div class="reader-pages" id="reader-pages"></div></div><nav class="reader-controls" aria-label="Page controls"><button type="button" id="reader-prev">← Previous</button><span id="reader-count">Cover</span><button type="button" id="reader-next">Next →</button></nav><p class="reader-tip">DRAG A PAGE OR CLICK THE PAGE EDGES TO TURN</p>
+ <div class="reader-stage" id="reader-stage"><div class="reader-pages" id="reader-pages"></div></div><nav class="reader-controls" aria-label="Page controls"><button type="button" id="reader-prev">← Previous</button><span id="reader-count" aria-live="polite">Cover</span><button type="button" id="reader-next">Next →</button></nav><div class="reader-progress" id="reader-progress" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="reader-progress-fill"></span></div><p class="reader-tip">DRAG TO TURN · CLICK THE PAGE EDGES · USE ← → KEYS</p>
 </section>
 </div></main><script>const $=(s,c=document)=>c.querySelector(s),pad=n=>String(n).padStart(2,'0'); /* ---------- EDIT YOUR CONTENT HERE ---------- */ const NAME='Aldryl<br>Labaguis'; const W=[ ['PTs & Products Compilation','All machine problems, activities, seatwork and recitation outputs in one PDF, with Java screenshots.','#','Open PDF'], ['Project Documentation','Goals, design and a walkthrough of my project code.','#','Open PDF'], ['Video Project Presentation','A recorded demo of my project. Paste your YouTube or Drive link.','#','Watch video'], ['Work Experience / Internships','Add your role, company and dates.','#','Edit me'], ['Seminars & Trainings','List the seminars you attended, with speakers and dates.','#','Edit me'], ['Organization & Community','Your orgs, roles and outreach activities, in or out of campus.','#','Edit me'], ['Awards & Recognitions','Dean’s list, contests, certificates.','#','Edit me'], ['Other JRU Experience','Anything else you want to share about your journey at JRU.','#','Edit me']]; const RF=[ ['Prelim','We began with how a program is structured, then variables, data types, input/output and operators. A missing semicolon could eat an entire afternoon, but reading error messages slowly turned frustration into calm debugging.','[Edit: your favorite activity and biggest struggle.]'], ['Midterm','Decision-making and repetition changed everything: if–else, switch, loops and nested loops. Patterns and number problems taught me to trace my code line by line before running it.','[Edit: a machine problem you were proud of.]'], ['Final','Arrays and methods taught me to break big problems into small reusable pieces, and the project let me combine everything from the semester.','[Edit: how you grew and your plans for Programming 2.]']]; /* -------------------------------------------- */ const pn=n=>`<div class="pn">— ${pad(n)} —</div>`; const li=(w,i,o)=>`<li><b>${pad(i+o+1)}</b><div><h3>${w[0]}</h3><p>${w[1]}</p><a href="${w[2]}" target="_blank" rel="noopener">${w[3]} →</a></div></li>`; const ph='<img src="photo.png" alt="" onerror="this.remove()">'; const PG=[ // reading order: F0,B0,F1,B1,...
 ['cover cover-main-refined',`<div class="sun"></div>${ph}<div class="ct"><small>E‑PORTFOLIO · CP1 · JRU</small><h1>${NAME}</h1></div><img class="cover-sticker sticker-cat" src="assets/gothic-cat.svg" alt="" aria-hidden="true"><div class="stamp">Computer<br>Programming 1<br>2026</div>`], ['',`<h2>Hello &amp;<br>welcome.</h2><p class="lead">This volume introduces me and my portfolio. My projects and reflections are each in their own books. Flip through this one or choose a section:</p><div class="toc"><button data-go="1">About me</button><button data-go="3">Contact</button></div>${pn(1)}`], ['',`<h2>About me</h2><p>Hello! I’m <mark>Aldryl Labaguis</mark>, a student at Jose Rizal University. Add your course and year level here.</p><p>Write 2–3 sentences about your hobbies, your goals after graduation and what drives you to learn programming.</p><p class="edit">[Edit this page.]</p>${pn(2)}`], ['',`<div class="pola"><div class="ph">Y${ph}</div><span>Aldryl Labaguis, 2026</span></div><div class="stats"><div><b>—</b>programs</div><div><b>—</b>projects</div><div><b>—</b>certificates</div></div>${pn(3)}`], ]; PG.push(
  ['',`<h2>Three<br>volumes.</h2><p class="lead">This is the first book in my collection.</p><p>Here you can get to know me and explore my personal portfolio. My academic outputs and my Prelim, Midterm, and Final reflections are kept in two separate books on the bookshelf.</p><p>Close this book to explore <strong>Works &amp; Projects</strong> or <strong>Reflections</strong>.</p>${pn(4)}`],
  ['',`<h2>Let’s<br>connect.</h2><p>Questions, feedback or opportunities? I’d love to hear from you.</p><p><a class="stk" href="mailto:your-email@example.com">your-email@example.com</a></p><p><a class="stk" href="https://github.com/aldryllabaguis" target="_blank" rel="noopener">GitHub</a><a class="stk" href="#">LinkedIn</a></p>${pn(5)}`],
  ['',`<h2 style="margin-top:30%">Thanks for<br>reading.</h2><p>© 2026 Aldryl Labaguis · CP1 · JRU</p><button data-go="0">Back to cover</button>${pn(6)}`],
- ['bk','<h1>fin.</h1>']);
+ ['bk bk-main',`<div class="reader-back-design"><span class="reader-back-flourish">✦</span><small>VOLUME I · THE END</small><strong>Main Portfolio</strong><span class="reader-back-divider"></span><span class="reader-back-signature">ALDRYL LABAGUIS</span><span class="reader-back-year">PERSONAL COLLECTION · 2026</span></div>`]);
 const WORKS_PG=[
  ['cover cover-works',`<div class="ct"><small>VOLUME II · SELECTED WORKS</small><h1>Works<br>&amp; Projects</h1><p class="works-subtitle">A collection by Aldryl Labaguis</p></div><img class="cover-sticker sticker-cat" src="assets/gothic-cat.svg" alt="" aria-hidden="true"><div class="stamp">Volume<br>Two<br>2026</div><span class="cover-archive-label" aria-hidden="true">EST. 2026<br>ARCHIVE / 02</span>`],
  ['',`<h2>Selected<br>works.</h2><p class="lead">A separate volume for academic outputs, projects, presentations and other work.</p><div class="toc"><button data-mini-go="1">Browse works</button></div>${pn(1)}`],
  ['',`<h2>Academics<br>&amp; outputs</h2><ol>${W.slice(0,4).map((w,i)=>li(w,i,0)).join('')}</ol>${pn(2)}`],
  ['',`<h2>More<br>works</h2><ol style="margin-top:6px">${W.slice(4).map((w,i)=>li(w,i,4)).join('')}</ol>${pn(3)}`],
  ['',`<h2>End of<br>volume.</h2><p>More projects and achievements can be added here as they grow.</p>${pn(4)}`],
- ['bk','<h1>fin.</h1>']
+ ['bk bk-works',`<div class="reader-back-design"><span class="reader-back-flourish">✦</span><small>VOLUME II · THE END</small><strong>Works &amp; Projects</strong><span class="reader-back-divider"></span><span class="reader-back-signature">ALDRYL LABAGUIS</span><span class="reader-back-year">PERSONAL COLLECTION · 2026</span></div>`]
 ];
 
 
@@ -1764,7 +2065,7 @@ const REFLECTIONS_PG=[
  ...RF.map((r,i)=>['',`<div class="num">${pad(i+1)}</div><h2>${r[0]}<br>term</h2><p class="body">${r[1]}</p><p class="edit">${r[2]}</p>${pn(i+2)}`]),
  ['',`<h2>Looking<br>back.</h2><p>Each term gave me new challenges and helped me practice problem-solving, patience, and logical thinking.</p><p>The lessons in this volume are part of my growth as a Computer Programming student.</p>${pn(5)}`],
  ['',`<h2>End of<br>reflections.</h2><p>Thank you for reading my journey through Prelim, Midterm, and Final.</p><p>© 2026 Aldryl Labaguis · CP1 · JRU</p><button data-go="0">Back to cover</button>${pn(6)}`],
- ['bk','<h1>fin.</h1>']
+ ['bk bk-reflections',`<div class="reader-back-design"><span class="reader-back-flourish">✦</span><small>VOLUME III · THE END</small><strong>My Reflections</strong><span class="reader-back-divider"></span><span class="reader-back-signature">ALDRYL LABAGUIS</span><span class="reader-back-year">PERSONAL COLLECTION · 2026</span></div>`]
 ];
 
 (function(){
@@ -2097,6 +2398,7 @@ const REFLECTIONS_PG=[
  }
  function makeReader(b){
   const stage=$('#reader-stage'),pagesEl=$('#reader-pages');
+  const progress=$('#reader-progress'),progressFill=$('#reader-progress-fill');
   pagesEl.innerHTML='';
   const count=b.pages.length/2,leaves=[],faces=[];
   for(let i=0;i<count;i++){
@@ -2111,6 +2413,8 @@ const REFLECTIONS_PG=[
   function render(){
    leaves.forEach((leaf,i)=>{
     const f=clamp(pos-i,0,1);
+    const folding=Math.sin(f*Math.PI);
+    leaf.style.setProperty('--leaf-fold',folding.toFixed(3));
     leaf.style.transform='rotateY('+(-180*f).toFixed(3)+'deg)';
     leaf.style.zIndex=f>0&&f<1?count+5:f>=1?i+1:count-i;
     faces[i][0].style.visibility=f<.5?'visible':'hidden';
@@ -2119,7 +2423,10 @@ const REFLECTIONS_PG=[
    const shift=-25*(1-Math.min(1,pos))+25*Math.max(0,pos-(count-1));
    pagesEl.style.transform='translateX('+shift.toFixed(2)+'%)';
    pagesEl.style.setProperty('--spread',Math.min(1,Math.min(pos,count-pos)*3));
-   $('#reader-count').textContent=pos<.1?'Cover':pos>count-.1?'Back cover':'Spread '+Math.round(pos)+' / '+count;
+   $('#reader-count').textContent=pos<.1?'Front cover':pos>count-.1?'Back cover':'Pages '+Math.round(pos)+' of '+count;
+   const percent=count?Math.round(pos/count*100):0;
+   progress.setAttribute('aria-valuenow',String(percent));
+   progressFill.style.width=percent+'%';
    $('#reader-prev').disabled=pos<=.01;
    $('#reader-next').disabled=pos>=count-.01;
   }
@@ -2151,7 +2458,13 @@ const REFLECTIONS_PG=[
    if(stage.hasPointerCapture?.(e.pointerId))stage.releasePointerCapture(e.pointerId);
    if(d.moved){skip=true;setTimeout(()=>skip=false,0);const diff=pos-d.base;go(d.base+(diff>.26?1:diff<-.26?-1:0))}
   }
-  stage.onpointerup=finish;stage.onpointercancel=finish;
+  stage.onpointerup=finish;
+  stage.onpointercancel=e=>{
+   if(!gesture||gesture.id!==e.pointerId)return;
+   const base=gesture.base;gesture=null;
+   if(stage.hasPointerCapture?.(e.pointerId))stage.releasePointerCapture(e.pointerId);
+   go(base);
+  };
   stage.onclick=e=>{
    const button=e.target.closest('[data-reader-go]');if(button){go(+button.dataset.readerGo);return}
    if(skip){skip=false;return}if(e.target.closest('button,a'))return;
