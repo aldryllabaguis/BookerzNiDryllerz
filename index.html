@@ -918,6 +918,21 @@ button:focus-visible{outline:2px solid #dec2a3;outline-offset:5px}
  from{opacity:0;transform:translateY(-12px)}
  to{opacity:1;transform:translateY(0)}
 }
+/* Instant handoff: never reveal a second copy of the clicked book or
+   leave an empty frame while the detail view fades in. The cover itself
+   still animates on its hinge after the travelling book arrives. */
+.scene.is-detail .shelf-view{
+ opacity:0!important;
+ visibility:hidden!important;
+ transition:none!important;
+ pointer-events:none!important;
+}
+.scene.is-detail .detail-view{
+ opacity:1!important;
+ visibility:visible!important;
+ transform:translateY(0)!important;
+ transition:none!important;
+}
 /* The front cover must visibly close BEFORE travelling back to the shelf. */
 .scene.is-detail.is-closing .focus-cover-hinge{
  transform:rotateY(0deg)!important;
@@ -1160,14 +1175,12 @@ const REFLECTIONS_PG=[
    const from=rectSnapshot($('.focus-book').getBoundingClientRect());
    const card=document.querySelectorAll('#shelf-track .shelf-book')[selected];
    const titleSize=getComputedStyle(card.querySelector('.display-cover .ct h1')).fontSize;
-   // Build ghost while the detail view is still visible.
-   const ghost=makeFlightBook(from,titleSize);
+   // Build the reverse-flight cover before the next paint. Both scene
+   // modes switch synchronously, so the book cannot blink out in between.
    card.classList.add('is-chosen');
    scene.classList.remove('is-detail','is-closing','is-reading');
    scene.classList.add('is-returning');
    const to=rectSnapshot(card.querySelector('.book-3d').getBoundingClientRect());
-   // Transfer the prebuilt ghost into the animation without a one-frame gap.
-   ghost.remove();activeFlight=null;
    const flight=flyBook(from,to,true,titleSize);
    await flight;
    if(seq!==bookFlightSequence)return;
