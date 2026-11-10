@@ -794,15 +794,34 @@ button:focus-visible{outline:2px solid #dec2a3;outline-offset:5px}
  #shelf-track .shelf-book:nth-child(2) .display-cover .ct h1{font-size:clamp(1.35rem,4.8vw,2rem)}
 }
 
+
+/* Keep the instruction safely with the heading, not beneath moving books. */
+#shelf-view .shelf-title{
+ position:relative;
+ z-index:12;
+ margin-bottom:clamp(24px,3vw,44px);
+}
+#shelf-view .shelf-title .shelf-prompt{
+ margin:14px auto 0;
+ font:10px/1.5 'Special Elite',monospace;
+ letter-spacing:.17em;
+ color:#c5bdce;
+ text-align:center;
+}
+#shelf-view .shelf-stage{z-index:1}
+@media(max-width:790px){
+ #shelf-view .shelf-title{margin-bottom:25px}
+ #shelf-view .shelf-title .shelf-prompt{font-size:9px;letter-spacing:.12em}
+}
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
 <section id="shelf-view" class="shelf-view" aria-label="Bookshelf">
  <header class="shelf-head"><span>ALDRYL LABAGUIS · PERSONAL COLLECTION</span><span class="head-count" id="head-count">01 / 03</span></header>
- <div class="shelf-title"><span class="eyebrow">A COLLECTION IN THREE VOLUMES</span><h1>My Bookshelf</h1><p>Explore my story, works, and projects</p></div>
+ <div class="shelf-title"><span class="eyebrow">A COLLECTION IN THREE VOLUMES</span><h1>My Bookshelf</h1><p>Explore my story, works, and projects</p><p class="shelf-prompt">SELECT A BOOK TO EXPLORE</p></div>
  <div class="shelf-stage">
   <div class="shelf-track" id="shelf-track"></div>
  </div>
- <footer class="shelf-footer"><span>SELECT A BOOK TO EXPLORE</span></footer>
+ 
 </section>
 <section id="detail-view" class="detail-view" hidden aria-label="Selected book">
  <button type="button" id="detail-close" class="close-detail" aria-label="Close book details">×</button>
