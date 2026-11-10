@@ -2318,7 +2318,7 @@ body::after{
  position:relative;
  display:block;
  width:100%;
- aspect-ratio:340 / 431;
+ aspect-ratio:1114 / 1411;
  background:#a79e8e;
  overflow:hidden;
  border:1px solid #aaa395;
@@ -2329,19 +2329,14 @@ body::after{
  display:block;
  width:100%;
  height:100%;
- aspect-ratio:340 / 431;
- object-fit:cover;
+ aspect-ratio:1114 / 1411;
+ object-fit:contain;
  object-position:center center;
- filter:saturate(.96) contrast(.99);
+ filter:none;
 }
-.page-face .taped-polaroid .ph.polaroid-picture::after{
- content:"";
- position:absolute;
- inset:0;
- background:linear-gradient(145deg,#fff4da16,transparent 42%,#493b2b0d);
- box-shadow:inset 0 0 8px #2d20191f;
- pointer-events:none;
-}
+/* Keep the original image pixels and colors fully visible:
+   age only the PAPER FRAME and tape, never tint or cover the photo. */
+.page-face .taped-polaroid .ph.polaroid-picture::after{content:none;}
 .page-face .taped-polaroid figcaption{
  display:flex;
  flex-wrap:wrap;
@@ -2433,7 +2428,7 @@ body::after{
 </section>
 </div></main><script>
 const $=(s,c=document)=>c.querySelector(s),pad=n=>String(n).padStart(2,'0'); /* ---------- EDIT YOUR CONTENT HERE ---------- */ const NAME='Aldryl<br>Labaguis'; const W=[ ['PTs & Products Compilation','All machine problems, activities, seatwork and recitation outputs in one PDF, with Java screenshots.','#','Open PDF'], ['Project Documentation','Goals, design and a walkthrough of my project code.','#','Open PDF'], ['Video Project Presentation','A recorded demo of my project. Paste your YouTube or Drive link.','#','Watch video'], ['Work Experience / Internships','Add your role, company and dates.','#','Edit me'], ['Seminars & Trainings','List the seminars you attended, with speakers and dates.','#','Edit me'], ['Organization & Community','Your orgs, roles and outreach activities, in or out of campus.','#','Edit me'], ['Awards & Recognitions','Dean’s list, contests, certificates.','#','Edit me'], ['Other JRU Experience','Anything else you want to share about your journey at JRU.','#','Edit me']]; const RF=[ ['Prelim','We began with how a program is structured, then variables, data types, input/output and operators. A missing semicolon could eat an entire afternoon, but reading error messages slowly turned frustration into calm debugging.','[Edit: your favorite activity and biggest struggle.]'], ['Midterm','Decision-making and repetition changed everything: if–else, switch, loops and nested loops. Patterns and number problems taught me to trace my code line by line before running it.','[Edit: a machine problem you were proud of.]'], ['Final','Arrays and methods taught me to break big problems into small reusable pieces, and the project let me combine everything from the semester.','[Edit: how you grew and your plans for Programming 2.]']]; /* -------------------------------------------- */ const pn=n=>`<div class="pn">— ${pad(n)} —</div>`; const li=(w,i,o)=>`<li><b>${pad(i+o+1)}</b><div><h3>${w[0]}</h3><p>${w[1]}</p><a href="${w[2]}" target="_blank" rel="noopener">${w[3]} →</a></div></li>`; const ph='<img src="photo.png" alt="" onerror="this.remove()">'; const PG=[ // reading order: F0,B0,F1,B1,...
-['cover cover-main-refined',`<div class="sun"></div>${ph}<div class="ct"><small>E‑PORTFOLIO · CP1 · JRU</small><h1>${NAME}</h1></div><img class="cover-sticker sticker-cat" src="assets/gothic-cat.svg" alt="" aria-hidden="true"><div class="stamp">Computer<br>Programming 1<br>2026</div>`], ['',`<h2>Hello &amp;<br>welcome.</h2><p class="lead">This volume introduces me and my portfolio. My projects and reflections are each in their own books. Flip through this one or choose a section:</p><div class="toc"><button data-go="1">About me</button><button data-go="3">Contact</button></div>${pn(1)}`], ['',`<h2>About me</h2><p>Hello! I’m <mark>Aldryl Labaguis</mark>, a student at Jose Rizal University. Add your course and year level here.</p><p>Write 2–3 sentences about your hobbies, your goals after graduation and what drives you to learn programming.</p><p class="edit">[Edit this page.]</p>${pn(2)}`], ['',`<figure class="pola taped-polaroid" aria-label="Photo of Aldryl Labaguis taped onto the page"><div class="ph polaroid-picture"><img src="assets/aldryl-library-portrait.webp" width="340" height="431" loading="lazy" decoding="async" alt="Aldryl Labaguis standing in a library wearing a black sweater and dark blue trousers"></div><figcaption><span>Aldryl Labaguis</span><small>2026</small></figcaption></figure><div class="stats"><div><b>—</b>programs</div><div><b>—</b>projects</div><div><b>—</b>certificates</div></div>${pn(3)}`], ]; PG.push(
+['cover cover-main-refined',`<div class="sun"></div>${ph}<div class="ct"><small>E‑PORTFOLIO · CP1 · JRU</small><h1>${NAME}</h1></div><img class="cover-sticker sticker-cat" src="assets/gothic-cat.svg" alt="" aria-hidden="true"><div class="stamp">Computer<br>Programming 1<br>2026</div>`], ['',`<h2>Hello &amp;<br>welcome.</h2><p class="lead">This volume introduces me and my portfolio. My projects and reflections are each in their own books. Flip through this one or choose a section:</p><div class="toc"><button data-go="1">About me</button><button data-go="3">Contact</button></div>${pn(1)}`], ['',`<h2>About me</h2><p>Hello! I’m <mark>Aldryl Labaguis</mark>, a student at Jose Rizal University. Add your course and year level here.</p><p>Write 2–3 sentences about your hobbies, your goals after graduation and what drives you to learn programming.</p><p class="edit">[Edit this page.]</p>${pn(2)}`], ['',`<figure class="pola taped-polaroid" aria-label="Photo of Aldryl Labaguis taped onto the page"><div class="ph polaroid-picture"><img src="assets/aldryl-library-portrait-original.png" width="1114" height="1411" loading="lazy" decoding="async" alt="Aldryl Labaguis standing in a library wearing a black sweater and dark blue trousers"></div><figcaption><span>Aldryl Labaguis</span><small>2026</small></figcaption></figure><div class="stats"><div><b>—</b>programs</div><div><b>—</b>projects</div><div><b>—</b>certificates</div></div>${pn(3)}`], ]; PG.push(
  ['',`<h2>Three<br>volumes.</h2><p class="lead">This is the first book in my collection.</p><p>Here you can get to know me and explore my personal portfolio. My academic outputs and my Prelim, Midterm, and Final reflections are kept in two separate books on the bookshelf.</p><p>Close this book to explore <strong>Works &amp; Projects</strong> or <strong>Reflections</strong>.</p>${pn(4)}`],
  ['',`<h2>Let’s<br>connect.</h2><p>Questions, feedback or opportunities? I’d love to hear from you.</p><p><a class="stk" href="mailto:your-email@example.com">your-email@example.com</a></p><p><a class="stk" href="https://github.com/aldryllabaguis" target="_blank" rel="noopener">GitHub</a><a class="stk" href="#">LinkedIn</a></p>${pn(5)}`],
  ['',`<h2 style="margin-top:30%">Thanks for<br>reading.</h2><p>© 2026 Aldryl Labaguis · CP1 · JRU</p><button data-go="0">Back to cover</button>${pn(6)}`],
