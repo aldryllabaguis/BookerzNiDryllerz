@@ -528,6 +528,70 @@ button:focus-visible{outline:2px solid #dec2a3;outline-offset:5px}
  #shelf-track .shelf-book:nth-child(2) .shelf-book-title{font-size:20px}
 }
 
+
+/* ROUGHER REAL-BOOK TEXTURE — keep every original cover color.
+   Fine irregular leather grain and worn pressure marks are overlays only;
+   no cover geometry, positioning, typography or animations are changed. */
+.display-cover,.page-face.cover,.focus-front,#shelf-track .book-backboard{
+  overflow:hidden;
+}
+/* A fine non-repeating organic leather surface, not a dot pattern. */
+.display-cover::before,
+.page-face.cover::before,
+.focus-front::before,
+#shelf-track .book-backboard::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='grain'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.71' numOctaves='4' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23grain)' opacity='.8'/%3E%3C/svg%3E"),
+    repeating-linear-gradient(107deg,transparent 0 4px,#fff1 5px,transparent 7px,transparent 14px);
+  background-size:180px 180px,100% 100%;
+  opacity:.22;
+  mix-blend-mode:soft-light;
+}
+/* Corners, edges and hinge have subtle uneven wear and indentations. */
+.display-cover::after,
+.page-face.cover::after,
+.focus-front::after,
+#shelf-track .book-backboard::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:2;
+  pointer-events:none;
+  background:
+    radial-gradient(ellipse 22% 17% at 0% 0%,#fff2,transparent 92%),
+    radial-gradient(ellipse 24% 20% at 100% 100%,#0005,transparent 92%),
+    linear-gradient(90deg,#fff2 0%,transparent 3%,transparent 93%,#0004 100%),
+    linear-gradient(180deg,#fff1 0%,transparent 4%,transparent 93%,#0004 100%);
+  box-shadow:inset 0 0 23px #0004,inset 0 0 3px #fff2;
+}
+/* Restore all foreground artwork and writing above the texture overlays. */
+.display-cover .ct,.page-face.cover .ct,.focus-front .ct{
+  position:absolute;
+  z-index:6;
+  box-shadow:0 2px 8px #0005,inset 0 1px 0 #fff1,inset 0 -1px 0 #0004;
+}
+.display-cover .cover-sticker,.page-face.cover .cover-sticker{
+  z-index:5;
+}
+.display-cover .stamp,.page-face.cover .stamp{
+  z-index:6;
+}
+/* The binding and paper surfaces gain tactile relief, without recoloring. */
+#shelf-track .shelf-book .book-edge,
+#shelf-track .book-top,
+#shelf-track .book-bottom,
+.focus-pageblock{
+  box-shadow:inset 0 1px 4px #fff3,inset 0 -1px 6px #0003,inset -5px 0 7px #61503c40!important;
+}
+#shelf-track .shelf-book .book-spine,
+.focus-spine{
+  box-shadow:inset 5px 0 8px #140c168c,inset -5px 0 9px #140c1680,inset 1px 0 0 #fff1,inset -1px 0 0 #0004!important;
+}
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
 <section id="shelf-view" class="shelf-view" aria-label="Bookshelf">
