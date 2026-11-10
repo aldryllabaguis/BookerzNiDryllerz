@@ -15,7 +15,6 @@ button:focus-visible{outline:2px solid #dec2a3;outline-offset:5px}
 .shelf-view{transition:opacity .55s ease,transform .7s cubic-bezier(.19,1,.22,1);opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
 .scene.is-detail .shelf-view,.scene.is-reading .shelf-view{opacity:0;transform:translateY(25px) scale(.94);pointer-events:none}
 .shelf-head{display:flex;align-items:center;justify-content:space-between;gap:20px;font:11px 'Special Elite',monospace;color:#c8c4d5;letter-spacing:.13em}
-.shelf-head .head-count{color:#f0d6c3}
 .shelf-title{text-align:center;margin:32px auto 34px}
 .shelf-title .eyebrow{font:10px 'Special Elite',monospace;letter-spacing:.2em;color:#c6bfd1}
 .shelf-title h1{font:500 clamp(2.8rem,6vw,5.3rem)/1.05 'IM Fell English',Georgia,serif;color:#f5e9de;margin:11px 0 10px;text-shadow:0 4px 20px #03050d50}
@@ -969,7 +968,7 @@ button:focus-visible{outline:2px solid #dec2a3;outline-offset:5px}
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
 <section id="shelf-view" class="shelf-view" aria-label="Bookshelf">
- <header class="shelf-head"><span>ALDRYL LABAGUIS · PERSONAL COLLECTION</span><span class="head-count" id="head-count">01 / 03</span></header>
+ <header class="shelf-head"><span>ALDRYL LABAGUIS · PERSONAL COLLECTION</span></header>
  <div class="shelf-title"><span class="eyebrow">A COLLECTION IN THREE VOLUMES</span><h1>My Bookshelf</h1><p>Explore my story, works, and projects</p><p class="shelf-prompt">SELECT A BOOK TO EXPLORE</p></div>
  <div class="shelf-stage">
   <div class="shelf-track" id="shelf-track"></div>
@@ -1031,7 +1030,6 @@ const REFLECTIONS_PG=[
  }
  $('#shelf-track').innerHTML=books.map(card).join('');
  function markSelected(){
-  $('#head-count').textContent='0'+(selected+1)+' / 0'+books.length;
   document.querySelectorAll('.shelf-book').forEach((el,i)=>el.setAttribute('aria-current',i===selected?'true':'false'));
  }
  function populateDetail(){
