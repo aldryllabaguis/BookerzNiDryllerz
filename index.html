@@ -847,6 +847,16 @@ button:focus-visible{outline:2px solid #dec2a3;outline-offset:5px}
 @media(prefers-reduced-motion:reduce){
  .shelf-stage .shelf-side-nav .round-control{transition:none}
 }
+
+/* Arrow selection: raise the active book above its neighbors while spring
+   motion animates its lift, depth, rotation, and slight lateral rearrangement.
+   Its original shelf slot and idle animation stay unchanged. */
+#shelf-track[data-shelf-navigated="true"] .shelf-book[aria-current="true"]{
+ z-index:14!important;
+}
+#shelf-track[data-shelf-navigated="true"] .shelf-book:not([aria-current="true"]){
+ z-index:1;
+}
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
 <section id="shelf-view" class="shelf-view" aria-label="Bookshelf">
@@ -920,8 +930,11 @@ const REFLECTIONS_PG=[
   document.querySelectorAll('.shelf-book').forEach((el,i)=>el.setAttribute('aria-current',i===selected?'true':'false'));
  }
  function select(delta){
-  selected=(selected+delta+books.length)%books.length;markSelected();
-  const c=document.querySelectorAll('.shelf-book')[selected];c.focus({preventScroll:true});
+  selected=(selected+delta+books.length)%books.length;
+  markSelected();
+  animateShelfSelection(delta);
+  const c=document.querySelectorAll('.shelf-book')[selected];
+  c.focus({preventScroll:true});
  }
  function populateDetail(){
   const b=books[selected];
@@ -1068,9 +1081,38 @@ const REFLECTIONS_PG=[
    scale:new Spring(1,SPRING.POSITION),
    // Same lower-to-slot entrance as the reference: 240ms stagger.
    entrance:new Spring(-3.9,SPRING.POSITION),
-   entered:false,enterAt:performance.now()+240+i*150
+   entered:false,enterAt:performance.now()+240+i*150,
+   // Arrow navigation animates its own spring offsets without replacing
+   // the source showcase's continuous floating or mouse tilt.
+   navLift:new Spring(0,SPRING.TILT),
+   navDepth:new Spring(0,SPRING.TILT),
+   navShift:new Spring(0,SPRING.POSITION),
+   navYaw:new Spring(0,SPRING.TILT),
+   navScale:new Spring(1,SPRING.POSITION)
   };
  });
+
+ // Animate arrow selection like a spring-driven miniature carousel:
+ // the chosen hardcover comes toward the reader and straightens, while
+ // the previously selected book settles back into its original shelf slot.
+ function animateShelfSelection(direction){
+  if(scene.classList.contains('is-detail')||scene.classList.contains('is-reading'))return;
+  motionTrack.dataset.shelfNavigated='true';
+  hideOpenCursor();
+  motionBooks.forEach((book,i)=>{
+   const chosen=i===selected;
+   const side=i<selected?-1:i>selected?1:0;
+   book.navLift.t=chosen?.26:0;
+   book.navDepth.t=chosen?.20:0;
+   book.navYaw.t=chosen?-book.angles.ry*.82:0;
+   book.navScale.t=chosen?1.075:1;
+   book.navShift.t=chosen?(i===0?.065:i===2?-.065:0):side*.045;
+   // A small directional spring impulse makes every arrow press visible,
+   // including repeated presses while the previous transition is running.
+   book.navShift.vel+=direction*(chosen?.85:.36);
+   if(chosen)book.navLift.vel+=.6;
+  });
+ }
  const cursorOpen=document.createElement('span');
  cursorOpen.className='cursor-open-tag';
  cursorOpen.textContent='OPEN';
@@ -1160,6 +1202,11 @@ const REFLECTIONS_PG=[
    const lift=book.lift.update(dt);
    const scale=book.scale.update(dt);
    const drop=book.entrance.update(dt);
+   const navLift=book.navLift.update(dt);
+   const navDepth=book.navDepth.update(dt);
+   const navShift=book.navShift.update(dt);
+   const navYaw=book.navYaw.update(dt);
+   const navScale=book.navScale.update(dt);
    const ppu=shape.offsetHeight/(2.14*(book===motionBooks[1]?1.32:1.22));
    book.ppu=ppu;
    // Original source:
@@ -1171,10 +1218,12 @@ const REFLECTIONS_PG=[
    const baseY=book===motionBooks[1]?-10:0;
    const baseZ=book===motionBooks[1]?22:0;
    shape.style.setProperty('transform',
-    'perspective(1400px) translate3d(0,'+(baseY+(drop+lift)*ppu).toFixed(3)+'px,'+baseZ+'px) '+
+    'perspective(1400px) translate3d('+(navShift*ppu).toFixed(3)+'px,'+
+    (baseY+(drop+lift+navLift)*ppu).toFixed(3)+'px,'+
+    (baseZ+navDepth*ppu).toFixed(3)+'px) '+
     'rotateX('+(angles.rx+tiltX).toFixed(6)+'rad) '+
-    'rotateY('+(angles.ry+tiltY).toFixed(6)+'rad) '+
-    'rotateZ('+angles.rz.toFixed(6)+'rad) scale('+scale.toFixed(5)+')','important');
+    'rotateY('+(angles.ry+tiltY+navYaw).toFixed(6)+'rad) '+
+    'rotateZ('+angles.rz.toFixed(6)+'rad) scale('+(scale*navScale).toFixed(5)+')','important');
   });
   if(cursorBook){
    const tx=pointerX,ty=pointerY+34;
