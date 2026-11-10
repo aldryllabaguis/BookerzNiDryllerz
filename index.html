@@ -2016,12 +2016,12 @@ body::after{
    Works & Projects, About Me and Reflections use one shared reader.
    All page-turn physics, content, covers and original image files stay intact. */
 .reader-stage#reader-stage{
- width:min(1050px,100%);
- height:clamp(505px,62vw,680px);
+ width:min(1180px,100%);
+ height:clamp(550px,68vw,760px);
 }
 .reader-view .reader-top,
 .reader-controls{
- max-width:1050px;
+ max-width:1180px;
 }
 .reader-leaf .page-face:not(.cover):not(.bk){
  font-size:clamp(16px,1.42vw,19px);
@@ -2053,13 +2053,13 @@ body::after{
 }
 @media(min-width:791px){
  .scene.is-reading{
-  min-height:clamp(770px,calc(62vw + 185px),950px);
+  min-height:clamp(855px,calc(68vw + 185px),1040px);
  }
 }
 @media(max-width:790px){
  .reader-stage#reader-stage{
   width:100%;
-  height:clamp(440px,75vw,560px);
+  height:clamp(465px,82vw,620px);
  }
  .reader-leaf .page-face:not(.cover):not(.bk){
   font-size:clamp(13px,1.9vw,16px);
@@ -2085,7 +2085,7 @@ body::after{
 }
 @media(max-width:440px){
  .reader-stage#reader-stage{
-  height:clamp(460px,122vw,560px);
+  height:clamp(480px,132vw,620px);
  }
  .reader-leaf .page-face:not(.cover):not(.bk){
   font-size:13px;
@@ -2115,16 +2115,16 @@ body::after{
    Preserve the shared spine, hinged cover, drag rotation and reader layout. */
 @media(min-width:791px){
  .detail-grid{
-  grid-template-columns:minmax(0,1.15fr) minmax(350px,.85fr);
+  grid-template-columns:minmax(0,1.2fr) minmax(340px,.8fr);
   gap:clamp(18px,2.5vw,40px);
-  min-height:740px;
+  min-height:825px;
   padding-top:58px;
  }
  .focus-stage#focus-stage{
-  --focus-view-width:clamp(225px,min(25vw,37svh),355px);
-  min-height:min(630px,calc(100svh - 100px));
+  --focus-view-width:clamp(245px,min(28vw,43svh),405px);
+  min-height:min(710px,calc(100svh - 75px));
  }
- .scene.is-detail{min-height:760px}
+ .scene.is-detail{min-height:845px}
 }
 .detail-text{
  min-width:0;
@@ -2200,8 +2200,8 @@ body::after{
   gap:23px;
  }
  .focus-stage#focus-stage{
-  --focus-view-width:clamp(155px,min(46vw,35svh,calc((100vw - 36px)/2)),260px);
-  min-height:clamp(350px,73vw,510px);
+  --focus-view-width:clamp(162px,min(48vw,39svh,calc((100vw - 28px)/2)),290px);
+  min-height:clamp(385px,80vw,565px);
   padding:16px 3px 10px;
   gap:20px;
  }
@@ -2247,7 +2247,7 @@ body::after{
 @media(max-width:440px){
  .detail-grid{gap:12px}
  .focus-stage#focus-stage{
-  min-height:330px;
+  min-height:360px;
   gap:17px;
  }
  .detail-text h2{font-size:clamp(2.9rem,10vw,3.5rem)}
