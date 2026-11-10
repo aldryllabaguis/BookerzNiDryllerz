@@ -306,7 +306,6 @@ const WORKS_PG=[
  $('#detail-next').addEventListener('click',()=>switchDetail(1));
  $('#detail-read').addEventListener('click',openReader);
  $('#reader-close').addEventListener('click',closeReader);
- $('#reader-prev').addEventListener('click',()=>reader?.go(-1+Number(($('#reader-count').textContent.match(/Spread (\d+)/)||[])[1]||0)));
  // Reader navigation keeps its own current position, not the displayed label.
  $('#reader-prev').onclick=()=>reader?.step(-1);
  $('#reader-next').onclick=()=>reader?.step(1);
