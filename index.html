@@ -674,6 +674,125 @@ button:focus-visible{outline:2px solid #dec2a3;outline-offset:5px}
 #shelf-track .shelf-book-title,
 #shelf-track .shelf-book-sub,
 #shelf-track .shelf-book-open{display:none!important}
+
+/* FULLER BOOKSHELF: larger covers and a wider stage, with the existing
+   book arrangement, 3D physics, pointer interactions and materials unchanged.
+   The centered Main Portfolio stays the featured (largest) volume. */
+@media(min-width:1101px){
+ #showcase{
+  width:min(1500px,100%);
+  padding-left:clamp(22px,2.9vw,46px);
+  padding-right:clamp(22px,2.9vw,46px);
+ }
+ #shelf-track{
+  gap:clamp(13px,1.7vw,26px);
+  min-height:clamp(610px,69vh,755px);
+  padding:14px 0 12px;
+  align-items:center;
+  justify-content:center;
+ }
+ #shelf-track .shelf-book{
+  width:clamp(295px,27.5vw,385px);
+  flex:0 1 auto;
+ }
+ #shelf-track .shelf-book:nth-child(2){
+  width:clamp(345px,31vw,440px);
+ }
+ #shelf-track .shelf-book .book-3d,
+ #shelf-track .shelf-book:nth-child(3) .book-3d{
+  width:clamp(285px,26.5vw,375px);
+  height:clamp(435px,40vw,565px);
+ }
+ #shelf-track .shelf-book:nth-child(2) .book-3d{
+  width:clamp(335px,30.2vw,420px);
+  height:clamp(505px,45.5vw,634px);
+ }
+ #shelf-track .shelf-book .display-cover .ct h1{
+  font-size:clamp(2.3rem,3.2vw,3.45rem);
+  line-height:1.06;
+ }
+ #shelf-track .shelf-book:nth-child(2) .display-cover .ct h1{
+  font-size:clamp(2.7rem,3.6vw,3.95rem);
+ }
+ .shelf-title{margin:22px auto 12px}
+ .shelf-footer{margin-top:10px}
+}
+@media(max-width:1100px) and (min-width:791px){
+ #shelf-track{
+  gap:clamp(8px,1vw,16px);
+  min-height:clamp(475px,60vw,585px);
+  padding:16px 0 10px;
+ }
+ #shelf-track .shelf-book{
+  width:clamp(215px,27vw,300px);
+ }
+ #shelf-track .shelf-book:nth-child(2){
+  width:clamp(240px,31vw,345px);
+ }
+ #shelf-track .shelf-book .book-3d,
+ #shelf-track .shelf-book:nth-child(3) .book-3d{
+  width:clamp(205px,26vw,282px);
+  height:clamp(310px,39vw,426px);
+ }
+ #shelf-track .shelf-book:nth-child(2) .book-3d{
+  width:clamp(235px,30vw,325px);
+  height:clamp(357px,45vw,488px);
+ }
+ #shelf-track .shelf-book .display-cover .ct h1{
+  font-size:clamp(1.9rem,3vw,2.8rem);
+ }
+ #shelf-track .shelf-book:nth-child(2) .display-cover .ct h1{
+  font-size:clamp(2.15rem,3.5vw,3.1rem);
+ }
+ .shelf-title{margin:24px auto 16px}
+}
+@media(max-width:790px){
+ #shelf-track{
+  gap:24px 12px;
+  min-height:0;
+  padding:18px 0 14px;
+  flex-wrap:wrap;
+ }
+ #shelf-track .shelf-book{
+  width:46%;
+  flex:0 1 46%;
+ }
+ #shelf-track .shelf-book:nth-child(2){
+  width:50%;
+  flex:0 1 50%;
+ }
+ #shelf-track .shelf-book .book-3d,
+ #shelf-track .shelf-book:nth-child(3) .book-3d{
+  width:min(40vw,275px);
+  height:min(60vw,413px);
+ }
+ #shelf-track .shelf-book:nth-child(2) .book-3d{
+  width:min(44vw,302px);
+  height:min(66vw,453px);
+ }
+ #shelf-track .shelf-book .display-cover .ct h1{
+  font-size:clamp(1.5rem,4.35vw,2.6rem);
+ }
+ #shelf-track .shelf-book:nth-child(2) .display-cover .ct h1{
+  font-size:clamp(1.65rem,4.7vw,2.85rem);
+ }
+}
+@media(max-width:440px){
+ #shelf-track{gap:21px 8px}
+ #shelf-track .shelf-book{width:46%;flex:0 1 46%}
+ #shelf-track .shelf-book:nth-child(2){width:49%;flex:0 1 49%}
+ #shelf-track .shelf-book .book-3d,
+ #shelf-track .shelf-book:nth-child(3) .book-3d{
+  width:40vw;
+  height:60vw;
+ }
+ #shelf-track .shelf-book:nth-child(2) .book-3d{
+  width:43vw;
+  height:64.5vw;
+ }
+ #shelf-track .shelf-book .display-cover .ct h1{font-size:clamp(1.2rem,4.45vw,1.8rem)}
+ #shelf-track .shelf-book:nth-child(2) .display-cover .ct h1{font-size:clamp(1.35rem,4.8vw,2rem)}
+}
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
 <section id="shelf-view" class="shelf-view" aria-label="Bookshelf">
