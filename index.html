@@ -1527,6 +1527,75 @@ body::after{
  .scene.is-detail:not(.is-closing) .focus-book#focus-book{transition:none!important}
  .scene.is-detail:not(.is-closing) .focus-drag-hint{transition:none}
 }
+
+/* FIX 3D DETAIL VIEW: keep the ENTIRE opened spread in frame.
+   The hinged front cover extends almost a full book-width to the left,
+   so frame the spread (not just the closed book's bounding rectangle).
+   Cap its size to the available viewport, leaving room for the controls. */
+.focus-stage#focus-stage{
+ --focus-view-width:clamp(190px,min(23vw,33svh),302px);
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ justify-content:center;
+ gap:clamp(18px,2.1vw,28px);
+ min-width:0;
+ min-height:min(510px,calc(100svh - 130px));
+ padding:20px 8px 12px;
+ overflow:visible;
+}
+.focus-stage#focus-stage .focus-book#focus-book{
+ width:var(--focus-view-width)!important;
+ height:auto!important;
+ aspect-ratio:365/520;
+ flex:none;
+ left:calc(var(--focus-view-width) * .44);
+ transform-origin:center center;
+}
+.focus-stage#focus-stage .focus-drag-hint{
+ position:relative!important;
+ inset:auto!important;
+ width:100%;
+ min-height:34px;
+ display:flex;
+ flex:none;
+ justify-content:center;
+ align-items:center;
+ gap:10px 16px;
+ padding:0 4px;
+ margin:0;
+ z-index:3;
+ overflow:visible;
+}
+/* Opening is still a full hinge animation; reduce near-edge foreshortening
+   slightly so the two covers form a readable, non-overlapping spread. */
+.scene.is-detail:not(.is-closing) #focus-book .focus-cover-hinge{
+ transform:translateZ(13px) rotateY(-145deg);
+}
+@media(max-width:790px){
+ .focus-stage#focus-stage{
+  --focus-view-width:clamp(148px,min(43vw,32svh),225px);
+  min-height:345px;
+  gap:16px;
+  padding:20px 6px 14px;
+ }
+ .focus-stage#focus-stage .focus-book#focus-book{
+  left:calc(var(--focus-view-width) * .42);
+ }
+ .focus-stage#focus-stage .focus-drag-hint{
+  font-size:9px;
+  min-height:32px;
+  gap:8px 12px;
+ }
+}
+@media(max-width:440px){
+ .focus-stage#focus-stage{min-height:300px;gap:13px}
+ .focus-stage#focus-stage .focus-drag-hint{
+  padding:0 8px;
+  gap:7px 10px;
+ }
+ .focus-stage#focus-stage .focus-drag-hint span{white-space:normal}
+}
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
 <section id="shelf-view" class="shelf-view" aria-label="Bookshelf">
