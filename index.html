@@ -809,10 +809,15 @@ button:focus-visible{outline:2px solid #dec2a3;outline-offset:5px}
  text-shadow:0 0 1px currentColor;
  text-align:center;
 }
-#shelf-view .shelf-stage{z-index:1}
+#shelf-view .shelf-stage{
+ position:relative;
+ z-index:1;
+ top:-18px;
+}
 @media(max-width:790px){
  #shelf-view .shelf-title{margin-bottom:25px}
  #shelf-view .shelf-title .shelf-prompt{font-size:9px;letter-spacing:.12em}
+ #shelf-view .shelf-stage{top:-10px}
 }
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
