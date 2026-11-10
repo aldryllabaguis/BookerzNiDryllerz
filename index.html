@@ -628,66 +628,68 @@ button:focus-visible{outline:2px solid #dec2a3;outline-offset:5px}
 @media(hover:none){.cursor-open-tag{display:none}}
 @media(prefers-reduced-motion:reduce){.cursor-open-tag{transition:none}}
 
-/* RESTING BOOK ANIMATION — subtle independent movement while not hovered.
-   Dedicated wrapper keeps the existing 3D book and mouse-follow OPEN interaction intact. */
+/* VISIBLE THREE-BOOK IDLE MOTION — float, rock and slowly yaw even with no cursor.
+   Animate the outer wrapper so the inner hardcover remains fully 3D
+   and the existing cursor tilt / book-open transitions are unaffected. */
 #shelf-track .shelf-book .idle-float{
   display:block;
   position:relative;
-  flex:none;
   width:max-content;
   max-width:none;
   height:auto;
+  flex:none;
+  transform-origin:50% 55%;
   transform-style:preserve-3d;
-  transform-origin:50% 57%;
-  animation:idleBookBreath 6.7s ease-in-out infinite alternate;
+  animation:bookIdleFloatCenter 4.8s ease-in-out infinite alternate both;
   will-change:transform;
+  backface-visibility:visible;
 }
-/* Each volume feels independently suspended, not like synchronized clones. */
 #shelf-track .shelf-book:nth-child(1) .idle-float{
-  animation-name:idleBookLeft;
-  animation-duration:7.3s;
-  animation-delay:-2.4s;
+  animation-name:bookIdleFloatLeft;
+  animation-duration:5.4s;
+  animation-delay:-1.4s;
 }
 #shelf-track .shelf-book:nth-child(2) .idle-float{
-  animation-name:idleBookCenter;
-  animation-duration:6.1s;
-  animation-delay:-.8s;
+  animation-name:bookIdleFloatCenter;
+  animation-duration:4.8s;
+  animation-delay:-2.1s;
 }
 #shelf-track .shelf-book:nth-child(3) .idle-float{
-  animation-name:idleBookRight;
-  animation-duration:7.9s;
-  animation-delay:-4.6s;
+  animation-name:bookIdleFloatRight;
+  animation-duration:5.8s;
+  animation-delay:-3.4s;
 }
-@keyframes idleBookLeft{
-  0%{transform:translate3d(-2px,5px,0) rotateZ(-1.05deg) rotateX(-.4deg)}
-  50%{transform:translate3d(1px,-4px,0) rotateZ(.2deg) rotateX(.5deg)}
-  100%{transform:translate3d(4px,-9px,0) rotateZ(1deg) rotateX(1deg)}
+/* Asymmetric curved keyframes keep the movement more organic than a rigid bob.
+   The 20–35px vertical travel and 3–12 degree 3D yaw should read clearly at desktop size. */
+@keyframes bookIdleFloatLeft{
+  0%   {transform:translate3d(-6px,15px,0) rotateY(-9deg) rotateX(2deg) rotateZ(-2deg)}
+  28%  {transform:translate3d(-2px,2px,0) rotateY(-4deg) rotateX(0deg) rotateZ(-.6deg)}
+  62%  {transform:translate3d(4px,-13px,0) rotateY(6deg) rotateX(-2.5deg) rotateZ(1.5deg)}
+  100% {transform:translate3d(8px,-19px,0) rotateY(10deg) rotateX(-3deg) rotateZ(2.3deg)}
 }
-@keyframes idleBookCenter{
-  0%{transform:translate3d(0,4px,0) rotateZ(-.35deg) rotateX(-.6deg)}
-  50%{transform:translate3d(1px,-3px,0) rotateZ(.25deg) rotateX(.4deg)}
-  100%{transform:translate3d(-1px,-8px,0) rotateZ(.45deg) rotateX(.8deg)}
+@keyframes bookIdleFloatCenter{
+  0%   {transform:translate3d(-3px,17px,0) rotateY(-6deg) rotateX(2.8deg) rotateZ(-1.4deg)}
+  33%  {transform:translate3d(1px,4px,0) rotateY(-1deg) rotateX(.6deg) rotateZ(-.3deg)}
+  68%  {transform:translate3d(2px,-12px,0) rotateY(4deg) rotateX(-1.7deg) rotateZ(.8deg)}
+  100% {transform:translate3d(0,-24px,0) rotateY(7deg) rotateX(-2.7deg) rotateZ(1.3deg)}
 }
-@keyframes idleBookRight{
-  0%{transform:translate3d(3px,-7px,0) rotateZ(1deg) rotateX(.7deg)}
-  50%{transform:translate3d(0,2px,0) rotateZ(-.2deg) rotateX(-.5deg)}
-  100%{transform:translate3d(-3px,6px,0) rotateZ(-1.1deg) rotateX(-.8deg)}
+@keyframes bookIdleFloatRight{
+  0%   {transform:translate3d(7px,-19px,0) rotateY(9deg) rotateX(-3deg) rotateZ(2.2deg)}
+  32%  {transform:translate3d(3px,-7px,0) rotateY(4deg) rotateX(-1.2deg) rotateZ(.5deg)}
+  68%  {transform:translate3d(-3px,8px,0) rotateY(-5deg) rotateX(1.8deg) rotateZ(-1deg)}
+  100% {transform:translate3d(-8px,16px,0) rotateY(-11deg) rotateX(3.2deg) rotateZ(-2.5deg)}
 }
-@keyframes idleBookBreath{
-  from{transform:translate3d(0,5px,0) rotateZ(-.7deg)}
-  to{transform:translate3d(0,-7px,0) rotateZ(.7deg)}
-}
-/* Hover takes over the inner book with its more responsive cursor tilt.
-   Keep the wrapper steady at its current animation frame to avoid a snap. */
+/* Stop drifting while the user controls a specific book, preserving its current position.
+   Once the pointer leaves, the other volumes continue their staggered motion. */
 #shelf-track .shelf-book:is(:hover,:focus-visible) .idle-float,
 .scene:is(.is-detail,.is-reading) #shelf-track .idle-float{
   animation-play-state:paused;
 }
 @media(prefers-reduced-motion:reduce){
  #shelf-track .shelf-book .idle-float{
-   animation:none!important;
-   transform:none!important;
-   will-change:auto;
+  animation:none!important;
+  transform:none!important;
+  will-change:auto;
  }
 }
 </style></head>
