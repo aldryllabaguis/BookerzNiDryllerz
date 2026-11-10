@@ -1163,6 +1163,110 @@ body::after{display:none!important}
 @media(max-width:720px){body{padding:28px 14px 40px!important}#desk{min-height:0!important}.showcase-heading{margin-bottom:24px}.showcase-shelf{gap:20px;padding:15px 4px 30px}.showcase-object{width:clamp(130px,30vw,190px);height:clamp(200px,45vw,280px)}.showcase-card-title{font-size:18px}.showcase-detail-grid{grid-template-columns:1fr;gap:20px}.featured-volume .mini-desk{height:430px!important}.showcase-info{padding:0 8px}.showcase-description{max-width:none}}
 @media(max-width:390px){.showcase-shelf{grid-template-columns:1fr;gap:32px}.showcase-object{width:190px;height:280px}.showcase-card-title{font-size:21px}}
 @media(prefers-reduced-motion:reduce){.showcase-card,.showcase-object,.detail-enter{animation:none!important;transition:none!important}}
+
+/* REALISTIC 3D HARDCOVER GEOMETRY — visible spine, page block and cover thickness */
+.showcase-shelf{
+ perspective:1800px!important;
+ perspective-origin:50% 48%!important;
+ transform-style:preserve-3d!important;
+}
+.showcase-card{
+ transform-style:preserve-3d!important;
+ perspective:1200px!important;
+}
+.showcase-object{
+ --book-depth:18px;
+ position:relative!important;
+ display:block!important;
+ isolation:isolate!important;
+ transform-style:preserve-3d!important;
+ transform:perspective(1000px) rotateY(-28deg) rotateX(3deg) translateZ(0)!important;
+ transform-origin:50% 50%!important;
+ filter:drop-shadow(24px 28px 18px #000b)!important;
+ transition:transform .65s cubic-bezier(.2,.8,.2,1),filter .65s!important;
+}
+.showcase-card:hover .showcase-object,
+.showcase-card:focus-visible .showcase-object{
+ transform:perspective(1000px) rotateY(-38deg) rotateX(1deg) translateY(-7px) translateZ(18px)!important;
+ filter:drop-shadow(34px 35px 20px #000c)!important;
+}
+.showcase-pages{
+ inset:5px 0 5px 13px!important;
+ transform:translateZ(-10px)!important;
+ border-right:5px solid #9e8a6d!important;
+ box-shadow:inset -5px 0 5px #55432f!important;
+}
+.showcase-object::before{
+ content:"";
+ position:absolute;
+ z-index:0;
+ top:3px;bottom:3px;right:-17px;width:18px;
+ background:linear-gradient(90deg,#b8a88f 0%,#f1e7d4 18%,#d7c8ad 48%,#89775e 100%);
+ border:1px solid #76664f;
+ transform:rotateY(90deg) translateZ(-1px);
+ transform-origin:left center;
+}
+.showcase-object::after{
+ content:"";
+ position:absolute;
+ z-index:0;
+ left:7px;right:-10px;bottom:-8px;height:13px;
+ background:linear-gradient(180deg,#d8c9af,#89775e);
+ border:1px solid #6f5d48;
+ transform:rotateX(-90deg);
+ transform-origin:top center;
+}
+.showcase-spine{
+ z-index:3!important;
+ left:-1px!important;
+ width:22px!important;
+ transform:translateZ(-1px) rotateY(-90deg) translateX(-11px)!important;
+ transform-origin:left center!important;
+ background:linear-gradient(90deg,#170f10 0%,#56302b 22%,#8c5547 48%,#3a211f 75%,#170f10 100%)!important;
+ box-shadow:inset 2px 0 4px #0009,inset -2px 0 4px #0009!important;
+}
+.showcase-cover{
+ z-index:2!important;
+ transform:translateZ(10px)!important;
+ backface-visibility:hidden!important;
+ transform-style:preserve-3d!important;
+ box-shadow:inset 0 0 0 4px #291a19,inset 0 0 0 6px #b99a63,inset 0 0 35px #000b,3px 3px 0 #4b3029,5px 5px 0 #201719!important;
+}
+.showcase-cover::after{
+ content:"";
+ position:absolute;
+ pointer-events:none;
+ inset:0;
+ background:linear-gradient(115deg,#ffffff20 0%,transparent 20%,transparent 72%,#0003 100%);
+ mix-blend-mode:screen;
+}
+.showcase-card:nth-child(2) .showcase-object{transform:perspective(1000px) rotateY(-22deg) rotateX(2deg) translateZ(0)!important}
+.showcase-card:nth-child(2):hover .showcase-object{transform:perspective(1000px) rotateY(-34deg) rotateX(1deg) translateY(-7px) translateZ(18px)!important}
+.showcase-card-title,.showcase-card-author,.showcase-open{transform:translateZ(20px)}
+.featured-volume .mini-desk{perspective:2200px!important;perspective-origin:50% 50%!important}
+.featured-volume .mini-book{transform-style:preserve-3d!important;filter:drop-shadow(20px 25px 18px #000b)!important}
+.featured-volume .mini-book::before{
+ transform:translateZ(-12px) rotateY(0deg)!important;
+ border-radius:4px!important;
+ box-shadow:0 20px 30px #000a!important;
+}
+.featured-volume .mini-book .leaf{
+ transform-style:preserve-3d!important;
+ backface-visibility:visible!important;
+}
+.featured-volume .mini-book .face{
+ backface-visibility:hidden!important;
+ box-shadow:inset 0 0 20px #30221622,0 2px 5px #0004!important;
+}
+.featured-volume .mini-book .face.back{backface-visibility:hidden!important}
+@media(max-width:720px){
+ .showcase-object{--book-depth:12px;transform:perspective(850px) rotateY(-23deg) rotateX(2deg)!important}
+ .showcase-card:hover .showcase-object{transform:perspective(850px) rotateY(-30deg) translateY(-5px) translateZ(8px)!important}
+ .showcase-object::before{right:-11px;width:12px}
+ .showcase-object::after{bottom:-6px;height:9px}
+ .showcase-spine{width:16px!important;transform:translateZ(-1px) rotateY(-90deg) translateX(-8px)!important}
+}
+@media(prefers-reduced-motion:reduce){.showcase-object{transition:none!important}}
 </style></head><body> <div id="hint">drag the book · click the page edges · or use ← →</div> <div id="desk"><div id="book"></div></div> <div id="nav"></div><main id="flat"></main> <script> const $=(s,c=document)=>c.querySelector(s),pad=n=>String(n).padStart(2,'0'); /* ---------- EDIT YOUR CONTENT HERE ---------- */ const NAME='Aldryl<br>Labaguis'; const W=[ ['PTs & Products Compilation','All machine problems, activities, seatwork and recitation outputs in one PDF, with Java screenshots.','#','Open PDF'], ['Project Documentation','Goals, design and a walkthrough of my project code.','#','Open PDF'], ['Video Project Presentation','A recorded demo of my project. Paste your YouTube or Drive link.','#','Watch video'], ['Work Experience / Internships','Add your role, company and dates.','#','Edit me'], ['Seminars & Trainings','List the seminars you attended, with speakers and dates.','#','Edit me'], ['Organization & Community','Your orgs, roles and outreach activities, in or out of campus.','#','Edit me'], ['Awards & Recognitions','Dean’s list, contests, certificates.','#','Edit me'], ['Other JRU Experience','Anything else you want to share about your journey at JRU.','#','Edit me']]; const RF=[ ['Prelim','We began with how a program is structured, then variables, data types, input/output and operators. A missing semicolon could eat an entire afternoon, but reading error messages slowly turned frustration into calm debugging.','[Edit: your favorite activity and biggest struggle.]'], ['Midterm','Decision-making and repetition changed everything: if–else, switch, loops and nested loops. Patterns and number problems taught me to trace my code line by line before running it.','[Edit: a machine problem you were proud of.]'], ['Final','Arrays and methods taught me to break big problems into small reusable pieces, and the project let me combine everything from the semester.','[Edit: how you grew and your plans for Programming 2.]']]; /* -------------------------------------------- */ const pn=n=>`<div class="pn">— ${pad(n)} —</div>`; const li=(w,i,o)=>`<li><b>${pad(i+o+1)}</b><div><h3>${w[0]}</h3><p>${w[1]}</p><a href="${w[2]}" target="_blank" rel="noopener">${w[3]} →</a></div></li>`; const ph='<img src="photo.png" alt="" onerror="this.remove()">'; const PG=[ // reading order: F0,B0,F1,B1,...
 ['cover',`<div class="sun"></div>${ph}<div class="ct"><small>E‑PORTFOLIO · CP1 · JRU</small><h1>${NAME}</h1></div><img class="cover-sticker sticker-cat" src="assets/gothic-cat.svg" alt="" aria-hidden="true"><img class="cover-sticker sticker-bat" src="assets/gothic-bat.svg" alt="" aria-hidden="true"><img class="cover-sticker sticker-skull" src="assets/gothic-skull.svg" alt="" aria-hidden="true"><div class="stamp">Computer<br>Programming 1<br>2026</div>`], ['',`<h2>Hello &amp;<br>welcome.</h2><p class="lead">This notebook holds what I built, what I learned and what I struggled with in Computer Programming 1. Flip through it, or jump to:</p><div class="toc"><button data-go="1">About me</button><button data-book="works">Open Works book</button><button data-go="3">Term reflections</button><button data-go="5">Contact</button></div>${pn(1)}`], ['',`<h2>About me</h2><p>Hello! I’m <mark>Aldryl Labaguis</mark>, a student at Jose Rizal University. Add your course and year level here.</p><p>Write 2–3 sentences about your hobbies, your goals after graduation and what drives you to learn programming.</p><p class="edit">[Edit this page.]</p>${pn(2)}`], ['',`<div class="pola"><div class="ph">Y${ph}</div><span>Aldryl Labaguis, 2026</span></div><div class="stats"><div><b>—</b>programs</div><div><b>—</b>projects</div><div><b>—</b>certificates</div></div>${pn(3)}`], ]; RF.forEach((r,i)=>PG.splice(6+i,0,['',`<div class="num">${pad(i+1)}</div><h2>${r[0]}<br>term</h2><p class="body">${r[1]}</p><p class="edit">${r[2]}</p>${pn(6+i)}`])); PG.push(['',`<h2>Let’s<br>connect.</h2><p>Questions, feedback or opportunities? I’d love to hear from you.</p><p><a class="stk" href="mailto:your-email@example.com">your-email@example.com</a></p><p><a class="stk" href="https://github.com/aldryllabaguis" target="_blank" rel="noopener">GitHub</a><a class="stk" href="#">LinkedIn</a></p>${pn(9)}`], ['',`<h2 style="margin-top:30%">Thanks for<br>reading.</h2><p>© 2026 Aldryl Labaguis · CP1 · JRU</p><button data-go="0">Back to cover</button>${pn(10)}`], ['bk','<h1>fin.</h1>']); 
 const WORKS_PG=[
