@@ -2397,6 +2397,64 @@ body::after{
  .page-face .taped-polaroid figcaption{font-size:13px;min-height:25px}
  .page-face .taped-polaroid figcaption small{font-size:8px}
 }
+
+/* CURSOR-REACTIVE FALLING LEAVES — selected/opened-book detail only.
+   Small olive and moss leaves float gently like the user's reference.
+   Invisible to pointer input so 3D dragging, buttons and links still work. */
+#detail-view .detail-leaf-field{
+ position:absolute;
+ inset:0;
+ overflow:hidden;
+ pointer-events:none;
+ z-index:4;
+ opacity:0;
+ visibility:hidden;
+ transition:opacity .65s ease,visibility .65s ease;
+ contain:paint;
+}
+.scene.is-detail:not(.is-closing):not(.is-reading) #detail-leaf-field{
+ opacity:1;
+ visibility:visible;
+}
+#detail-leaf-field .cursor-leaf{
+ position:absolute;
+ top:0;
+ left:0;
+ display:block;
+ width:var(--leaf-size,13px);
+ height:calc(var(--leaf-size,13px) * .65);
+ transform-origin:50% 50%;
+ opacity:var(--leaf-opacity,.65);
+ will-change:transform;
+ pointer-events:none;
+ filter:drop-shadow(0 1px 2px #17120c80);
+}
+#detail-leaf-field .cursor-leaf svg{
+ display:block;
+ width:100%;
+ height:100%;
+ overflow:visible;
+}
+#detail-leaf-field .cursor-leaf .leaf-wing{
+ display:block;
+ transform-origin:center;
+ animation:detailLeafFlutter 2.9s ease-in-out infinite alternate;
+}
+@keyframes detailLeafFlutter{
+ 0%{transform:rotateY(-49deg) rotateX(9deg) skewX(-5deg)}
+ 45%{transform:rotateY(12deg) rotateX(-14deg) skewX(4deg)}
+ 100%{transform:rotateY(63deg) rotateX(19deg) skewX(-3deg)}
+}
+@media(max-width:790px){
+ #detail-leaf-field .cursor-leaf{
+  width:calc(var(--leaf-size,13px) * .82);
+  height:calc(var(--leaf-size,13px) * .53);
+ }
+}
+@media(prefers-reduced-motion:reduce){
+ #detail-leaf-field{display:none!important}
+ #detail-leaf-field .cursor-leaf .leaf-wing{animation:none!important}
+}
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
 <section id="shelf-view" class="shelf-view" aria-label="Bookshelf">
@@ -2408,6 +2466,7 @@ body::after{
  
 </section>
 <section id="detail-view" class="detail-view" hidden aria-label="Selected book">
+ <div id="detail-leaf-field" class="detail-leaf-field" aria-hidden="true"></div>
  <button type="button" id="detail-close" class="close-detail" aria-label="Close book details">×</button>
  <div class="detail-grid"><div class="focus-stage" id="focus-stage">
    <div class="focus-book" id="focus-book" tabindex="0" role="group" aria-roledescription="3D book" aria-describedby="focus-drag-hint" aria-label="Interactive 3D book — drag to rotate">
@@ -2892,6 +2951,76 @@ const REFLECTIONS_PG=[
   populateDetail();requestAnimationFrame(()=>{scene.classList.add('is-detail');startFocusView()});
   setTimeout(()=>{readerView.hidden=true},600);
  }
+
+ // Living leaf motes inspired by the reference video's floating green leaves.
+ // They drift around the opened 3D book, then gently orbit and follow the
+ // cursor instead of forming a rigid mouse trail. No pointer interception.
+ const detailLeafField=$('#detail-leaf-field');
+ const leafPalette=['#698640','#486e34','#93a853','#637d3a','#789747','#4b773d','#819346'];
+ const leafCount=window.matchMedia('(max-width:790px)').matches?10:16;
+ const leafParticles=Array.from({length:leafCount},(_,i)=>{
+  const el=document.createElement('span');
+  el.className='cursor-leaf';
+  const color=leafPalette[i%leafPalette.length];
+  el.style.setProperty('--leaf-size',(9+(i*7%10))+'px');
+  el.style.setProperty('--leaf-opacity',(0.37+(i*5%8)*.045).toFixed(2));
+  el.innerHTML='<span class="leaf-wing"><svg viewBox="0 0 30 19" aria-hidden="true" focusable="false">'+
+   '<path d="M1 12C7 2 19-1 29 7C25 17 12 21 1 12Z" fill="'+color+'"/>'+
+   '<path d="M2 12Q14 10 28 7" fill="none" stroke="#d3da9b" stroke-opacity=".46" stroke-width="1"/>'+
+   '<path d="M13 10L11 5M18 9L22 14" fill="none" stroke="#223c21" stroke-opacity=".4" stroke-width=".7"/>'+
+   '</svg></span>';
+  el.querySelector('.leaf-wing').style.animationDuration=(2.2+(i*3%11)*.23)+'s';
+  el.querySelector('.leaf-wing').style.animationDelay=(-(i*7%19)*.27)+'s';
+  detailLeafField.append(el);
+  const fraction=(n)=>n-Math.floor(n);
+  return {el,x:NaN,y:NaN,homeX:.1+fraction(i*.618034+.16)*.8,
+   homeY:.09+fraction(i*.414214+.29)*.8,
+   phase:i*2.39996,orbit:(i+.5)/leafCount*Math.PI*2,
+   orbitSpeed:.22+(i%5)*.046, radius:49+(i*23%115),
+   wobble:(i%3+1)*7, turn:i*27};
+ });
+ const detailMouse={x:0,y:0,inside:false,strength:0};
+ detail.addEventListener('pointermove',e=>{
+  if(e.pointerType==='touch'||!scene.classList.contains('is-detail'))return;
+  const rect=detailLeafField.getBoundingClientRect();
+  if(!rect.width||!rect.height)return;
+  detailMouse.x=e.clientX-rect.left;
+  detailMouse.y=e.clientY-rect.top;
+  detailMouse.inside=true;
+ },{passive:true});
+ detail.addEventListener('pointerleave',()=>{detailMouse.inside=false});
+ window.addEventListener('blur',()=>{detailMouse.inside=false});
+ function updateDetailLeaves(t,dt,reduced){
+  if(reduced||document.hidden||!scene.classList.contains('is-detail')||
+     scene.classList.contains('is-closing')||detail.hidden){
+   detailMouse.inside=false;
+   detailMouse.strength=0;
+   return;
+  }
+  const w=detailLeafField.clientWidth,h=detailLeafField.clientHeight;
+  if(!w||!h)return;
+  const ease=Math.min(.12,dt*2.8);
+  detailMouse.strength+=(Number(detailMouse.inside)-detailMouse.strength)*ease;
+  for(const p of leafParticles){
+   const a=p.orbit+t*p.orbitSpeed;
+   const driftX=p.homeX*w+Math.sin(t*.47+p.phase)*35;
+   const driftY=p.homeY*h+Math.cos(t*.39+p.phase*1.4)*25;
+   const followX=detailMouse.x+Math.cos(a)*p.radius+Math.sin(t*1.2+p.phase)*p.wobble;
+   const followY=detailMouse.y+Math.sin(a)*p.radius*.72+Math.cos(t*.85+p.phase)*p.wobble;
+   const s=detailMouse.strength;
+   const targetX=driftX*(1-s)+followX*s;
+   const targetY=driftY*(1-s)+followY*s;
+   if(!Number.isFinite(p.x)){p.x=driftX;p.y=driftY}
+   const spring=Math.min(.24,dt*(.9+(p.radius%6)*.14));
+   p.x+=(targetX-p.x)*spring;
+   p.y+=(targetY-p.y)*spring;
+   // Small depth and wind variations keep the leaves naturally fluttering.
+   const rot=p.turn+Math.sin(t*.83+p.phase)*35+t*(iLeafDirection(p))*10;
+   p.el.style.transform='translate3d('+p.x.toFixed(1)+'px,'+p.y.toFixed(1)+'px,0) rotate('+rot.toFixed(1)+'deg)';
+  }
+ }
+ function iLeafDirection(p){return p.turn%2===0?1:-1}
+
  // MOTION PORT from VengeanceUI's original Three.js BooksShowcase.
  // SPRING presets, spring integration, idle time/frequency, lift, hover tilt,
  // scale, pointer parallax and OPEN label spring use the source values.
@@ -2998,6 +3127,7 @@ const REFLECTIONS_PG=[
   elapsedMotion+=dt;
   const t=elapsedMotion;
   const reduced=motionReduce.matches;
+  updateDetailLeaves(t,dt,reduced);
   const w=Math.max(1,motionRoot.clientWidth),h=Math.max(1,motionRoot.clientHeight);
   const box=motionRoot.getBoundingClientRect();
   const ndcX=knownPointer?cm((pointerX-box.left)/w*2-1,-1,1):0;
