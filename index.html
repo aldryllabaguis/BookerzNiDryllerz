@@ -820,114 +820,78 @@ button:focus-visible{outline:2px solid #dec2a3;outline-offset:5px}
  #shelf-view .shelf-stage{top:-10px}
 }
 
-/* BOOK OPEN + EXIT CHOREOGRAPHY — matched to the reference sequence:
-   neighbors descend, chosen book rises/spins toward details, cover opens;
-   on exit the cover closes, selected returns, neighbors rise back up.
-   Animate the outer book button so the original Three.js-style idle/tilt
-   engine continues operating independently on the inner 3D hardcover. */
-#shelf-track .shelf-book{transform-origin:center center;backface-visibility:visible}
-.scene.is-opening .shelf-view{pointer-events:none}
-.scene.is-opening .shelf-book,
-.scene.is-returning .shelf-book{
- animation-fill-mode:both;
- will-change:transform,opacity;
+/* SEAMLESS BOOK-TO-DETAIL TRANSITION.
+   A single fixed 3D book travels between the cover's screen position and
+   the detail view. Neither view can hide the travelling book midway. */
+.book-transition-ghost{
+ position:fixed;
+ top:0;left:0;
+ z-index:9998;
+ pointer-events:none;
+ transform-style:preserve-3d;
+ transform-origin:center center;
+ perspective:1400px;
+ will-change:left,top,width,height,transform;
+ filter:drop-shadow(12px 20px 15px #0009);
 }
-.scene.is-opening .shelf-book.is-chosen{
- z-index:30!important;
- animation:bookFlyIntoDetail 1.14s cubic-bezier(.2,.75,.21,1) both;
+.book-transition-ghost .display-cover{
+ position:absolute;
+ inset:0;
+ transform:translateZ(18px)!important;
+ backface-visibility:hidden!important;
+ overflow:hidden;
+}
+.book-transition-ghost .display-cover .ct h1{
+ font-size:var(--flight-title-size,2.5rem)!important;
+}
+.book-transition-ghost .ghost-back{
+ position:absolute;inset:0;
+ transform:rotateY(180deg) translateZ(18px);
+ backface-visibility:hidden;
+ background:linear-gradient(135deg,#523239,#24191f 60%,#150f16);
+ border:3px double #b9a17d;
+}
+.book-transition-ghost .ghost-spine,
+.book-transition-ghost .ghost-edges{
+ position:absolute;top:0;height:100%;width:36px;
+ backface-visibility:hidden;
+ pointer-events:none;
+}
+.book-transition-ghost .ghost-spine{
+ left:-18px;transform:rotateY(-90deg);
+ background:linear-gradient(90deg,#21141a,#815348 35%,#3e272d 78%,#130f14);
+ border:1px solid #86644f;
+}
+.book-transition-ghost .ghost-edges{
+ right:-18px;transform:rotateY(90deg);
+ background:repeating-linear-gradient(0deg,#f0e6d3 0 2px,#c6b49c 2px 3px,#eee1cd 3px 5px);
+ border:1px solid #b6a188;
+}
+.scene.is-opening .shelf-view{
+ opacity:1!important;
+ transform:none!important;
+ pointer-events:none;
+ transition:none!important;
+}
+.scene.is-opening .shelf-book.is-chosen,
+.scene.is-returning .shelf-book.is-chosen{
+ visibility:hidden!important;
 }
 .scene.is-opening .shelf-book:not(.is-chosen){
- animation:bookNeighborsFall 1.03s cubic-bezier(.65,0,.35,1) both;
+ animation:otherBooksLeave .84s cubic-bezier(.45,.02,.53,.98) both;
 }
-.scene.is-opening .shelf-book:nth-child(1):not(.is-chosen){animation-delay:0s}
-.scene.is-opening .shelf-book:nth-child(2):not(.is-chosen){animation-delay:.085s}
-.scene.is-opening .shelf-book:nth-child(3):not(.is-chosen){animation-delay:.16s}
-@keyframes bookFlyIntoDetail{
- 0%{transform:translate3d(0,0,0) rotateY(0deg) rotateZ(0deg) scale(1);opacity:1}
- 23%{transform:translate3d(0,-53px,55px) rotateY(-48deg) rotateZ(-2deg) scale(1.09);opacity:1}
- 55%{transform:translate3d(var(--flight-half-x),var(--flight-half-y),90px) rotateY(-183deg) rotateZ(-4deg) scale(var(--flight-mid-scale));opacity:1}
- 83%{transform:translate3d(var(--flight-x),var(--flight-y),30px) rotateY(-327deg) rotateZ(2deg) scale(var(--flight-scale));opacity:1}
- 100%{transform:translate3d(var(--flight-x),var(--flight-y),0) rotateY(-360deg) rotateZ(0) scale(var(--flight-scale));opacity:1}
+.scene.is-opening .shelf-book:nth-child(3):not(.is-chosen){animation-delay:.08s}
+@keyframes otherBooksLeave{
+ 0%{opacity:1;transform:translate3d(0,0,0) rotateZ(0)}
+ 25%{opacity:1;transform:translate3d(0,-24px,22px) rotateZ(-2deg)}
+ 100%{opacity:0;transform:translate3d(0,85vh,-80px) rotateZ(-13deg)}
 }
-@keyframes bookNeighborsFall{
- 0%{transform:translate3d(0,0,0) rotateY(0) rotateZ(0) scale(1);opacity:1}
- 22%{transform:translate3d(0,-22px,20px) rotateY(-12deg) rotateZ(0) scale(1.02);opacity:1}
- 58%{opacity:1}
- 100%{transform:translate3d(var(--fall-x),calc(100vh + 210px),-150px) rotateY(65deg) rotateZ(var(--fall-angle)) scale(.8);opacity:0}
-}
-/* The detail display takes over exactly where the flying cover lands. */
-.scene.is-arriving .shelf-view{opacity:0!important;visibility:hidden!important;transition:none!important}
-.scene.is-arriving .focus-book{
- animation:bookFocusSettle .72s cubic-bezier(.22,1,.36,1) both;
-}
-@keyframes bookFocusSettle{
- from{transform:rotateY(-32deg) rotateX(-2deg) translateY(20px) scale(.94)}
- to{transform:rotateY(-5deg) rotateX(1deg) translateY(0) scale(1)}
-}
-/* Hide detail controls until the chosen cover has turned into view. */
-.scene.is-arriving .detail-text{
- transition-delay:.37s;
-}
-.scene.is-detail.is-closing .focus-cover-hinge{
- transform:rotateY(0deg)!important;
- transition:transform .64s cubic-bezier(.45,0,.22,1)!important;
- transition-delay:0s!important;
-}
-.scene.is-detail.is-closing .focus-book{
- transform:rotateY(10deg) rotateX(1deg) translateY(12px) scale(.96)!important;
- transition:transform .68s cubic-bezier(.33,0,.67,1)!important;
-}
-.scene.is-detail.is-closing .detail-text{
- opacity:0!important;
- transform:translateX(38px)!important;
- transition:opacity .28s ease,transform .4s ease!important;
- transition-delay:0s!important;
-}
-.scene.is-detail.is-closing .close-detail{opacity:0;pointer-events:none}
-.scene.is-returning .shelf-book.is-chosen{
- z-index:30!important;
- animation:bookFlyBackToShelf 1.05s cubic-bezier(.2,.75,.3,1) both;
-}
-.scene.is-returning .shelf-book:not(.is-chosen){
- animation:bookNeighborsRise 1.08s cubic-bezier(.22,.9,.25,1) both;
-}
-.scene.is-returning .shelf-book:nth-child(1):not(.is-chosen){animation-delay:.1s}
-.scene.is-returning .shelf-book:nth-child(2):not(.is-chosen){animation-delay:.19s}
-.scene.is-returning .shelf-book:nth-child(3):not(.is-chosen){animation-delay:.28s}
-.scene.is-returning .shelf-title,.scene.is-returning .shelf-head{
- animation:booksHeaderFade .88s ease .25s both;
-}
-@keyframes bookFlyBackToShelf{
- 0%{transform:translate3d(var(--flight-x),var(--flight-y),0) rotateY(-360deg) rotateZ(0) scale(var(--flight-scale));opacity:1}
- 30%{transform:translate3d(var(--flight-half-x),var(--flight-half-y),70px) rotateY(-500deg) rotateZ(3deg) scale(var(--flight-mid-scale));opacity:1}
- 68%{transform:translate3d(0,-60px,25px) rotateY(-670deg) rotateZ(1deg) scale(1.08);opacity:1}
- 100%{transform:translate3d(0,0,0) rotateY(-720deg) rotateZ(0) scale(1);opacity:1}
-}
-@keyframes bookNeighborsRise{
- 0%{transform:translate3d(var(--fall-x),calc(100vh + 170px),-120px) rotateY(50deg) rotateZ(var(--fall-angle)) scale(.85);opacity:0}
- 36%{opacity:1}
- 74%{transform:translate3d(0,-21px,22px) rotateY(-6deg) rotateZ(0) scale(1.02);opacity:1}
- 100%{transform:translate3d(0,0,0) rotateY(0) rotateZ(0) scale(1);opacity:1}
-}
-@keyframes booksHeaderFade{
- from{opacity:0;transform:translateY(-12px)}
- to{opacity:1;transform:translateY(0)}
-}
-@media(prefers-reduced-motion:reduce){
- .scene.is-opening .shelf-book,.scene.is-returning .shelf-book,
- .scene.is-arriving .focus-book,
- .scene.is-returning .shelf-title,.scene.is-returning .shelf-head{
-  animation:none!important;
- }
- .scene.is-detail.is-closing .focus-cover-hinge,
- .scene.is-detail.is-closing .focus-book{transition:none!important}
-}
-/* Keep the return flight visible from its very first frame.
-   Hide the now-closed detail book to avoid two overlapping covers. */
+.scene.is-opening .shelf-title,
+.scene.is-opening .shelf-head{opacity:0;transition:opacity .35s ease!important}
 .scene.is-returning .shelf-view{
  opacity:1!important;
- transform:translateY(0) scale(1)!important;
  visibility:visible!important;
+ transform:none!important;
  transition:none!important;
  pointer-events:none;
 }
@@ -937,10 +901,55 @@ button:focus-visible{outline:2px solid #dec2a3;outline-offset:5px}
  transition:none!important;
  pointer-events:none!important;
 }
-.scene.is-opening .shelf-head,
-.scene.is-opening .shelf-title{
- opacity:0;
- transition:opacity .42s ease!important;
+.scene.is-returning .shelf-book:not(.is-chosen){
+ animation:otherBooksReturn .95s cubic-bezier(.18,.83,.27,1) both;
+}
+.scene.is-returning .shelf-book:nth-child(3):not(.is-chosen){animation-delay:.08s}
+@keyframes otherBooksReturn{
+ 0%{opacity:0;transform:translate3d(0,68vh,-80px) rotateZ(-12deg)}
+ 70%{opacity:1;transform:translate3d(0,-19px,15px) rotateZ(1deg)}
+ 100%{opacity:1;transform:translate3d(0,0,0) rotateZ(0)}
+}
+.scene.is-returning .shelf-title,
+.scene.is-returning .shelf-head{
+ animation:headerReturns .75s ease both;
+}
+@keyframes headerReturns{
+ from{opacity:0;transform:translateY(-12px)}
+ to{opacity:1;transform:translateY(0)}
+}
+/* The front cover must visibly close BEFORE travelling back to the shelf. */
+.scene.is-detail.is-closing .focus-cover-hinge{
+ transform:rotateY(0deg)!important;
+ transition:transform .62s cubic-bezier(.3,.05,.35,1)!important;
+ transition-delay:0s!important;
+}
+.scene.is-detail.is-closing .focus-book{
+ transform:rotateY(-8deg) rotateX(1deg)!important;
+}
+.scene.is-detail.is-closing .detail-text{
+ opacity:0!important;
+ transform:translateX(35px)!important;
+ transition:opacity .25s ease,transform .35s ease!important;
+}
+.scene.is-detail.is-closing .close-detail{
+ opacity:0;pointer-events:none;
+}
+@media(min-width:791px){
+ .detail-grid{min-height:660px}
+ .focus-stage{min-height:565px}
+ .focus-book{width:clamp(280px,28vw,365px);height:clamp(406px,40vw,520px)}
+}
+@media(max-width:790px){
+ .focus-stage{min-height:385px}
+ .focus-book{width:min(65vw,260px);height:min(94vw,375px)}
+}
+@media(prefers-reduced-motion:reduce){
+ .scene.is-opening .shelf-book,
+ .scene.is-returning .shelf-book,
+ .scene.is-returning .shelf-title,
+ .scene.is-returning .shelf-head{animation:none!important}
+ .scene.is-detail.is-closing .focus-cover-hinge{transition:none!important}
 }
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
@@ -1021,87 +1030,150 @@ const REFLECTIONS_PG=[
   $('#detail-meta').innerHTML='<span>2026</span><span>Portfolio</span><span>'+b.pages.length+' pages</span>';
   $('#detail-index').textContent='0'+(selected+1)+' / 0'+books.length;
  }
- // Book-selection choreography: shelves fall away, the selected hardcover
- // flies toward the detail stage and spins, then its hinged cover swings open.
- // Closing reverses the order, bringing the shelf books back up from below.
+ // Seamless shared-cover transition: animate a fixed 3D replica between
+ // the shelf book and its detail-stage destination. This prevents the blank
+ // screen and the sudden tiny-book jump caused by the old shelf animation.
  const transitionReduce=window.matchMedia('(prefers-reduced-motion: reduce)');
- let flightTimer=0,settleTimer=0;
- function prepareBookFlight(i){
-  const cards=[...document.querySelectorAll('#shelf-track .shelf-book')];
-  const chosen=cards[i],start=chosen.querySelector('.book-3d').getBoundingClientRect();
-  // On narrow screens the shelf disappears from the document flow in
-  // detail mode; measure the real landing point with that layout in place.
-  const narrow=window.matchMedia('(max-width:790px)').matches;
-  const oldDisplay=shelf.style.display;
-  if(narrow)shelf.style.display='none';
-  const target=$('.focus-book').getBoundingClientRect();
-  if(narrow)shelf.style.display=oldDisplay;
-  const x=(target.left+target.width/2)-(start.left+start.width/2);
-  // The hidden detail view starts translated 26px down; its visible state
-  // resets that translation, so compensate to make the cover land cleanly.
-  const y=(target.top+target.height/2-26)-(start.top+start.height/2);
-  const scale=Math.max(.4,Math.min(1.05,Math.min(target.width/start.width,target.height/start.height)));
-  cards.forEach((card,n)=>{
-   card.classList.toggle('is-chosen',n===i);
-   card.style.setProperty('--flight-x',x.toFixed(2)+'px');
-   card.style.setProperty('--flight-y',y.toFixed(2)+'px');
-   card.style.setProperty('--flight-half-x',(x*.52).toFixed(2)+'px');
-   card.style.setProperty('--flight-half-y',(y*.52-40).toFixed(2)+'px');
-   card.style.setProperty('--flight-scale',scale.toFixed(4));
-   card.style.setProperty('--flight-mid-scale',Math.max(.72,(1+scale)*.59).toFixed(4));
-   card.style.setProperty('--fall-x',(n<i?-115:115)+'px');
-   card.style.setProperty('--fall-angle',(n<i?-18:18)+'deg');
-  });
- }
+ let flightTimer=0,activeFlight=null,activeFlightAnimation=null;
+ let bookFlightSequence=0;
  function clearBookFlight(){
   clearTimeout(flightTimer);
-  clearTimeout(settleTimer);
+  if(activeFlightAnimation){activeFlightAnimation.cancel();activeFlightAnimation=null}
+  if(activeFlight){activeFlight.remove();activeFlight=null}
  }
  function resetBookFlight(){
-  scene.classList.remove('is-opening','is-arriving','is-closing','is-returning');
+  clearBookFlight();
+  scene.classList.remove('is-opening','is-closing','is-returning');
   document.querySelectorAll('#shelf-track .shelf-book.is-chosen').forEach(card=>card.classList.remove('is-chosen'));
  }
- function openDetail(i){
-  if(scene.classList.contains('is-opening')||scene.classList.contains('is-returning')||
-     scene.classList.contains('is-closing'))return;
+ function rectSnapshot(rect){
+  return {left:rect.left,top:rect.top,width:rect.width,height:rect.height};
+ }
+ function detailLandingRect(){
+  // In mobile detail view the shelf disappears from layout, so measure
+  // with that layout temporarily in place. Restore it before painting.
+  const narrow=window.matchMedia('(max-width:790px)').matches;
+  const existing=shelf.getAttribute('style');
+  if(narrow)shelf.style.setProperty('display','none','important');
+  const rect=rectSnapshot($('.focus-book').getBoundingClientRect());
+  if(narrow){
+   if(existing===null)shelf.removeAttribute('style');
+   else shelf.setAttribute('style',existing);
+  }
+  // The hidden detail screen has translateY(26px), removed in detail mode.
+  rect.top-=26;
+  return rect;
+ }
+ function makeFlightBook(rect,titleSize){
+  const el=document.createElement('div');
+  el.className='book-transition-ghost';
+  el.style.left=rect.left+'px';
+  el.style.top=rect.top+'px';
+  el.style.width=rect.width+'px';
+  el.style.height=rect.height+'px';
+  el.style.setProperty('--flight-title-size',titleSize);
+  el.innerHTML='<div class="ghost-back"></div><div class="ghost-spine"></div><div class="ghost-edges"></div>'+cover(books[selected]);
+  document.body.appendChild(el);
+  activeFlight=el;
+  return el;
+ }
+ function flyBook(from,to,reverse,titleSize){
+  const ghost=makeFlightBook(from,titleSize);
+  const dx=to.left-from.left,dy=to.top-from.top;
+  const middle={
+   left:from.left+dx*.48,
+   top:from.top+dy*.48-65,
+   width:from.width+(to.width-from.width)*.48,
+   height:from.height+(to.height-from.height)*.48
+  };
+  const spin=reverse?360:-360;
+  const frame=(rect,angle,z,tilt,offset)=>({
+   left:rect.left+'px',top:rect.top+'px',
+   width:rect.width+'px',height:rect.height+'px',
+   transform:'perspective(1400px) translateZ('+z+'px) rotateY('+angle+'deg) rotateZ('+tilt+'deg)',
+   offset
+  });
+  const frames=[
+   frame(from,0,0,0,0),
+   frame({left:from.left+dx*.16,top:from.top+dy*.16-52,width:from.width+(to.width-from.width)*.16,height:from.height+(to.height-from.height)*.16},spin*.15,68,-2,.24),
+   frame(middle,spin*.55,110,-3,.54),
+   frame(to,spin,0,0,1)
+  ];
+  const animation=ghost.animate(frames,{
+   duration:930,easing:'cubic-bezier(.23,.78,.19,1)',fill:'forwards'
+  });
+  activeFlightAnimation=animation;
+  return animation.finished.catch(()=>{}).then(()=>{
+   if(activeFlight===ghost){ghost.remove();activeFlight=null;activeFlightAnimation=null}
+  });
+ }
+ async function openDetail(i){
+  if(scene.classList.contains('is-opening')||
+     scene.classList.contains('is-closing')||
+     scene.classList.contains('is-returning')||
+     scene.classList.contains('is-detail'))return;
   hideOpenCursor();
-  clearTimeout(closeTimer);clearBookFlight();resetBookFlight();
+  clearTimeout(closeTimer);
+  resetBookFlight();
   selected=i;markSelected();populateDetail();
-  readerView.hidden=true;detail.hidden=false;scene.classList.remove('is-reading');
+  readerView.hidden=true;detail.hidden=false;
+  scene.classList.remove('is-reading');
   void detail.offsetWidth;
   if(transitionReduce.matches){
-   requestAnimationFrame(()=>scene.classList.add('is-detail'));
+   scene.classList.add('is-detail');
    return;
   }
-  prepareBookFlight(i);
+  const seq=++bookFlightSequence;
+  const card=document.querySelectorAll('#shelf-track .shelf-book')[i];
+  const coverEl=card.querySelector('.book-3d');
+  const from=rectSnapshot(coverEl.getBoundingClientRect());
+  const titleSize=getComputedStyle(card.querySelector('.display-cover .ct h1')).fontSize;
+  const to=detailLandingRect();
+  // Create the traveller first, then hide the physical shelf copy.
+  const flight=flyBook(from,to,false,titleSize);
+  card.classList.add('is-chosen');
   scene.classList.add('is-opening');
-  flightTimer=setTimeout(()=>{
-   scene.classList.add('is-detail','is-arriving');
-   scene.classList.remove('is-opening');
-   settleTimer=setTimeout(()=>scene.classList.remove('is-arriving'),900);
-  },1140);
+  await flight;
+  if(seq!==bookFlightSequence)return;
+  // Swap the traveller for the real cover at the same screen coordinates.
+  scene.classList.add('is-detail');
+  scene.classList.remove('is-opening');
+  card.classList.remove('is-chosen');
  }
  function returnShelf(){
-  if(scene.classList.contains('is-closing')||scene.classList.contains('is-returning'))return;
-  clearTimeout(closeTimer);clearBookFlight();
-  scene.classList.remove('is-arriving');
+  if(scene.classList.contains('is-closing')||
+     scene.classList.contains('is-opening')||
+     scene.classList.contains('is-returning'))return;
+  clearTimeout(closeTimer);
   if(transitionReduce.matches){
    scene.classList.remove('is-detail','is-reading');
    resetBookFlight();
    closeTimer=setTimeout(()=>{detail.hidden=true;readerView.hidden=true;reader=null},100);
    return;
   }
-  // First let the front hardcover close, as it does in the reference.
+  const seq=++bookFlightSequence;
+  clearBookFlight();
   scene.classList.add('is-closing');
-  flightTimer=setTimeout(()=>{
-   scene.classList.remove('is-detail','is-reading','is-closing');
+  // Hinged cover closes before the book starts its trip back.
+  flightTimer=setTimeout(async()=>{
+   if(seq!==bookFlightSequence)return;
+   const from=rectSnapshot($('.focus-book').getBoundingClientRect());
+   const card=document.querySelectorAll('#shelf-track .shelf-book')[selected];
+   const titleSize=getComputedStyle(card.querySelector('.display-cover .ct h1')).fontSize;
+   // Build ghost while the detail view is still visible.
+   const ghost=makeFlightBook(from,titleSize);
+   card.classList.add('is-chosen');
+   scene.classList.remove('is-detail','is-closing','is-reading');
    scene.classList.add('is-returning');
-   // The chosen book flies back as its two neighbors rise from below.
-   flightTimer=setTimeout(()=>{
-    resetBookFlight();
-    detail.hidden=true;readerView.hidden=true;reader=null;
-   },1460);
-  },700);
+   const to=rectSnapshot(card.querySelector('.book-3d').getBoundingClientRect());
+   // Transfer the prebuilt ghost into the animation without a one-frame gap.
+   ghost.remove();activeFlight=null;
+   const flight=flyBook(from,to,true,titleSize);
+   await flight;
+   if(seq!==bookFlightSequence)return;
+   resetBookFlight();
+   detail.hidden=true;readerView.hidden=true;reader=null;
+  },680);
  }
  function switchDetail(delta){
   clearBookFlight();
