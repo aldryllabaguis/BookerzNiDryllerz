@@ -2457,6 +2457,19 @@ body::after{
  .scene.is-opening .shelf-book:not(.is-chosen){opacity:1;transform:none}
 }
 .reader-stage{cursor:grab}.reader-stage:active{cursor:grabbing}.reader-tip{text-align:center;margin:12px auto 0;color:#e6d3c5;font:10px/1.5 "Special Elite",monospace;letter-spacing:.07em}@media(max-width:790px){.reader-tip{font-size:9px;padding:0 12px}}
+
+/* Vivaldi/Chromium book fix: prevent the reader's 3D children from flattening. */
+.reader-stage#reader-stage{isolation:auto!important;perspective:2350px;-webkit-perspective:2350px;overflow:visible}
+.reader-pages#reader-pages{filter:none!important;-webkit-filter:none!important;isolation:auto!important;transform-style:preserve-3d!important;-webkit-transform-style:preserve-3d!important;perspective:2350px;-webkit-perspective:2350px;will-change:transform}
+.reader-pages#reader-pages::before{background:linear-gradient(90deg,#d3c0a6,#f5eada 45%,#705241 50%,#f5ead9 55%,#d5c0a3);box-shadow:inset 0 0 17px #624a3335;transform:translateZ(-4px);-webkit-transform:translateZ(-4px)}
+.reader-pages#reader-pages::after{content:"";position:absolute;inset:8px 6px -7px;z-index:-1;background:#130c1070;box-shadow:0 24px 44px #0008;transform:translateZ(-12px);pointer-events:none}
+.reader-pages#reader-pages .reader-leaf{transform-style:preserve-3d!important;-webkit-transform-style:preserve-3d!important;backface-visibility:visible!important;-webkit-backface-visibility:visible!important;filter:none!important}
+.reader-pages#reader-pages .reader-leaf>.page-face{backface-visibility:hidden!important;-webkit-backface-visibility:hidden!important;transform:translateZ(.6px);-webkit-transform:translateZ(.6px);opacity:1!important}
+.reader-pages#reader-pages .reader-leaf>.page-face.back{transform:rotateY(180deg) translateZ(.6px);-webkit-transform:rotateY(180deg) translateZ(.6px)}
+.scene.is-reading .reader-view{transition:opacity .8s cubic-bezier(.22,.75,.2,1),transform .96s cubic-bezier(.19,1,.22,1)}
+.scene.is-reading .reader-top,.scene.is-reading .reader-controls,.scene.is-reading .reader-tip,.scene.is-reading .reader-progress{animation:reader-ui-enter .7s cubic-bezier(.2,.8,.2,1) both}
+@keyframes reader-ui-enter{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.scene.is-reading .reader-top,.scene.is-reading .reader-controls,.scene.is-reading .reader-tip,.scene.is-reading .reader-progress{animation:none!important}}
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
 <section id="shelf-view" class="shelf-view" aria-label="Bookshelf">
@@ -2764,10 +2777,10 @@ const REFLECTIONS_PG=[
   try{
    motion=ghost.animate([
     pose(0,0,0),
-    pose(.22,24,reverse?-5:5),
-    pose(.58,30,reverse?-3:3),
+    pose(.22,17,reverse?-3:3),
+    pose(.58,24,reverse?-2:2),
     pose(1,0,0)
-   ],{duration:reverse?780:810,easing:'cubic-bezier(.22,.75,.18,1)',fill:'forwards'});
+   ],{duration:reverse?900:1040,easing:'cubic-bezier(.22,.75,.18,1)',fill:'forwards'});
    activeFlightAnimation=motion;
   }catch(error){
    ghost.style.left=to.left+'px';ghost.style.top=to.top+'px';
@@ -2897,15 +2910,15 @@ const REFLECTIONS_PG=[
     const f=clamp(pos-i,0,1);
     const folding=Math.sin(f*Math.PI);
     leaf.style.setProperty('--leaf-fold',folding.toFixed(3));
-    leaf.style.transform='rotateY('+(-180*f).toFixed(3)+'deg)';
+    leaf.style.transform='translateZ(.2px) rotateY('+(-180*f).toFixed(4)+'deg)';
     leaf.style.zIndex=f>0&&f<1?count+5:f>=1?i+1:count-i;
     faces[i][0].style.visibility=f<.5?'visible':'hidden';
     faces[i][1].style.visibility=f>=.5?'visible':'hidden';
    });
    const shift=-25*(1-Math.min(1,pos))+25*Math.max(0,pos-(count-1));
    // Keep the original flat book layout; avoid a blank spread as the cover turns.
-   pagesEl.style.transform='translateX('+shift.toFixed(2)+'%)';
-   const insideSpread=Math.max(0,Math.min(1,(pos-1)*3,(count-1-pos)*3));
+   pagesEl.style.transform='translate3d('+shift.toFixed(4)+'%,0,0)';
+   const insideSpread=clamp(Math.min(pos,count-pos)*3,0,1);
    pagesEl.style.setProperty('--spread',insideSpread.toFixed(3));
    $('#reader-count').textContent=pos<.1?'Front cover':pos>count-.1?'Back cover':'Pages '+Math.round(pos)+' of '+count;
    const percent=count?Math.round(pos/count*100):0;
@@ -2918,9 +2931,9 @@ const REFLECTIONS_PG=[
   function go(n){
    target=clamp(Math.round(n),0,count);cancel();
    if(reduce.matches){pos=target;render();return}
-   const from=pos,to=target,started=performance.now(),duration=clamp(820+(Math.abs(to-from)-1)*130,540,1600);
+   const from=pos,to=target,started=performance.now(),duration=clamp(1030+(Math.abs(to-from)-1)*165,620,1770);
    const tick=now=>{
-    let x=clamp((now-started)/duration,0,1),e=x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+    const x=clamp((now-started)/duration,0,1),e=x*x*x*(x*(x*6-15)+10);
     pos=from+(to-from)*e;render();
     if(x<1)frame=requestAnimationFrame(tick);else{pos=to;render();frame=0}
    };
@@ -3125,7 +3138,7 @@ const REFLECTIONS_PG=[
  window.addEventListener('blur',()=>hideOpenCursor());
  // Frame update mirrors the source's 30 fps physics time step.
  let motionFrame=0,lastMotion=0,elapsedMotion=0,isInViewport=true;
- const frameInterval=1000/30;
+ const frameInterval=1000/60;
  const motionObserver=new IntersectionObserver(entries=>{
   isInViewport=entries[0]?.isIntersecting??true;
   if(isInViewport&&!motionFrame)motionFrame=requestAnimationFrame(animateBooks);
