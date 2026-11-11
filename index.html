@@ -3597,35 +3597,90 @@ body::after{
  background:#120e14;
 }
 
-/* WORKS & PROJECTS · larger real paper dimensions, not a scaled screenshot.
-   The 4:3 spread keeps each leaf at its original 2:3 book proportion. */
-@media(min-width:791px){
- .reader-view.works-expanded #reader-stage.reader-stage{
-  width:min(100%,1240px);
-  height:auto;
-  aspect-ratio:4 / 3;
-  max-height:none;
- }
- .reader-view.works-expanded .reader-top,
- .reader-view.works-expanded .reader-controls{
-  max-width:1240px;
- }
- .scene.is-reading.is-works-reader{
-  min-height:clamp(930px,calc(70vw + 215px),1240px);
- }
+
+/* Works & Projects: expand media and writing WITHIN each original-size page.
+   The book dimensions, 3D leaf geometry, and original media files are unchanged. */
+.reader-view.works-expanded .reader-leaf .page-face.works-pts-image-page:not(.cover):not(.bk),
+.reader-view.works-expanded .reader-leaf .page-face.works-video-page:not(.cover):not(.bk){
+ padding:clamp(7px,1vw,12px);
 }
-/* Smaller screens: preserve the two-page flip and give each leaf more
-   vertical space without distorting or recompressing the image/video. */
-@media(max-width:790px){
- .reader-view.works-expanded #reader-stage.reader-stage{
-  width:100%;
-  height:clamp(535px,107vw,725px);
-  max-height:none;
- }
+.reader-view.works-expanded .page-face.works-pts-image-page .works-pts-overline{
+ margin-bottom:8px;
+ padding-bottom:6px;
+}
+.reader-view.works-expanded .page-face.works-pts-image-page h2.works-pts-title{
+ font-size:clamp(23px,2.6vw,33px);
+ margin-bottom:9px;
+}
+.reader-view.works-expanded .page-face.works-pts-image-page .works-pts-figure{
+ width:100%;
+ padding:3px;
+ margin:0 0 9px;
+}
+.reader-view.works-expanded .page-face.works-pts-image-page .works-pts-figure img{
+ display:block;
+ width:100%;
+ max-width:100%;
+ height:auto;
+ object-fit:contain;
+}
+.reader-view.works-expanded .page-face.works-pts-image-page .works-pts-figure figcaption{
+ margin-top:6px;
+}
+.reader-view.works-expanded .page-face.works-pts-image-page .pn{
+ margin-top:9px;
+ padding-top:7px;
+}
+.reader-view.works-expanded .page-face.works-video-page .works-video-kicker{
+ margin-bottom:9px;
+ padding-bottom:6px;
+}
+.reader-view.works-expanded .page-face.works-video-page h2{
+ font-size:clamp(26px,2.8vw,38px);
+ margin-bottom:8px;
+}
+.reader-view.works-expanded .page-face.works-video-page p.works-video-intro{
+ font-size:clamp(14px,1.55vw,18px);
+ margin-bottom:10px;
+}
+.reader-view.works-expanded .page-face.works-video-page .works-video-frame{
+ width:100%;
+ padding:3px 3px 7px;
+ margin:0;
+}
+.reader-view.works-expanded .page-face.works-video-page .works-video-player{
+ width:100%;
+ aspect-ratio:16 / 9;
+ height:auto;
+ max-height:none;
+}
+.reader-view.works-expanded .page-face.works-video-page .works-video-caption{
+ margin-top:6px;
+}
+.reader-view.works-expanded .page-face.works-video-page .pn{
+ margin-top:10px;
+ padding-top:7px;
 }
 @media(max-width:440px){
- .reader-view.works-expanded #reader-stage.reader-stage{
-  height:clamp(540px,145vw,685px);
+ .reader-view.works-expanded .reader-leaf .page-face.works-pts-image-page:not(.cover):not(.bk),
+ .reader-view.works-expanded .reader-leaf .page-face.works-video-page:not(.cover):not(.bk){
+  padding:6px;
+ }
+ .reader-view.works-expanded .page-face.works-pts-image-page h2.works-pts-title{
+  font-size:20px;
+  margin-bottom:7px;
+ }
+ .reader-view.works-expanded .page-face.works-video-page h2{
+  font-size:23px;
+  margin-bottom:7px;
+ }
+ .reader-view.works-expanded .page-face.works-video-page p.works-video-intro{
+  font-size:13px;
+  margin-bottom:7px;
+ }
+ .reader-view.works-expanded .page-face.works-pts-image-page .works-pts-figure,
+ .reader-view.works-expanded .page-face.works-video-page .works-video-frame{
+  padding:2px;
  }
 }
 </style></head>
@@ -4098,9 +4153,8 @@ const REFLECTIONS_PG=[
   setTimeout(()=>{selected=(selected+delta+books.length)%books.length;markSelected();populateDetail();requestAnimationFrame(()=>{scene.classList.add('is-detail');startFocusView()})},240);
  }
  function makeReader(b){
-  // Works & Projects gets a larger reading spread; other volumes keep their original proportions.
+  // Style only the media/content inside Works & Projects; preserve all book dimensions.
   readerView.classList.toggle('works-expanded',b.title==='Works & Projects');
-  scene.classList.toggle('is-works-reader',b.title==='Works & Projects');
   const stage=$('#reader-stage'),pagesEl=$('#reader-pages');
   const progress=$('#reader-progress'),progressFill=$('#reader-progress-fill');
   pagesEl.innerHTML='';
