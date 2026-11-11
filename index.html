@@ -3805,30 +3805,22 @@ body::after{
  display:grid;place-items:center;
  width:clamp(35px,2.7vw,39px);
  height:clamp(35px,2.7vw,39px);
- color:#e8d5c2;
- background:linear-gradient(145deg,#3f2b32,#241a23);
- border:1px solid rgba(206,167,122,.62);
- border-radius:50%;
- box-shadow:inset 0 1px 0 rgba(255,241,215,.1),0 3px 9px rgba(0,0,0,.29);
+ color:#f2ddca;
+ background:transparent;
+ border:0;
+ border-radius:9px;
+ box-shadow:none;
  text-decoration:none;
  transition:transform .22s ease,border-color .22s ease,color .22s ease,box-shadow .22s ease;
 }
-#scene .shelf-social-link svg{display:block;width:20px;height:20px}
+#scene .shelf-social-link .shelf-brand-logo{display:block;width:28px;height:28px;filter:drop-shadow(0 1px 3px rgba(0,0,0,.43))}
 #scene .shelf-social-link:hover,
 #scene .shelf-social-link:focus-visible{
  transform:translateY(-2px);
- border-color:#e6c49d;
- box-shadow:0 6px 19px rgba(0,0,0,.42),0 0 17px rgba(181,115,117,.24);
+ background:rgba(244,218,185,.09);
+ box-shadow:0 0 0 1px rgba(230,196,157,.2),0 0 14px rgba(181,115,117,.14);
  outline:none;
 }
-#scene .shelf-social-discord:hover,
-#scene .shelf-social-discord:focus-visible{color:#abb1ff}
-#scene .shelf-social-instagram:hover,
-#scene .shelf-social-instagram:focus-visible{color:#f7acc3}
-#scene .shelf-social-facebook:hover,
-#scene .shelf-social-facebook:focus-visible{color:#8bbafb}
-#scene .shelf-social-gmail:hover,
-#scene .shelf-social-gmail:focus-visible{color:#ffc7a0}
 #scene .shelf-contact-ornament{
  display:none;
  color:#a98567;
@@ -3858,7 +3850,7 @@ body::after{
  }
  #scene .shelf-contact-icons{gap:8px}
  #scene .shelf-social-link{width:36px;height:36px}
- #scene .shelf-social-link svg{width:20px;height:20px}
+ #scene .shelf-social-link .shelf-brand-logo{width:27px;height:27px}
  #scene .shelf-contact-heading h2{font-size:17px}
  #scene .shelf-contact-rule{width:25px}
 }
@@ -3879,28 +3871,34 @@ body::after{
  <div class="shelf-contact-heading"><span class="shelf-contact-rule" aria-hidden="true"></span><h2 id="shelf-contact-title">Contact me!</h2><span class="shelf-contact-rule" aria-hidden="true"></span></div>
  <div class="shelf-contact-icons">
   <a class="shelf-social-link shelf-social-discord" href="https://discord.com/users/1178331890399330347" target="_blank" rel="noopener noreferrer" title="Discord" aria-label="Contact me on Discord">
-   <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-    <path fill="currentColor" d="M19.73 5.21a17.2 17.2 0 0 0-4.24-1.32l-.51 1.04a15.8 15.8 0 0 0-4.93 0l-.51-1.04A17.2 17.2 0 0 0 5.3 5.21C2.63 9.17 1.91 13.03 2.28 16.84a17.4 17.4 0 0 0 5.21 2.64l1.12-1.81a11 11 0 0 1-1.68-.82l.41-.33c3.24 1.52 6.79 1.52 10.01 0l.41.33c-.54.33-1.1.61-1.68.82l1.12 1.81a17.4 17.4 0 0 0 5.21-2.64c.44-4.43-.75-8.25-2.68-11.63zM9.36 14.61c-.99 0-1.81-.89-1.81-1.98s.8-1.98 1.81-1.98c1.01 0 1.82.89 1.81 1.98 0 1.09-.81 1.98-1.81 1.98zm5.28 0c-1 0-1.81-.89-1.81-1.98s.8-1.98 1.81-1.98c1.01 0 1.82.89 1.81 1.98 0 1.09-.8 1.98-1.81 1.98z"/>
-   </svg>
+   <svg class="shelf-brand-logo shelf-brand-discord-logo" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+   <path fill="#5865F2" d="M12 0a12 12 0 1 0 0 24 12 12 0 0 0 0-24z"/>
+   <path fill="#fff" d="M17.76 6.38a14.9 14.9 0 0 0-3.67-1.14l-.46.94a13.7 13.7 0 0 0-3.28 0l-.46-.94a14.9 14.9 0 0 0-3.67 1.14C3.89 9.84 3.25 13.23 3.56 16.6c1.5 1.15 3.15 1.93 4.51 2.28l.92-1.5c-.5-.2-1-.42-1.47-.7.12-.09.24-.18.35-.28 3.07 1.4 6.72 1.4 9.75 0l.35.28c-.47.28-.96.5-1.47.7l.92 1.5c1.36-.35 3.01-1.13 4.51-2.28.35-3.83-.61-7.21-2.67-10.22zm-8.1 8.1c-.88 0-1.6-.79-1.6-1.76s.71-1.76 1.6-1.76c.89 0 1.61.8 1.6 1.76 0 .97-.7 1.76-1.6 1.76zm5.04 0c-.88 0-1.6-.79-1.6-1.76s.71-1.76 1.6-1.76 1.61.8 1.6 1.76c0 .97-.71 1.76-1.6 1.76z" transform="translate(1.1 0) scale(.9)"/>
+  </svg>
   </a>
   <a class="shelf-social-link shelf-social-instagram" href="https://www.instagram.com/iam.dryl/" target="_blank" rel="noopener noreferrer" title="Instagram" aria-label="Follow me on Instagram">
-   <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-    <rect x="2" y="2" width="20" height="20" rx="6" fill="none" stroke="currentColor" stroke-width="2.1"/>
-    <circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="2.1"/>
-    <circle cx="17.9" cy="6.4" r="1.4" fill="currentColor"/>
-   </svg>
+   <svg class="shelf-brand-logo shelf-brand-instagram-logo" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+   <defs><linearGradient id="shelf-instagram-gradient" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#FCAF45"/><stop offset="35%" stop-color="#F56040"/><stop offset="66%" stop-color="#C13584"/><stop offset="100%" stop-color="#5851DB"/></linearGradient></defs>
+   <rect x="1" y="1" width="22" height="22" rx="6.4" fill="url(#shelf-instagram-gradient)"/>
+   <rect x="5.35" y="5.35" width="13.3" height="13.3" rx="4.1" fill="none" stroke="#fff" stroke-width="1.8"/>
+   <circle cx="12" cy="12" r="3.25" fill="none" stroke="#fff" stroke-width="1.8"/>
+   <circle cx="16.85" cy="7.25" r="1.12" fill="#fff"/>
+  </svg>
   </a>
   <a class="shelf-social-link shelf-social-facebook" href="https://www.facebook.com/aldryl.labaguis.2024." target="_blank" rel="noopener noreferrer" title="Facebook" aria-label="Connect with me on Facebook">
-   <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-    <path fill="currentColor" d="M21 12a9 9 0 1 0-10.4 8.89v-6.3H8.3V12h2.3v-1.99c0-2.27 1.35-3.53 3.42-3.53.99 0 2.02.18 2.02.18v2.22H14.9c-1.12 0-1.47.69-1.47 1.4V12h2.5l-.4 2.59h-2.1v6.3A9 9 0 0 0 21 12Z"/>
-   </svg>
+   <svg class="shelf-brand-logo shelf-brand-facebook-logo" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+   <circle cx="12" cy="12" r="11" fill="#1877F2"/>
+   <path d="M14.5 22V13.6h2.6l.4-3.3h-3V8.2c0-.95.29-1.6 1.55-1.6H17.6V3.65a18 18 0 0 0-2.38-.15c-2.5 0-4.2 1.53-4.2 4.33v2.47H8.3v3.3h2.72V22z" fill="#fff"/>
+  </svg>
   </a>
   <a class="shelf-social-link shelf-social-gmail" href="mailto:aldryllabaguis1808@gmail.com" title="Gmail" aria-label="Email me on Gmail">
-   <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-    <path d="M3.5 7v12" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round"/>
-    <path d="M20.5 7v12" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round"/>
-    <path d="M3.5 7 12 13.5l8.5-6.5" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/>
-   </svg>
+   <svg class="shelf-brand-logo shelf-brand-gmail-logo" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+   <path d="M3.5 7v12" fill="none" stroke="#4285F4" stroke-width="3.2" stroke-linecap="round"/>
+   <path d="M20.5 7v12" fill="none" stroke="#34A853" stroke-width="3.2" stroke-linecap="round"/>
+   <path d="M3.5 7 12 13.5l8.5-6.5" fill="none" stroke="#EA4335" stroke-width="3.3" stroke-linecap="round" stroke-linejoin="round"/>
+   <path d="M3.5 7V5.3" fill="none" stroke="#C5221F" stroke-width="3.2" stroke-linecap="round"/>
+   <path d="M20.5 7V5.3" fill="none" stroke="#FBBC04" stroke-width="3.2" stroke-linecap="round"/>
+  </svg>
   </a>
  </div>
  <span class="shelf-contact-ornament" aria-hidden="true">✦</span>
