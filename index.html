@@ -2721,6 +2721,76 @@ body::after{
  .reader-leaf .page-face.contact-page a.stk+a.stk{margin-left:10px}
  .reader-leaf .page-face.closing-page:not(.cover):not(.bk) h2{margin-top:28px}
 }
+
+/* Clean contact links with official-style Gmail and Facebook icons. */
+.reader-leaf .page-face.contact-page .contact-links{
+ display:flex;
+ flex-direction:column;
+ align-items:flex-start;
+ gap:17px;
+ margin-top:24px;
+ max-width:100%;
+}
+.reader-leaf .page-face.contact-page .contact-links .contact-link.stk{
+ display:inline-flex;
+ align-items:center;
+ justify-content:flex-start;
+ gap:13px;
+ width:fit-content;
+ max-width:100%;
+ margin:0;
+ padding:2px 0 4px;
+ color:#603e49;
+ text-decoration:none;
+ border-bottom:1px solid #a68b8559;
+ font-size:clamp(18px,1.55vw,23px);
+ line-height:1.35;
+ transition:color .2s ease,border-color .2s ease;
+}
+.reader-leaf .page-face.contact-page .contact-links .contact-link.stk:hover{
+ color:#8d4b60;
+ border-bottom-color:#8d4b60;
+}
+.reader-leaf .page-face.contact-page .contact-links .contact-link.stk:focus-visible{
+ outline:2px solid #8d4b60;
+ outline-offset:5px;
+}
+.reader-leaf .page-face.contact-page .contact-links .contact-link span{
+ min-width:0;
+ overflow-wrap:anywhere;
+}
+.reader-leaf .page-face.contact-page .contact-links .contact-logo{
+ display:block;
+ flex:none;
+ width:clamp(23px,2vw,30px);
+ height:clamp(23px,2vw,30px);
+ filter:drop-shadow(0 1px 1px #4c342b28);
+}
+@media(max-width:790px){
+ .reader-leaf .page-face.contact-page .contact-links{
+  gap:13px;
+  margin-top:15px;
+ }
+ .reader-leaf .page-face.contact-page .contact-links .contact-link.stk{
+  gap:9px;
+  font-size:clamp(13px,2vw,19px);
+ }
+ .reader-leaf .page-face.contact-page .contact-links .contact-logo{
+  width:clamp(20px,2.4vw,26px);
+  height:clamp(20px,2.4vw,26px);
+ }
+}
+@media(max-width:440px){
+ .reader-leaf .page-face.contact-page .contact-links{gap:11px}
+ .reader-leaf .page-face.contact-page .contact-links .contact-link.stk{
+  font-size:12px;
+  gap:7px;
+ }
+ .reader-leaf .page-face.contact-page .contact-links .contact-logo{width:18px;height:18px}
+}
+@media(prefers-reduced-motion:reduce){
+ .reader-leaf .page-face.contact-page .contact-links .contact-link.stk{transition:none}
+}
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
 <section id="shelf-view" class="shelf-view" aria-label="Bookshelf">
@@ -2754,7 +2824,25 @@ body::after{
 const $=(s,c=document)=>c.querySelector(s),pad=n=>String(n).padStart(2,'0'); /* ---------- EDIT YOUR CONTENT HERE ---------- */ const NAME='Aldryl<br>Labaguis'; const W=[ ['PTs & Products Compilation','All machine problems, activities, seatwork and recitation outputs in one PDF, with Java screenshots.','#','Open PDF'], ['Project Documentation','Goals, design and a walkthrough of my project code.','#','Open PDF'], ['Video Project Presentation','A recorded demo of my project. Paste your YouTube or Drive link.','#','Watch video'], ['Work Experience / Internships','Add your role, company and dates.','#','Edit me'], ['Seminars & Trainings','List the seminars you attended, with speakers and dates.','#','Edit me'], ['Organization & Community','Your orgs, roles and outreach activities, in or out of campus.','#','Edit me'], ['Awards & Recognitions','Dean’s list, contests, certificates.','#','Edit me'], ['Other JRU Experience','Anything else you want to share about your journey at JRU.','#','Edit me']]; const RF=[ ['Prelim','We began with how a program is structured, then variables, data types, input/output and operators. A missing semicolon could eat an entire afternoon, but reading error messages slowly turned frustration into calm debugging.','[Edit: your favorite activity and biggest struggle.]'], ['Midterm','Decision-making and repetition changed everything: if–else, switch, loops and nested loops. Patterns and number problems taught me to trace my code line by line before running it.','[Edit: a machine problem you were proud of.]'], ['Final','Arrays and methods taught me to break big problems into small reusable pieces, and the project let me combine everything from the semester.','[Edit: how you grew and your plans for Programming 2.]']]; /* -------------------------------------------- */ const pn=n=>`<div class="pn">— ${pad(n)} —</div>`; const li=(w,i,o)=>`<li><b>${pad(i+o+1)}</b><div><h3>${w[0]}</h3><p>${w[1]}</p><a href="${w[2]}" target="_blank" rel="noopener">${w[3]} →</a></div></li>`; const ph='<img src="photo.png" alt="" onerror="this.remove()">'; const PG=[ // reading order: F0,B0,F1,B1,...
 ['cover cover-main-refined',`<div class="sun"></div>${ph}<div class="ct"><small>E‑PORTFOLIO · CP1 · JRU</small><h1>${NAME}</h1></div><img class="cover-sticker sticker-cat" src="assets/gothic-cat.svg" alt="" aria-hidden="true"><div class="stamp">Computer<br>Programming 1<br>2026</div>`], ['',`<h2>Hello &amp;<br>welcome.</h2><p class="lead">This volume introduces me and my portfolio. My projects and reflections are each in their own books. Flip through this one or choose a section:</p><div class="toc"><button data-go="1">About me</button><button data-go="3">Contact</button></div>${pn(1)}`], ['',`<h2>About me</h2><p>Hello! My name is <mark>Aldryl Labaguis</mark>, and I’m 17 years old. I’m currently a student in BSIT-103I at Jose Rizal University, where I’m learning more about information technology and how it can be used in everyday life.</p><p>I chose BSIT because I’m interested in graphic design and how images, colors, and layouts can bring ideas to life. I want to explore how creativity and technology work together and develop the skills to create my own designs and projects.</p><p>Outside of school, I enjoy playing music, especially the guitar, and playing video games. Music gives me a way to express myself, while games let me relax and experience different worlds, artwork, and styles. I also enjoy going for midnight strolls because the quiet atmosphere helps me unwind and clear my mind.</p><p>As I continue my studies, I hope to grow my knowledge of technology, improve my design abilities, and create work that reflects my ideas and personality.</p>${pn(2)}`], ['polaroid-full-page',`<figure class="pola taped-polaroid" aria-label="Photo of Aldryl Labaguis taped onto the page"><div class="ph polaroid-picture"><img src="assets/aldryl-library-portrait-original.png" width="1114" height="1411" loading="lazy" decoding="async" alt="Aldryl Labaguis standing in a library wearing a black sweater and dark blue trousers"></div><figcaption><span>Aldryl Labaguis</span><small>2026</small></figcaption></figure>${pn(3)}`], ]; PG.push(
  ['three-volumes-page',`<h2>Three<br>volumes.</h2><p class="lead">This is the first book in my collection, and it serves as an introduction to who I am, my interests, and my journey as an Information Technology student.</p><p>I created this bookshelf to present my personal portfolio in a more creative and meaningful way. Instead of putting everything together in one place, I divided my experiences into three different volumes, with each book representing a part of my story.</p><p>The first volume, <strong>About Me</strong>, introduces my background, hobbies, interests, and goals. The second volume, <strong>Works &amp; Projects</strong>, contains my academic activities, projects, and accomplishments throughout my studies. Lastly, <strong>Reflections</strong> shares the experiences, challenges, and lessons I've learned during the Prelim, Midterm, and Final periods.</p><p>Together, these three books represent my progress, creativity, and growth as a student. Each page holds something that has helped shape who I am and who I hope to become.</p><p>Feel free to explore <strong><button type="button" class="reader-volume-link" data-open-volume="0" aria-label="Open Works and Projects book">Works &amp; Projects</button></strong> or <strong><button type="button" class="reader-volume-link" data-open-volume="2" aria-label="Open Reflections book">Reflections</button></strong> to discover more about my journey.</p>${pn(4)}`],
- ['contact-page',`<h2>Let’s<br>connect.</h2><p>Questions, feedback or opportunities? I’d love to hear from you.</p><p><a class="stk" href="mailto:aldryllabaguis1808@gmail.com">aldryllabaguis1808@gmail.com</a></p><p><a class="stk" href="https://www.facebook.com/aldryl.labaguis.2024." target="_blank" rel="noopener noreferrer">Facebook</a><a class="stk" href="#">LinkedIn</a></p>${pn(5)}`],
+ ['contact-page',`<h2>Let’s<br>connect.</h2><p>Questions, feedback or opportunities? I’d love to hear from you.</p><div class="contact-links">
+ <a class="stk contact-link" href="mailto:aldryllabaguis1808@gmail.com" aria-label="Email Aldryl Labaguis">
+  <svg class="contact-logo gmail-logo" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+   <path d="M3.5 7v12" fill="none" stroke="#4285F4" stroke-width="3.2" stroke-linecap="round"/>
+   <path d="M20.5 7v12" fill="none" stroke="#34A853" stroke-width="3.2" stroke-linecap="round"/>
+   <path d="M3.5 7 12 13.5l8.5-6.5" fill="none" stroke="#EA4335" stroke-width="3.3" stroke-linecap="round" stroke-linejoin="round"/>
+   <path d="M3.5 7V5.3" fill="none" stroke="#C5221F" stroke-width="3.2" stroke-linecap="round"/>
+   <path d="M20.5 7V5.3" fill="none" stroke="#FBBC04" stroke-width="3.2" stroke-linecap="round"/>
+  </svg>
+  <span>aldryllabaguis1808@gmail.com</span>
+ </a>
+ <a class="stk contact-link" href="https://www.facebook.com/aldryl.labaguis.2024." target="_blank" rel="noopener noreferrer" aria-label="Aldryl Labaguis on Facebook">
+  <svg class="contact-logo facebook-logo" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+   <circle cx="12" cy="12" r="11" fill="#1877F2"/>
+   <path d="M14.5 22V13.6h2.6l.4-3.3h-3V8.2c0-.95.29-1.6 1.55-1.6H17.6V3.65a18 18 0 0 0-2.38-.15c-2.5 0-4.2 1.53-4.2 4.33v2.47H8.3v3.3h2.72V22z" fill="#fff"/>
+  </svg>
+  <span>Aldryl Labaguis</span>
+ </a>
+</div>${pn(5)}`],
  ['closing-page',`<h2>Thanks for<br>reading.</h2><p>© 2026 Aldryl Labaguis · CP1 · JRU</p><button data-go="0">Back to cover</button>${pn(6)}`],
  ['bk bk-main',`<div class="reader-back-design"><span class="reader-back-flourish">✦</span><small>VOLUME I · THE END</small><strong>About Me</strong><span class="reader-back-divider"></span><span class="reader-back-signature">ALDRYL LABAGUIS</span><span class="reader-back-year">PERSONAL COLLECTION · 2026</span></div>`]);
 const WORKS_PG=[
