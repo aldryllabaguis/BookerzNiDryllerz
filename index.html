@@ -3749,6 +3749,11 @@ body::after{
   line-height:1.42;
  }
 }
+/* Four matching contact methods with comfortable spacing on a book leaf. */
+.reader-leaf .page-face.contact-page .contact-links{gap:clamp(11px,1.3vw,16px);margin-top:clamp(12px,1.7vw,21px)}
+@media(max-width:440px){
+ .reader-leaf .page-face.contact-page .contact-links{gap:9px;margin-top:11px}
+}
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
 <section id="shelf-view" class="shelf-view" aria-label="Bookshelf">
@@ -3813,6 +3818,23 @@ const pn=n=>`<div class="pn">— ${roman(n)} —</div>`; const li=(w,i,o)=>`<li 
    <path d="M14.5 22V13.6h2.6l.4-3.3h-3V8.2c0-.95.29-1.6 1.55-1.6H17.6V3.65a18 18 0 0 0-2.38-.15c-2.5 0-4.2 1.53-4.2 4.33v2.47H8.3v3.3h2.72V22z" fill="#fff"/>
   </svg>
   <span>Aldryl Labaguis</span>
+ </a>
+ <a class="stk contact-link" href="https://discord.com/users/1178331890399330347" target="_blank" rel="noopener noreferrer" aria-label="Discord profile">
+  <svg class="contact-logo discord-logo" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+   <path fill="#5865F2" d="M12 0a12 12 0 1 0 0 24 12 12 0 0 0 0-24z"/>
+   <path fill="#fff" d="M17.76 6.38a14.9 14.9 0 0 0-3.67-1.14l-.46.94a13.7 13.7 0 0 0-3.28 0l-.46-.94a14.9 14.9 0 0 0-3.67 1.14C3.89 9.84 3.25 13.23 3.56 16.6c1.5 1.15 3.15 1.93 4.51 2.28l.92-1.5c-.5-.2-1-.42-1.47-.7.12-.09.24-.18.35-.28 3.07 1.4 6.72 1.4 9.75 0l.35.28c-.47.28-.96.5-1.47.7l.92 1.5c1.36-.35 3.01-1.13 4.51-2.28.35-3.83-.61-7.21-2.67-10.22zm-8.1 8.1c-.88 0-1.6-.79-1.6-1.76s.71-1.76 1.6-1.76c.89 0 1.61.8 1.6 1.76 0 .97-.7 1.76-1.6 1.76zm5.04 0c-.88 0-1.6-.79-1.6-1.76s.71-1.76 1.6-1.76 1.61.8 1.6 1.76c0 .97-.71 1.76-1.6 1.76z" transform="translate(1.1 0) scale(.9)"/>
+  </svg>
+  <span>Discord</span>
+ </a>
+ <a class="stk contact-link" href="https://www.instagram.com/iam.dryl/" target="_blank" rel="noopener noreferrer" aria-label="Instagram profile at iam.dryl">
+  <svg class="contact-logo instagram-logo" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+   <defs><linearGradient id="contact-instagram-gradient" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stop-color="#FCAF45"/><stop offset="35%" stop-color="#F56040"/><stop offset="66%" stop-color="#C13584"/><stop offset="100%" stop-color="#5851DB"/></linearGradient></defs>
+   <rect x="1" y="1" width="22" height="22" rx="6.4" fill="url(#contact-instagram-gradient)"/>
+   <rect x="5.35" y="5.35" width="13.3" height="13.3" rx="4.1" fill="none" stroke="#fff" stroke-width="1.8"/>
+   <circle cx="12" cy="12" r="3.25" fill="none" stroke="#fff" stroke-width="1.8"/>
+   <circle cx="16.85" cy="7.25" r="1.12" fill="#fff"/>
+  </svg>
+  <span>@iam.dryl</span>
  </a>
 </div>${pn(5)}`],
  ['closing-page',`<div class="farewell-engraved-frame" aria-hidden="true"><span class="farewell-corner top-left"></span><span class="farewell-corner top-right"></span><span class="farewell-corner bottom-left"></span><span class="farewell-corner bottom-right"></span></div><div class="farewell-cat-halo" aria-hidden="true"><span class="farewell-cat-window"><svg class="farewell-cat-emblem" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 77 150" focusable="false"><path d="M39 1 L36 2 L36 9 Q26 12 21 18 L13 18 L21 34 L22 39 Q17 44 14 48 Q21 42 25 43 L26 46 L24 51 L25 55 Q13 62 10 72 Q7 82 5 94 Q4 102 6 123 Q8 139 21 145 Q43 149 56 143 Q63 142 69 135 Q66 130 67 126 Q74 124 75 117 Q76 114 74 110 Q69 113 67 121 Q64 132 57 130 L54 129 L51 125 Q53 111 53 98 L53 84 Q58 77 61 71 Q65 65 63 60 Q67 55 64 50 Q58 46 55 42 L55 37 Q52 34 53 30 L54 23 Q56 17 50 14 L46 12 L41 2 Z"/></svg></span></div><div class="farewell-content"><h2>Thanks for<br>reading.</h2><div class="farewell-ornament" aria-hidden="true"><span>✦</span></div><button data-go="0">Back to cover</button></div>${pn(6)}`],
