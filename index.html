@@ -2887,7 +2887,7 @@ const REFLECTIONS_PG=[
   }
   clearBookFlight();
  }
- async function openDetail(i){
+ async function openDetail(i,startAtCover=false){
   if(volumeTransitioning||scene.classList.contains('is-reading')||i<0||i>=books.length)return;
   volumeTransitioning=true;
   hideOpenCursor();
@@ -2925,14 +2925,14 @@ const REFLECTIONS_PG=[
    scene.classList.remove('is-opening','is-landing');
    await handoffFlight();
    card.classList.remove('is-chosen');
-   reader.go(1); // one book click opens to the first readable spread
+   if(!startAtCover)reader.go(1); // shelf clicks still open to the first spread; in-book links land on the cover
   }catch(error){
    console.error('Book opening fallback:',error);
    clearBookFlight();
    scene.classList.remove('is-opening','is-landing');
    scene.classList.add('is-reading');
    card.classList.remove('is-chosen');
-   reader?.go(1);
+   if(!startAtCover)reader?.go(1);
   }finally{
    volumeTransitioning=false;
   }
@@ -3173,7 +3173,7 @@ const REFLECTIONS_PG=[
 
   // Match the existing shelf-to-reader opening sequence for in-book links.
  // Close and fly the current hardcover home, then animate the new book
- // from its shelf position and turn open the first page.
+ // from its shelf position and leave it on its front cover.
  let crossVolumeBusy=false;
  async function jumpToVolume(index){
   if(crossVolumeBusy||volumeTransitioning||
@@ -3183,7 +3183,7 @@ const REFLECTIONS_PG=[
   try{
    await closeReader(false);
    if(!volumeTransitioning&&!scene.classList.contains('is-reading')){
-    await openDetail(index);
+    await openDetail(index,true);
    }
   }finally{
    crossVolumeBusy=false;
