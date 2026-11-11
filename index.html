@@ -3196,6 +3196,18 @@ const REFLECTIONS_PG=[
  function animateBooks(now){
   motionFrame=0;
   if(document.hidden||!isInViewport){lastMotion=0;return}
+  // Zero layout reads/writes while the book is flying or being read.
+  const shelfActive=!scene.classList.contains('is-opening')&&
+   !scene.classList.contains('is-landing')&&
+   !scene.classList.contains('is-returning')&&
+   !scene.classList.contains('is-reading')&&
+   !scene.classList.contains('is-detail');
+  if(!shelfActive){
+   if(cursorBook)hideOpenCursor();
+   lastMotion=0;
+   motionFrame=requestAnimationFrame(animateBooks);
+   return;
+  }
   if(!lastMotion)lastMotion=now-frameInterval;
   const diff=now-lastMotion;
   if(diff<frameInterval-1){motionFrame=requestAnimationFrame(animateBooks);return}
@@ -3210,17 +3222,6 @@ const REFLECTIONS_PG=[
   const ndcY=knownPointer?cm(-((pointerY-box.top)/h*2-1),-1,1):0;
   parX.t=reduced?0:ndcX*.02;
   parY.t=reduced?0:-ndcY*.012;
-  const shelfActive=!scene.classList.contains('is-opening')&&
-   !scene.classList.contains('is-landing')&&
-   !scene.classList.contains('is-returning')&&
-   !scene.classList.contains('is-reading')&&
-   !scene.classList.contains('is-detail');
-  if(!shelfActive){
-   hideOpenCursor();
-   lastMotion=0;
-   motionFrame=requestAnimationFrame(animateBooks);
-   return;
-  }
   // Read geometry once, then write transforms; no per-book layout thrashing.
   const hoveredBook=cursorBook;
   const hoverRect=hoveredBook?.shape.getBoundingClientRect();
