@@ -3857,6 +3857,127 @@ body::after{
 @media(prefers-reduced-motion:reduce){
  #scene .shelf-social-link{transition:none}
 }
+
+/* ABOUT ME · VINTAGE PRINTED PORTRAIT PLATE
+   The original full-resolution portrait is left intact; only its on-page
+   presentation is styled. No washi tape, tilted polaroid, or floating shadow. */
+.reader-leaf .page-face.vintage-portrait-page:not(.cover):not(.bk){
+ padding:clamp(15px,1.8vw,23px) clamp(15px,1.8vw,24px) clamp(12px,1.4vw,18px);
+ text-align:center;
+ overflow-y:auto;
+ scrollbar-width:thin;
+}
+.reader-leaf .page-face.vintage-portrait-page .vintage-portrait-overline{
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ gap:clamp(12px,2vw,22px);
+ margin:2px auto clamp(13px,1.4vw,19px);
+ color:#8d725c;
+ font:9px/1.5 'Special Elite',monospace;
+ letter-spacing:.13em;
+ white-space:nowrap;
+}
+.reader-leaf .page-face.vintage-portrait-page .vintage-portrait-overline span:first-child,
+.reader-leaf .page-face.vintage-portrait-page .vintage-portrait-overline span:last-child{
+ color:#aa8b65;
+ font:15px/1 Georgia,serif;
+}
+.reader-leaf .page-face.vintage-portrait-page .vintage-portrait-plate{
+ display:block;
+ width:min(94%,440px);
+ max-width:100%;
+ margin:0 auto;
+ padding:0;
+ background:transparent;
+ border:0;
+ border-radius:0;
+ box-shadow:none;
+ transform:none;
+}
+.reader-leaf .page-face.vintage-portrait-page .vintage-portrait-plate::before,
+.reader-leaf .page-face.vintage-portrait-page .vintage-portrait-plate::after{content:none}
+.reader-leaf .page-face.vintage-portrait-page .vintage-portrait-image{
+ position:relative;
+ display:block;
+ width:100%;
+ aspect-ratio:1114 / 1411;
+ overflow:hidden;
+ border:1px solid rgba(113,84,60,.64);
+ outline:3px double rgba(158,126,90,.65);
+ outline-offset:4px;
+ border-radius:0;
+ background:#cbb99b;
+ box-shadow:none;
+ transform:none;
+}
+.reader-leaf .page-face.vintage-portrait-page .vintage-portrait-image img{
+ position:relative;
+ display:block;
+ width:100%;
+ height:100%;
+ max-width:100%;
+ aspect-ratio:1114 / 1411;
+ object-fit:contain;
+ object-position:center;
+ filter:sepia(.12) saturate(.87) contrast(.99);
+}
+.reader-leaf .page-face.vintage-portrait-page .vintage-portrait-plate figcaption{
+ display:flex;
+ align-items:baseline;
+ justify-content:center;
+ gap:12px;
+ margin:clamp(15px,1.8vw,22px) auto 0;
+ padding:0 0 12px;
+ border-bottom:1px solid rgba(156,125,91,.38);
+ color:#765b4d;
+ text-shadow:none;
+ font:italic 600 clamp(19px,2vw,25px)/1.2 'Cormorant Garamond',Georgia,serif;
+ letter-spacing:.015em;
+}
+.reader-leaf .page-face.vintage-portrait-page .vintage-portrait-plate figcaption small{
+ color:#947963;
+ font:10px/1.5 'Special Elite',monospace;
+ letter-spacing:.08em;
+}
+.reader-leaf .page-face.vintage-portrait-page .pn{
+ margin-top:clamp(10px,1.1vw,15px);
+ color:#876d5e;
+}
+@media(max-width:790px){
+ .reader-leaf .page-face.vintage-portrait-page:not(.cover):not(.bk){
+  padding:12px 12px 9px;
+ }
+ .reader-leaf .page-face.vintage-portrait-page .vintage-portrait-plate{
+  width:min(92%,360px);
+ }
+ .reader-leaf .page-face.vintage-portrait-page .vintage-portrait-overline{
+  margin-bottom:13px;
+  font-size:8px;
+ }
+ .reader-leaf .page-face.vintage-portrait-page .vintage-portrait-plate figcaption{
+  margin-top:14px;
+  padding-bottom:9px;
+  font-size:clamp(15px,2.5vw,21px);
+ }
+}
+@media(max-width:440px){
+ .reader-leaf .page-face.vintage-portrait-page:not(.cover):not(.bk){padding:10px 8px}
+ .reader-leaf .page-face.vintage-portrait-page .vintage-portrait-plate{width:90%}
+ .reader-leaf .page-face.vintage-portrait-page .vintage-portrait-overline{
+  gap:7px;
+  margin-bottom:11px;
+  font-size:6.7px;
+ }
+ .reader-leaf .page-face.vintage-portrait-page .vintage-portrait-image{
+  outline-width:2px;outline-offset:3px;
+ }
+ .reader-leaf .page-face.vintage-portrait-page .vintage-portrait-plate figcaption{
+  gap:6px;margin-top:11px;padding-bottom:7px;font-size:14px;
+ }
+ .reader-leaf .page-face.vintage-portrait-page .vintage-portrait-plate figcaption small{font-size:8px}
+ .reader-leaf .page-face.vintage-portrait-page .pn{margin-top:9px}
+}
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
 <section id="shelf-view" class="shelf-view" aria-label="Bookshelf">
@@ -3938,7 +4059,7 @@ const W=[
  return output;
 };
 const pn=n=>`<div class="pn">— ${roman(n)} —</div>`; const li=(w,i,o)=>`<li class="work-entry"><b>${pad(i+o+1)}</b><div class="work-entry-content"><h3>${w[0]}</h3><p>${w[1]}</p><figure class="work-image-frame"><img src="${w[2]}" alt="${w[3]}" loading="lazy" onload="this.parentElement.classList.add('image-ready')" onerror="this.remove()"><figcaption class="work-image-placeholder" aria-hidden="true"><span class="work-image-glyph">✦</span><span>PROJECT IMAGE</span><small>Photo coming soon</small></figcaption></figure></div></li>`; const ph='<img src="photo.png" alt="" onerror="this.remove()">'; const PG=[ // reading order: F0,B0,F1,B1,...
-['cover cover-main-refined',`<div class="sun"></div>${ph}<div class="ct"><small>E‑PORTFOLIO · CP1 · JRU</small><h1>${NAME}</h1></div><img class="cover-sticker sticker-cat" src="assets/gothic-cat.svg" alt="" aria-hidden="true"><div class="stamp">Computer<br>Programming 1<br>2026</div>`], ['welcome-page',`<h2>Hello &amp;<br>welcome.</h2><p class="lead">This volume introduces me and my portfolio. My projects and reflections are each in their own books.</p><div class="toc"><button data-go="3">Contact</button></div>${pn(1)}`], ['',`<h2>About me</h2><p>Hello! My name is <mark class="name-ink-highlight">Aldryl Labaguis</mark>, and I’m 17 years old. I’m currently a student in BSIT-103I at Jose Rizal University, where I’m learning more about information technology and how it can be used in everyday life.</p><p>I chose BSIT because I’m interested in graphic design and how images, colors, and layouts can bring ideas to life. I want to explore how creativity and technology work together and develop the skills to create my own designs and projects.</p><p>Outside of school, I enjoy playing music, especially the guitar, and playing video games. Music gives me a way to express myself, while games let me relax and experience different worlds, artwork, and styles. I also enjoy going for midnight strolls because the quiet atmosphere helps me unwind and clear my mind.</p><p>As I continue my studies, I hope to grow my knowledge of technology, improve my design abilities, and create work that reflects my ideas and personality.</p>${pn(2)}`], ['polaroid-full-page',`<figure class="pola taped-polaroid" aria-label="Photo of Aldryl Labaguis taped onto the page"><div class="ph polaroid-picture"><img src="assets/aldryl-library-portrait-original.png" width="1114" height="1411" loading="lazy" decoding="async" alt="Aldryl Labaguis standing in a library wearing a black sweater and dark blue trousers"></div><figcaption><span>Aldryl Labaguis</span><small>2026</small></figcaption></figure>${pn(3)}`], ]; PG.push(
+['cover cover-main-refined',`<div class="sun"></div>${ph}<div class="ct"><small>E‑PORTFOLIO · CP1 · JRU</small><h1>${NAME}</h1></div><img class="cover-sticker sticker-cat" src="assets/gothic-cat.svg" alt="" aria-hidden="true"><div class="stamp">Computer<br>Programming 1<br>2026</div>`], ['welcome-page',`<h2>Hello &amp;<br>welcome.</h2><p class="lead">This volume introduces me and my portfolio. My projects and reflections are each in their own books.</p><div class="toc"><button data-go="3">Contact</button></div>${pn(1)}`], ['',`<h2>About me</h2><p>Hello! My name is <mark class="name-ink-highlight">Aldryl Labaguis</mark>, and I’m 17 years old. I’m currently a student in BSIT-103I at Jose Rizal University, where I’m learning more about information technology and how it can be used in everyday life.</p><p>I chose BSIT because I’m interested in graphic design and how images, colors, and layouts can bring ideas to life. I want to explore how creativity and technology work together and develop the skills to create my own designs and projects.</p><p>Outside of school, I enjoy playing music, especially the guitar, and playing video games. Music gives me a way to express myself, while games let me relax and experience different worlds, artwork, and styles. I also enjoy going for midnight strolls because the quiet atmosphere helps me unwind and clear my mind.</p><p>As I continue my studies, I hope to grow my knowledge of technology, improve my design abilities, and create work that reflects my ideas and personality.</p>${pn(2)}`], ['vintage-portrait-page',`<div class="vintage-portrait-overline" aria-hidden="true"><span>✦</span><span>FROM MY PERSONAL ARCHIVE</span><span>✦</span></div><figure class="vintage-portrait-plate" aria-label="Portrait of Aldryl Labaguis printed as a vintage photo plate inside the book"><div class="vintage-portrait-image"><img src="assets/aldryl-library-portrait-original.png" width="1114" height="1411" loading="lazy" decoding="async" alt="Aldryl Labaguis standing in a library wearing a black sweater and dark blue trousers"></div><figcaption><span>Aldryl Labaguis</span><small>2026</small></figcaption></figure>${pn(3)}`], ]; PG.push(
  ['three-volumes-page',`<h2>Three<br>volumes.</h2><p class="lead">This is the first book in my collection, and it serves as an introduction to who I am, my interests, and my journey as an Information Technology student.</p><p>I created this bookshelf to present my personal portfolio in a more creative and meaningful way. Instead of putting everything together in one place, I divided my experiences into three different volumes, with each book representing a part of my story.</p><p>The first volume, <strong>About Me</strong>, introduces my background, hobbies, interests, and goals. The second volume, <strong>Works &amp; Projects</strong>, contains my academic activities, projects, and accomplishments throughout my studies. Lastly, <strong>Reflections</strong> shares the experiences, challenges, and lessons I've learned during the Prelim, Midterm, and Final periods.</p><p>Together, these three books represent my progress, creativity, and growth as a student. Each page holds something that has helped shape who I am and who I hope to become.</p><p>Feel free to explore <strong><button type="button" class="reader-volume-link" data-open-volume="0" aria-label="Open Works and Projects book">Works &amp; Projects</button></strong> or <strong><button type="button" class="reader-volume-link" data-open-volume="2" aria-label="Open Reflections book">Reflections</button></strong> to discover more about my journey.</p>${pn(4)}`],
  ['contact-page',`<h2>Let’s<br>connect.</h2><p>Questions, feedback or opportunities? I’d love to hear from you.</p><div class="contact-links">
  <a class="stk contact-link" href="mailto:aldryllabaguis1808@gmail.com" aria-label="Email Aldryl Labaguis">
