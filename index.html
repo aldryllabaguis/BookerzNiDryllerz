@@ -3596,6 +3596,38 @@ body::after{
  height:auto;
  background:#120e14;
 }
+
+/* WORKS & PROJECTS · larger real paper dimensions, not a scaled screenshot.
+   The 4:3 spread keeps each leaf at its original 2:3 book proportion. */
+@media(min-width:791px){
+ .reader-view.works-expanded #reader-stage.reader-stage{
+  width:min(100%,1240px);
+  height:auto;
+  aspect-ratio:4 / 3;
+  max-height:none;
+ }
+ .reader-view.works-expanded .reader-top,
+ .reader-view.works-expanded .reader-controls{
+  max-width:1240px;
+ }
+ .scene.is-reading.is-works-reader{
+  min-height:clamp(930px,calc(70vw + 215px),1240px);
+ }
+}
+/* Smaller screens: preserve the two-page flip and give each leaf more
+   vertical space without distorting or recompressing the image/video. */
+@media(max-width:790px){
+ .reader-view.works-expanded #reader-stage.reader-stage{
+  width:100%;
+  height:clamp(535px,107vw,725px);
+  max-height:none;
+ }
+}
+@media(max-width:440px){
+ .reader-view.works-expanded #reader-stage.reader-stage{
+  height:clamp(540px,145vw,685px);
+ }
+}
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
 <section id="shelf-view" class="shelf-view" aria-label="Bookshelf">
@@ -4066,6 +4098,9 @@ const REFLECTIONS_PG=[
   setTimeout(()=>{selected=(selected+delta+books.length)%books.length;markSelected();populateDetail();requestAnimationFrame(()=>{scene.classList.add('is-detail');startFocusView()})},240);
  }
  function makeReader(b){
+  // Works & Projects gets a larger reading spread; other volumes keep their original proportions.
+  readerView.classList.toggle('works-expanded',b.title==='Works & Projects');
+  scene.classList.toggle('is-works-reader',b.title==='Works & Projects');
   const stage=$('#reader-stage'),pagesEl=$('#reader-pages');
   const progress=$('#reader-progress'),progressFill=$('#reader-progress-fill');
   pagesEl.innerHTML='';
