@@ -2495,6 +2495,18 @@ body::after{
   box-shadow:none!important;
 }
 
+
+/* Keep paperback cover proportions consistent in the reader, exactly 2:3
+   per leaf and 4:3 for the complete open book, without stretching artwork. */
+@media(min-width:791px){
+ #reader-stage.reader-stage{
+   width:min(100%,1012px);
+   height:auto;
+   aspect-ratio:4 / 3;
+   max-height:760px;
+ }
+}
+.book-transition-ghost{-webkit-transform-origin:top left!important;transform-origin:top left!important}
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
 <section id="shelf-view" class="shelf-view" aria-label="Bookshelf">
@@ -2764,6 +2776,15 @@ const REFLECTIONS_PG=[
   rect.top-=26;
   return rect;
  }
+ function coverRestRect(el){
+  // A shelf book is tilted in 3D. Its projected bounding width is not
+  // the cover width; use the CSS dimensions centered on the visual bounds.
+  const rect=el.getBoundingClientRect();
+  const width=el.offsetWidth||rect.width;
+  const height=el.offsetHeight||rect.height;
+  return {left:rect.left+(rect.width-width)/2,
+   top:rect.top+(rect.height-height)/2,width,height};
+ }
  function makeFlightBook(rect,titleSize){
   const el=document.createElement('div');
   el.className='book-transition-ghost';
@@ -2787,15 +2808,17 @@ const REFLECTIONS_PG=[
  function flyBook(from,to,reverse,titleSize,existingGhost=null){
   const ghost=existingGhost||makeFlightBook(from,titleSize);
   ghost.style.transformOrigin='top left';
-  const dx=to.left-from.left,dy=to.top-from.top;
-  const sx=to.width/Math.max(1,from.width),sy=to.height/Math.max(1,from.height);
+  // A single uniform scale prevents the cover from stretching in X or Y.
+  const fit=Math.min(to.width/Math.max(1,from.width),to.height/Math.max(1,from.height));
+  const targetWidth=from.width*fit,targetHeight=from.height*fit;
+  const dx=to.left+(to.width-targetWidth)/2-from.left;
+  const dy=to.top+(to.height-targetHeight)/2-from.top;
   const pose=(at,arc,tilt)=>({
-   transform:'translate3d('+(dx*at).toFixed(2)+'px,'+(dy*at-arc).toFixed(2)+'px,0) rotateY('+tilt+'deg) scale('+(1+(sx-1)*at).toFixed(5)+','+(1+(sy-1)*at).toFixed(5)+')',
+   transform:'translate3d('+(dx*at).toFixed(2)+'px,'+(dy*at-arc).toFixed(2)+'px,0) rotateY('+tilt+'deg) scale('+(1+(fit-1)*at).toFixed(5)+')',
    offset:at
   });
   if(transitionReduce.matches||typeof ghost.animate!=='function'){
-   ghost.style.left=to.left+'px';ghost.style.top=to.top+'px';
-   ghost.style.width=to.width+'px';ghost.style.height=to.height+'px';
+   ghost.style.transform=pose(1,0,0).transform;
    return Promise.resolve(ghost);
   }
   let motion;
@@ -2808,8 +2831,7 @@ const REFLECTIONS_PG=[
    ],{duration:reverse?900:1040,easing:'cubic-bezier(.22,.75,.18,1)',fill:'forwards'});
    activeFlightAnimation=motion;
   }catch(error){
-   ghost.style.left=to.left+'px';ghost.style.top=to.top+'px';
-   ghost.style.width=to.width+'px';ghost.style.height=to.height+'px';
+   ghost.style.transform=pose(1,0,0).transform;
    return Promise.resolve(ghost);
   }
   return motion.finished.catch(()=>{}).then(()=>ghost);
@@ -2844,7 +2866,7 @@ const REFLECTIONS_PG=[
   reader=makeReader(books[selected]);
   const card=document.querySelectorAll('#shelf-track .shelf-book')[i];
   const coverEl=card.querySelector('.book-3d');
-  const from=rectSnapshot(coverEl.getBoundingClientRect());
+  const from=coverRestRect(coverEl);
   const titleSize=getComputedStyle(card.querySelector('.display-cover .ct h1')).fontSize;
   try{
    if(!transitionReduce.matches){
@@ -2905,7 +2927,7 @@ const REFLECTIONS_PG=[
    card.classList.add('is-chosen');
    scene.classList.remove('is-detail','is-closing','is-reading');
    scene.classList.add('is-returning');
-   const to=rectSnapshot(card.querySelector('.book-3d').getBoundingClientRect());
+   const to=coverRestRect(card.querySelector('.book-3d'));
    const flight=flyBook(from,to,true,titleSize);
    await flight;
    if(seq!==bookFlightSequence)return;
@@ -3081,7 +3103,7 @@ const REFLECTIONS_PG=[
     scene.classList.remove('is-reading');
     scene.classList.add('is-returning');
     await nextBookFrame();await nextBookFrame();
-    const to=rectSnapshot(card.querySelector('.book-3d').getBoundingClientRect());
+    const to=coverRestRect(card.querySelector('.book-3d'));
     await flyBook(from,to,true,titleSize,traveller);
     // Restore the shelf cover before the traveller is faded away.
     scene.classList.remove('is-returning');
