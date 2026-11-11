@@ -3754,6 +3754,117 @@ body::after{
 @media(max-width:440px){
  .reader-leaf .page-face.contact-page .contact-links{gap:9px;margin-top:11px}
 }
+
+/* Bookshelf-only contact dock: gilded, discreet icon-only links. */
+#scene .shelf-contact-dock{
+ position:fixed;
+ left:50%;
+ bottom:clamp(13px,2.8vh,28px);
+ transform:translateX(-50%);
+ z-index:30;
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ gap:7px;
+ width:max-content;
+ max-width:calc(100vw - 26px);
+ padding:10px clamp(22px,3vw,36px) 8px;
+ border:1px solid rgba(193,158,122,.41);
+ border-radius:22px;
+ background:linear-gradient(125deg,rgba(27,16,22,.89),rgba(37,21,29,.87) 52%,rgba(24,15,20,.91));
+ box-shadow:0 16px 35px rgba(0,0,0,.36),inset 0 0 0 1px rgba(240,205,155,.065);
+ -webkit-backdrop-filter:blur(11px);
+ backdrop-filter:blur(11px);
+ color:#f2ddca;
+ transition:opacity .22s ease,visibility .22s ease;
+}
+#scene .shelf-contact-heading{
+ display:flex;align-items:center;justify-content:center;gap:13px;
+ width:100%;
+}
+#scene .shelf-contact-heading h2{
+ margin:0;
+ font:italic 600 clamp(21px,1.65vw,26px)/1.1 'IM Fell English',Georgia,serif;
+ letter-spacing:.015em;
+ white-space:nowrap;
+ text-shadow:0 2px 7px rgba(0,0,0,.65);
+}
+#scene .shelf-contact-rule{
+ width:clamp(35px,4.4vw,67px);
+ height:1px;
+ background:linear-gradient(90deg,transparent,#c6a47d,transparent);
+ opacity:.82;
+}
+#scene .shelf-contact-icons{
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ gap:clamp(10px,1.5vw,18px);
+}
+#scene .shelf-social-link{
+ display:grid;place-items:center;
+ width:clamp(40px,3.5vw,49px);
+ height:clamp(40px,3.5vw,49px);
+ color:#e8d5c2;
+ background:linear-gradient(145deg,#3f2b32,#241a23);
+ border:1px solid rgba(206,167,122,.62);
+ border-radius:50%;
+ box-shadow:inset 0 1px 0 rgba(255,241,215,.1),0 3px 9px rgba(0,0,0,.29);
+ text-decoration:none;
+ transition:transform .22s ease,border-color .22s ease,color .22s ease,box-shadow .22s ease;
+}
+#scene .shelf-social-link svg{display:block;width:25px;height:25px}
+#scene .shelf-social-link:hover,
+#scene .shelf-social-link:focus-visible{
+ transform:translateY(-4px);
+ border-color:#e6c49d;
+ box-shadow:0 6px 19px rgba(0,0,0,.42),0 0 17px rgba(181,115,117,.24);
+ outline:none;
+}
+#scene .shelf-social-discord:hover,
+#scene .shelf-social-discord:focus-visible{color:#abb1ff}
+#scene .shelf-social-instagram:hover,
+#scene .shelf-social-instagram:focus-visible{color:#f7acc3}
+#scene .shelf-social-facebook:hover,
+#scene .shelf-social-facebook:focus-visible{color:#8bbafb}
+#scene .shelf-social-gmail:hover,
+#scene .shelf-social-gmail:focus-visible{color:#ffc7a0}
+#scene .shelf-contact-ornament{
+ display:block;
+ color:#a98567;
+ font:10px/1 Georgia,serif;
+ opacity:.8;
+}
+#scene:is(.is-detail,.is-reading,.is-opening,.is-landing,.is-returning,.is-closing-volume) .shelf-contact-dock{
+ opacity:0;
+ visibility:hidden;
+ pointer-events:none;
+}
+/* In compact viewports, keep the dock below the books instead of overlaying them. */
+@media(max-width:900px), (max-height:800px){
+ #scene .shelf-contact-dock{
+  position:relative;
+  left:auto;
+  bottom:auto;
+  transform:none;
+  margin:clamp(-43px,-2vw,-16px) auto 15px;
+ }
+}
+@media(max-width:440px){
+ #scene .shelf-contact-dock{
+  padding:10px 17px 7px;
+  gap:6px;
+  border-radius:18px;
+ }
+ #scene .shelf-contact-icons{gap:11px}
+ #scene .shelf-social-link{width:41px;height:41px}
+ #scene .shelf-social-link svg{width:23px;height:23px}
+ #scene .shelf-contact-heading h2{font-size:22px}
+ #scene .shelf-contact-rule{width:32px}
+}
+@media(prefers-reduced-motion:reduce){
+ #scene .shelf-social-link{transition:none}
+}
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
 <section id="shelf-view" class="shelf-view" aria-label="Bookshelf">
@@ -3764,6 +3875,36 @@ body::after{
  </div>
  
 </section>
+<nav class="shelf-contact-dock" id="shelf-contact-dock" aria-labelledby="shelf-contact-title">
+ <div class="shelf-contact-heading"><span class="shelf-contact-rule" aria-hidden="true"></span><h2 id="shelf-contact-title">Contact me!</h2><span class="shelf-contact-rule" aria-hidden="true"></span></div>
+ <div class="shelf-contact-icons">
+  <a class="shelf-social-link shelf-social-discord" href="https://discord.com/users/1178331890399330347" target="_blank" rel="noopener noreferrer" title="Discord" aria-label="Contact me on Discord">
+   <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <path fill="currentColor" d="M19.73 5.21a17.2 17.2 0 0 0-4.24-1.32l-.51 1.04a15.8 15.8 0 0 0-4.93 0l-.51-1.04A17.2 17.2 0 0 0 5.3 5.21C2.63 9.17 1.91 13.03 2.28 16.84a17.4 17.4 0 0 0 5.21 2.64l1.12-1.81a11 11 0 0 1-1.68-.82l.41-.33c3.24 1.52 6.79 1.52 10.01 0l.41.33c-.54.33-1.1.61-1.68.82l1.12 1.81a17.4 17.4 0 0 0 5.21-2.64c.44-4.43-.75-8.25-2.68-11.63zM9.36 14.61c-.99 0-1.81-.89-1.81-1.98s.8-1.98 1.81-1.98c1.01 0 1.82.89 1.81 1.98 0 1.09-.81 1.98-1.81 1.98zm5.28 0c-1 0-1.81-.89-1.81-1.98s.8-1.98 1.81-1.98c1.01 0 1.82.89 1.81 1.98 0 1.09-.8 1.98-1.81 1.98z"/>
+   </svg>
+  </a>
+  <a class="shelf-social-link shelf-social-instagram" href="https://www.instagram.com/iam.dryl/" target="_blank" rel="noopener noreferrer" title="Instagram" aria-label="Follow me on Instagram">
+   <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <rect x="2" y="2" width="20" height="20" rx="6" fill="none" stroke="currentColor" stroke-width="2.1"/>
+    <circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="2.1"/>
+    <circle cx="17.9" cy="6.4" r="1.4" fill="currentColor"/>
+   </svg>
+  </a>
+  <a class="shelf-social-link shelf-social-facebook" href="https://www.facebook.com/aldryl.labaguis.2024." target="_blank" rel="noopener noreferrer" title="Facebook" aria-label="Connect with me on Facebook">
+   <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <path fill="currentColor" d="M21 12a9 9 0 1 0-10.4 8.89v-6.3H8.3V12h2.3v-1.99c0-2.27 1.35-3.53 3.42-3.53.99 0 2.02.18 2.02.18v2.22H14.9c-1.12 0-1.47.69-1.47 1.4V12h2.5l-.4 2.59h-2.1v6.3A9 9 0 0 0 21 12Z"/>
+   </svg>
+  </a>
+  <a class="shelf-social-link shelf-social-gmail" href="mailto:aldryllabaguis1808@gmail.com" title="Gmail" aria-label="Email me on Gmail">
+   <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <path d="M3.5 7v12" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round"/>
+    <path d="M20.5 7v12" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round"/>
+    <path d="M3.5 7 12 13.5l8.5-6.5" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"/>
+   </svg>
+  </a>
+ </div>
+ <span class="shelf-contact-ornament" aria-hidden="true">✦</span>
+</nav>
 <section id="detail-view" class="detail-view" hidden aria-label="Selected book">
  <button type="button" id="detail-close" class="close-detail" aria-label="Close book details">×</button>
  <div class="detail-grid"><div class="focus-stage" id="focus-stage">
