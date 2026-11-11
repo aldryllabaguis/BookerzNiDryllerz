@@ -3414,6 +3414,71 @@ body::after{
  .reader-leaf .page-face.works-image-page .work-image-frame{height:90px}
  .reader-leaf .page-face.works-image-page-single .work-image-frame{height:165px}
 }
+
+/* One project per page: give the photo the center of the spread. */
+.reader-leaf .page-face.works-image-page-single h2{
+ margin-bottom:clamp(15px,2vw,24px);
+}
+.reader-leaf .page-face.works-image-page-single .work-entry{
+ border:0;
+}
+.reader-leaf .page-face.works-image-page-single .work-entry h3{
+ font-size:clamp(18px,2vw,24px);
+ line-height:1.15;
+ margin-bottom:7px;
+}
+.reader-leaf .page-face.works-image-page-single .work-entry p{
+ font-size:clamp(14px,1.45vw,17px);
+ line-height:1.4;
+ margin-bottom:13px;
+}
+.reader-leaf .page-face.works-image-page-single .work-image-frame{
+ height:clamp(195px,24vw,275px);
+ margin-top:8px;
+}
+/* The final unnumbered leaf is a quiet decorative endpaper before the back cover. */
+.reader-leaf .page-face.works-endpaper{
+ display:grid;
+ place-items:center;
+}
+.reader-leaf .page-face.works-endpaper .works-endpaper-inner{
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ justify-content:center;
+ gap:17px;
+ width:86%;
+ min-height:72%;
+ border:1px solid #cbb492;
+ outline:1px solid #d9c8ab;
+ outline-offset:5px;
+ color:#73574d;
+ text-align:center;
+ font:10px/1.3 'Special Elite',monospace;
+ letter-spacing:.15em;
+}
+.reader-leaf .page-face.works-endpaper .works-endpaper-flourish{
+ font:32px/1 Georgia,serif;
+ color:#9f805b;
+}
+.reader-leaf .page-face.works-endpaper strong{
+ font:italic 600 clamp(24px,3vw,35px)/1.2 'IM Fell English',Georgia,serif;
+ letter-spacing:0;
+ color:#52343b;
+}
+.reader-leaf .page-face.works-endpaper .works-endpaper-rule{
+ display:block;
+ width:55%;
+ height:1px;
+ background:linear-gradient(90deg,transparent,#aa8865,transparent);
+}
+@media(max-width:440px){
+ .reader-leaf .page-face.works-image-page-single .work-entry h3{font-size:16px;margin-bottom:4px}
+ .reader-leaf .page-face.works-image-page-single .work-entry p{font-size:12.5px;margin-bottom:8px}
+ .reader-leaf .page-face.works-image-page-single .work-image-frame{height:173px;margin-top:5px}
+ .reader-leaf .page-face.works-image-page-single h2{margin-bottom:12px}
+ .reader-leaf .page-face.works-endpaper .works-endpaper-inner{gap:11px;width:83%;min-height:76%;font-size:8px}
+}
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
 <section id="shelf-view" class="shelf-view" aria-label="Bookshelf">
@@ -3485,9 +3550,11 @@ const pn=n=>`<div class="pn">— ${roman(n)} —</div>`; const li=(w,i,o)=>`<li 
 const WORKS_PG=[
  ['cover cover-works',`<div class="ct"><small>VOLUME II · SELECTED WORKS</small><h1>Works<br>&amp; Projects</h1><p class="works-subtitle">A collection by Aldryl Labaguis</p></div><img class="cover-sticker sticker-cat" src="assets/gothic-cat.svg" alt="" aria-hidden="true"><div class="stamp">Volume<br>Two<br>2026</div><span class="cover-archive-label" aria-hidden="true">EST. 2026<br>ARCHIVE / 02</span>`],
  ['',`<h2>Selected<br>works.</h2><p class="lead">A separate volume for academic outputs, projects, presentations and other work.</p><p class="reader-cross-volume">Also explore <strong><button type="button" class="reader-volume-link" data-open-volume="1" aria-label="Open About Me book">About Me</button></strong> or <strong><button type="button" class="reader-volume-link" data-open-volume="2" aria-label="Open Reflections book">Reflections</button></strong>.</p><div class="toc"><button data-mini-go="1">Browse works</button></div>${pn(1)}`],
- ['works-image-page',`<h2>Academics<br>&amp; outputs</h2><ol class="works-image-list">${W.slice(0,2).map((w,i)=>li(w,i,0)).join('')}</ol>${pn(2)}`],
- ['works-image-page works-image-page-single',`<h2>More<br>works</h2><ol class="works-image-list">${W.slice(2).map((w,i)=>li(w,i,2)).join('')}</ol>${pn(3)}`],
- ['',`<h2>End of<br>volume.</h2><p>More projects and achievements can be added here as they grow.</p>${pn(4)}`],
+ ['works-image-page works-image-page-single',`<h2>Work<br>one.</h2><ol class="works-image-list">${W.slice(0,1).map((w,i)=>li(w,i,0)).join('')}</ol>${pn(2)}`],
+ ['works-image-page works-image-page-single',`<h2>Work<br>two.</h2><ol class="works-image-list">${W.slice(1,2).map((w,i)=>li(w,i,1)).join('')}</ol>${pn(3)}`],
+ ['works-image-page works-image-page-single',`<h2>Work<br>three.</h2><ol class="works-image-list">${W.slice(2,3).map((w,i)=>li(w,i,2)).join('')}</ol>${pn(4)}`],
+ ['',`<h2>End of<br>volume.</h2><p>More projects and achievements can be added here as they grow.</p>${pn(5)}`],
+ ['works-endpaper',`<div class="works-endpaper-inner" aria-hidden="true"><span class="works-endpaper-flourish">✦</span><small>VOLUME II</small><strong>Works &amp; Projects</strong><span class="works-endpaper-rule"></span><span>A PERSONAL COLLECTION</span></div>`],
  ['bk bk-works',`<div class="reader-back-design"><span class="reader-back-flourish">✦</span><small>VOLUME II · THE END</small><strong>Works &amp; Projects</strong><span class="reader-back-divider"></span><span class="reader-back-signature">ALDRYL LABAGUIS</span><span class="reader-back-year">PERSONAL COLLECTION · 2026</span></div>`]
 ];
 
@@ -3506,7 +3573,7 @@ const REFLECTIONS_PG=[
 
 (function(){
  const books=[
-  {title:'Works & Projects',subtitle:'Volume II · Selected Works',desc:'A collection of academic outputs, project documentation, presentations, and achievements from my studies.',chapters:['Selected Works','Academics & Outputs','More Works','End of Volume'],pages:WORKS_PG},
+  {title:'Works & Projects',subtitle:'Volume II · Selected Works',desc:'A collection of academic outputs, project documentation, presentations, and achievements from my studies.',chapters:['Selected Works','PTs & Products Compilation','Project Documentation','Video Project Presentation','End of Volume'],pages:WORKS_PG},
   {title:'About Me',subtitle:'Volume I · E-Portfolio',desc:'My personal introduction, background, and contact details in Computer Programming 1.',chapters:['Welcome','About Me','Three Volumes','Contact'],pages:PG},
   {title:'Reflections',subtitle:'Volume III · Personal Reflections',desc:'My Prelim, Midterm, and Final reflections from Computer Programming 1, collected in their own volume.',chapters:['Introduction','Prelim','Midterm','Final','Looking Back'],pages:REFLECTIONS_PG}
  ];
