@@ -3908,7 +3908,7 @@ body::after{
  outline-offset:4px;
  border-radius:0;
  background:#cbb99b;
- box-shadow:none;
+ box-shadow:inset 0 0 0 1px rgba(255,248,238,.22),0 1px 3px rgba(62,40,26,.08);
  transform:none;
 }
 .reader-leaf .page-face.vintage-portrait-page .vintage-portrait-image img{
@@ -3920,24 +3920,48 @@ body::after{
  aspect-ratio:1114 / 1411;
  object-fit:contain;
  object-position:center;
- filter:sepia(.12) saturate(.87) contrast(.99);
+ /* Authentic aged print tone: light tint, natural skin and fabric details. */
+ filter:sepia(.16) saturate(.88) contrast(1.01) brightness(.98);
+}
+/* Faint optical falloff of a printed film photo, not a painted effect. */
+.reader-leaf .page-face.vintage-portrait-page .vintage-portrait-image::before{
+ content:"";
+ position:absolute;
+ inset:0;
+ z-index:2;
+ pointer-events:none;
+ background:radial-gradient(ellipse at 50% 47%,transparent 52%,rgba(78,55,38,.07) 100%);
+}
+/* Near-imperceptible archival paper grain, overlaid only at the pixel edges. */
+.reader-leaf .page-face.vintage-portrait-page .vintage-portrait-image::after{
+ content:"";
+ position:absolute;
+ inset:0;
+ z-index:3;
+ pointer-events:none;
+ background-image:
+  radial-gradient(rgba(78,55,39,.11) .55px,transparent .8px),
+  radial-gradient(rgba(255,247,226,.13) .6px,transparent .9px);
+ background-size:7px 8px,11px 10px;
+ background-position:0 0,4px 3px;
+ opacity:.14;
 }
 .reader-leaf .page-face.vintage-portrait-page .vintage-portrait-plate figcaption{
  display:flex;
  align-items:baseline;
  justify-content:center;
- gap:12px;
- margin:clamp(15px,1.8vw,22px) auto 0;
- padding:0 0 12px;
- border-bottom:1px solid rgba(156,125,91,.38);
- color:#765b4d;
- text-shadow:none;
- font:italic 600 clamp(19px,2vw,25px)/1.2 'Cormorant Garamond',Georgia,serif;
- letter-spacing:.015em;
+ gap:10px;
+ margin:clamp(14px,1.8vw,20px) auto 0;
+ padding:0 0 10px;
+ border-bottom:1px solid rgba(156,125,91,.30);
+ color:#735b4d;
+ text-shadow:0 1px 0 rgba(255,250,241,.45);
+ font:italic 600 clamp(18px,2vw,23px)/1.2 'Cormorant Garamond',Georgia,serif;
+ letter-spacing:.01em;
 }
 .reader-leaf .page-face.vintage-portrait-page .vintage-portrait-plate figcaption small{
- color:#947963;
- font:10px/1.5 'Special Elite',monospace;
+ color:#927764;
+ font:10px/1.4 'Special Elite',monospace;
  letter-spacing:.08em;
 }
 .reader-leaf .page-face.vintage-portrait-page .pn{
