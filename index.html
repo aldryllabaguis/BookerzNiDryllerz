@@ -3290,29 +3290,29 @@ body::after{
  .reader-leaf .page-face .num.reflection-roman-medallion::after{bottom:5px;font-size:8px}
 }
 
-/* Prelim reflection — clean, readable journal typography for the expanded entry. */
-.reader-leaf .page-face.reflection-prelim-page:not(.cover):not(.bk){
+/* Prelim and Midterm — matching, readable typography for the expanded entries. */
+.reader-leaf .page-face:is(.reflection-prelim-page,.reflection-midterm-page):not(.cover):not(.bk){
  padding:clamp(16px,2.35vw,28px);
 }
-.reader-leaf .page-face.reflection-prelim-page h2{
+.reader-leaf .page-face:is(.reflection-prelim-page,.reflection-midterm-page) h2{
  margin:0 0 clamp(13px,1.4vw,19px);
 }
-.reader-leaf .page-face.reflection-prelim-page p.body{
+.reader-leaf .page-face:is(.reflection-prelim-page,.reflection-midterm-page) p.body{
  margin:0 0 14px;
  color:#44383a;
- font:400 clamp(13px,1.4vw,17px)/1.56 'Cormorant Garamond',Georgia,serif;
+ font:400 clamp(14.5px,1.55vw,18.5px)/1.5 'Cormorant Garamond',Georgia,serif;
  letter-spacing:.005em;
  text-wrap:pretty;
 }
-.reader-leaf .page-face.reflection-prelim-page .pn{
+.reader-leaf .page-face:is(.reflection-prelim-page,.reflection-midterm-page) .pn{
  clear:both;
  padding-top:10px;
  border-top:1px solid rgba(159,128,92,.24);
 }
 @media(max-width:440px){
- .reader-leaf .page-face.reflection-prelim-page:not(.cover):not(.bk){padding:13px}
- .reader-leaf .page-face.reflection-prelim-page h2{margin-bottom:10px}
- .reader-leaf .page-face.reflection-prelim-page p.body{font-size:12.5px;line-height:1.46}
+ .reader-leaf .page-face:is(.reflection-prelim-page,.reflection-midterm-page):not(.cover):not(.bk){padding:13px}
+ .reader-leaf .page-face:is(.reflection-prelim-page,.reflection-midterm-page) h2{margin-bottom:10px}
+ .reader-leaf .page-face:is(.reflection-prelim-page,.reflection-midterm-page) p.body{font-size:13.5px;line-height:1.45}
 }
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
@@ -3344,7 +3344,7 @@ body::after{
  <div class="reader-stage" id="reader-stage"><div class="reader-pages" id="reader-pages"></div></div><nav class="reader-controls" aria-label="Page controls"><button type="button" id="reader-prev">← Previous</button><span id="reader-count" aria-live="polite">Cover</span><button type="button" id="reader-next">Next →</button></nav><div class="reader-progress" id="reader-progress" role="progressbar" aria-label="Reading progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="reader-progress-fill"></span></div>
 </section>
 </div></main><script>
-const $=(s,c=document)=>c.querySelector(s),pad=n=>String(n).padStart(2,'0'); /* ---------- EDIT YOUR CONTENT HERE ---------- */ const NAME='Aldryl<br>Labaguis'; const W=[ ['PTs & Products Compilation','All machine problems, activities, seatwork and recitation outputs in one PDF, with Java screenshots.','#','Open PDF'], ['Project Documentation','Goals, design and a walkthrough of my project code.','#','Open PDF'], ['Video Project Presentation','A recorded demo of my project. Paste your YouTube or Drive link.','#','Watch video'], ['Work Experience / Internships','Add your role, company and dates.','#','Edit me'], ['Seminars & Trainings','List the seminars you attended, with speakers and dates.','#','Edit me'], ['Organization & Community','Your orgs, roles and outreach activities, in or out of campus.','#','Edit me'], ['Awards & Recognitions','Dean’s list, contests, certificates.','#','Edit me'], ['Other JRU Experience','Anything else you want to share about your journey at JRU.','#','Edit me']]; const RF=[ ['Prelim','We began by learning how a program is structured, then moved on to variables, data types, input/output, and operators. At first, even a missing semicolon or a small typo could take up an entire afternoon, and debugging often felt frustrating and overwhelming. As the lessons went on, I slowly learned to read error messages more carefully and solve problems step by step, which helped turn confusion into calm and productive debugging. One of my favorite activities was creating simple programs and seeing them finally work after testing and revising them. My biggest struggle was fixing errors and understanding where I went wrong, but that challenge taught me to be more patient, observant, and confident in coding.',''], ['Midterm','Decision-making and repetition changed everything: if–else, switch, loops and nested loops. Patterns and number problems taught me to trace my code line by line before running it.','[Edit: a machine problem you were proud of.]'], ['Final','Arrays and methods taught me to break big problems into small reusable pieces, and the project let me combine everything from the semester.','[Edit: how you grew and your plans for Programming 2.]']]; /* -------------------------------------------- */ const roman=n=>{
+const $=(s,c=document)=>c.querySelector(s),pad=n=>String(n).padStart(2,'0'); /* ---------- EDIT YOUR CONTENT HERE ---------- */ const NAME='Aldryl<br>Labaguis'; const W=[ ['PTs & Products Compilation','All machine problems, activities, seatwork and recitation outputs in one PDF, with Java screenshots.','#','Open PDF'], ['Project Documentation','Goals, design and a walkthrough of my project code.','#','Open PDF'], ['Video Project Presentation','A recorded demo of my project. Paste your YouTube or Drive link.','#','Watch video'], ['Work Experience / Internships','Add your role, company and dates.','#','Edit me'], ['Seminars & Trainings','List the seminars you attended, with speakers and dates.','#','Edit me'], ['Organization & Community','Your orgs, roles and outreach activities, in or out of campus.','#','Edit me'], ['Awards & Recognitions','Dean’s list, contests, certificates.','#','Edit me'], ['Other JRU Experience','Anything else you want to share about your journey at JRU.','#','Edit me']]; const RF=[ ['Prelim','We began by learning how a program is structured, then moved on to variables, data types, input/output, and operators. At first, even a missing semicolon or a small typo could take up an entire afternoon, and debugging often felt frustrating and overwhelming. As the lessons went on, I slowly learned to read error messages more carefully and solve problems step by step, which helped turn confusion into calm and productive debugging. One of my favorite activities was creating simple programs and seeing them finally work after testing and revising them. My biggest struggle was fixing errors and understanding where I went wrong, but that challenge taught me to be more patient, observant, and confident in coding.',''], ['Midterm','During the Midterm, our lessons became more challenging as we started using decision-making statements and repetition, including if–else, switch, loops, and nested loops. Unlike the Prelim, where I focused on understanding the basics, this term pushed me to think more carefully about the steps a program takes before it produces an answer. Some of our activities involved solving number problems and creating patterns, which seemed simple until I had to write the logic myself. I sometimes struggled with choosing the right conditions or figuring out why a loop was not working as expected. There were times when my output looked completely different from what I wanted, so I had to check each line and test different values. My favorite part was finally getting a challenging program to work after several attempts. Through these experiences, I learned to be more patient, trace my code step by step, and become more confident when solving programming problems.',''], ['Final','Arrays and methods taught me to break big problems into small reusable pieces, and the project let me combine everything from the semester.','[Edit: how you grew and your plans for Programming 2.]']]; /* -------------------------------------------- */ const roman=n=>{
  let value=Math.max(1,Math.floor(Number(n)));
  let output='';
  for(const [number,symbol] of [[1000,'M'],[900,'CM'],[500,'D'],[400,'CD'],[100,'C'],[90,'XC'],[50,'L'],[40,'XL'],[10,'X'],[9,'IX'],[5,'V'],[4,'IV'],[1,'I']]){
@@ -3392,7 +3392,7 @@ const WORKS_PG=[
 const REFLECTIONS_PG=[
  ['cover cover-reflections',`<div class="ct"><small>VOLUME III · PERSONAL REFLECTIONS</small><h1>My<br>Reflections</h1><p class="works-subtitle">A learning journey by Aldryl Labaguis</p></div><div class="stamp">Volume<br>Three<br>2026</div><span class="cover-journal-crest" aria-hidden="true">✦&nbsp; III &nbsp;✦</span>`],
  ['welcome-page reflections-welcome-page',`<h2>Learning<br>&amp; growing.</h2><p class="lead">These are my reflections throughout Computer Programming 1.</p><p>From learning the basics to tackling more complex problems, each term has helped me improve as a programmer.</p><p class="reader-cross-volume">Also explore <strong><button type="button" class="reader-volume-link" data-open-volume="1" aria-label="Open About Me book">About Me</button></strong> or <strong><button type="button" class="reader-volume-link" data-open-volume="0" aria-label="Open Works and Projects book">Works &amp; Projects</button></strong>.</p>${pn(1)}`],
- ...RF.map((r,i)=>[i===0?'reflection-prelim-page':'',`<div class="num reflection-roman-medallion" aria-label="Reflection ${roman(i+1)}">${roman(i+1)}</div><h2>${r[0]}<br>term</h2><p class="body">${r[1]}</p>${r[2]?`<p class="edit">${r[2]}</p>`:''}${pn(i+2)}`]),
+ ...RF.map((r,i)=>[i===0?'reflection-prelim-page':i===1?'reflection-midterm-page':'',`<div class="num reflection-roman-medallion" aria-label="Reflection ${roman(i+1)}">${roman(i+1)}</div><h2>${r[0]}<br>term</h2><p class="body">${r[1]}</p>${r[2]?`<p class="edit">${r[2]}</p>`:''}${pn(i+2)}`]),
  ['',`<h2>Looking<br>back.</h2><p>Each term gave me new challenges and helped me practice problem-solving, patience, and logical thinking.</p><p>The lessons in this volume are part of my growth as a Computer Programming student.</p>${pn(5)}`],
  ['',`<h2>End of<br>reflections.</h2><p>Thank you for reading my journey through Prelim, Midterm, and Final.</p><p>© 2026 Aldryl Labaguis · CP1 · JRU</p><button data-go="0">Back to cover</button>${pn(6)}`],
  ['bk bk-reflections',`<div class="reader-back-design"><span class="reader-back-flourish">✦</span><small>VOLUME III · THE END</small><strong>My Reflections</strong><span class="reader-back-divider"></span><span class="reader-back-signature">ALDRYL LABAGUIS</span><span class="reader-back-year">PERSONAL COLLECTION · 2026</span></div>`]
