@@ -2975,6 +2975,180 @@ body::after{
   width:clamp(30px,9vw,42px);
  }
 }
+
+/* GOTHIC END-PAPER FINISH — decorative inkwork around the last page only.
+   Subtle antique gold double rules and corner etchings, a halo behind the
+   existing black-cat silhouette, and a jewel divider. No extra wording. */
+.reader-leaf .page-face.closing-page:not(.cover):not(.bk){
+ background:
+  radial-gradient(ellipse at 50% 43%,rgba(255,251,239,.58) 0%,rgba(255,248,233,.26) 47%,rgba(162,111,76,.095) 100%),
+  repeating-linear-gradient(100deg,rgba(119,85,53,.013) 0 1px,transparent 1px 9px),
+  #f2e8d6;
+}
+.reader-leaf .page-face.closing-page .farewell-engraved-frame{
+ position:absolute;
+ inset:clamp(13px,2vw,26px) clamp(13px,2vw,26px) clamp(58px,6.7vw,84px);
+ border:1px solid rgba(147,101,73,.45);
+ outline:1px solid rgba(180,145,97,.34);
+ outline-offset:-7px;
+ box-shadow:inset 0 0 0 4px rgba(255,251,239,.26),inset 0 0 28px rgba(105,66,47,.05);
+ border-radius:2px;
+ pointer-events:none;
+ z-index:1;
+}
+.reader-leaf .page-face.closing-page .farewell-corner{
+ position:absolute;
+ display:block;
+ width:clamp(25px,4vw,50px);
+ height:clamp(25px,4vw,50px);
+ border-color:#aa8061;
+ border-style:double;
+ opacity:.77;
+}
+.reader-leaf .page-face.closing-page .farewell-corner.top-left{
+ left:8px;top:8px;border-width:4px 0 0 4px;
+}
+.reader-leaf .page-face.closing-page .farewell-corner.top-right{
+ right:8px;top:8px;border-width:4px 4px 0 0;
+}
+.reader-leaf .page-face.closing-page .farewell-corner.bottom-left{
+ left:8px;bottom:8px;border-width:0 0 4px 4px;
+}
+.reader-leaf .page-face.closing-page .farewell-corner.bottom-right{
+ right:8px;bottom:8px;border-width:0 4px 4px 0;
+}
+.reader-leaf .page-face.closing-page .farewell-cat-halo{
+ position:absolute;
+ top:6.5%;
+ left:50%;
+ width:clamp(96px,11.5vw,150px);
+ aspect-ratio:1;
+ border:1px solid rgba(161,119,77,.55);
+ border-radius:50%;
+ transform:translateX(-50%);
+ background:radial-gradient(circle,rgba(239,213,167,.32) 0%,rgba(214,177,123,.10) 57%,transparent 70%);
+ box-shadow:0 0 0 6px rgba(152,105,66,.07),inset 0 0 0 5px rgba(255,253,245,.6),inset 0 0 0 6px rgba(158,112,66,.29);
+ pointer-events:none;
+ z-index:2;
+}
+.reader-leaf .page-face.closing-page .farewell-cat-halo::before,
+.reader-leaf .page-face.closing-page .farewell-cat-halo::after{
+ content:"✦";
+ position:absolute;
+ top:49%;
+ color:#b38964;
+ font:clamp(10px,1.5vw,17px)/1 Georgia,serif;
+ opacity:.83;
+ transform:translateY(-50%);
+}
+.reader-leaf .page-face.closing-page .farewell-cat-halo::before{left:-26px}
+.reader-leaf .page-face.closing-page .farewell-cat-halo::after{right:-26px}
+.reader-leaf .page-face.closing-page .farewell-cat{
+ z-index:3;
+ top:7.4%;
+ width:clamp(49px,5.1vw,74px);
+ filter:drop-shadow(1px 2px 1px rgba(48,27,26,.22));
+}
+.reader-leaf .page-face.closing-page .farewell-content{
+ position:relative;
+ z-index:3;
+ gap:clamp(17px,2vw,26px);
+ transform:translateY(3%);
+}
+.reader-leaf .page-face.closing-page:not(.cover):not(.bk) .farewell-content h2{
+ color:#58313b;
+ text-shadow:0 2px 0 rgba(255,251,237,.82),0 5px 19px rgba(120,74,64,.12);
+ letter-spacing:-.012em;
+}
+.reader-leaf .page-face.closing-page .farewell-ornament{
+ display:flex;
+ justify-content:center;
+ align-items:center;
+ width:min(77%,264px);
+ height:22px;
+ color:#a87c58;
+ font:18px/1 Georgia,serif;
+}
+.reader-leaf .page-face.closing-page .farewell-ornament::before,
+.reader-leaf .page-face.closing-page .farewell-ornament::after{
+ content:"";
+ display:block;
+ height:1px;
+ flex:1;
+ background:linear-gradient(90deg,transparent,#b8906e 84%);
+}
+.reader-leaf .page-face.closing-page .farewell-ornament::after{
+ transform:rotate(180deg);
+}
+.reader-leaf .page-face.closing-page .farewell-ornament span{padding:0 12px}
+.reader-leaf .page-face.closing-page .farewell-content button{
+ background:linear-gradient(160deg,#603640,#41242f);
+ color:#f8ece0;
+ border:1px solid #ac856d;
+ border-radius:4px;
+ box-shadow:0 4px 10px rgba(55,29,32,.19),inset 0 0 0 1px rgba(234,189,156,.16);
+ transition:background .2s ease,transform .2s ease,box-shadow .2s ease;
+}
+.reader-leaf .page-face.closing-page .farewell-content button:hover{
+ background:linear-gradient(160deg,#794252,#522b3a);
+ transform:translateY(-2px);
+ box-shadow:0 6px 14px rgba(55,29,32,.23);
+}
+.reader-leaf .page-face.closing-page .farewell-content button:focus-visible{
+ outline:3px solid #b58f70;
+ outline-offset:3px;
+}
+.reader-leaf .page-face.closing-page:not(.cover):not(.bk) .pn{
+ z-index:2;
+ color:#875c50;
+ letter-spacing:.14em;
+}
+@media(max-width:790px){
+ .reader-leaf .page-face.closing-page .farewell-engraved-frame{
+  inset:11px 11px 51px;
+ }
+ .reader-leaf .page-face.closing-page .farewell-cat-halo{
+  top:7%;
+  width:clamp(60px,11vw,100px);
+ }
+ .reader-leaf .page-face.closing-page .farewell-cat-halo::before{left:-16px}
+ .reader-leaf .page-face.closing-page .farewell-cat-halo::after{right:-16px}
+ .reader-leaf .page-face.closing-page .farewell-cat{
+  top:7.7%;
+  width:clamp(31px,5.6vw,50px);
+ }
+ .reader-leaf .page-face.closing-page .farewell-content{
+  gap:clamp(12px,2.2vw,21px);
+ }
+ .reader-leaf .page-face.closing-page .farewell-ornament{
+  width:min(80%,175px);
+  height:16px;
+  font-size:14px;
+ }
+}
+@media(max-width:440px){
+ .reader-leaf .page-face.closing-page .farewell-engraved-frame{
+  inset:9px 9px 44px;
+ }
+ .reader-leaf .page-face.closing-page .farewell-corner{width:19px;height:19px}
+ .reader-leaf .page-face.closing-page .farewell-cat-halo{
+  top:7%;
+  width:clamp(52px,16vw,67px);
+ }
+ .reader-leaf .page-face.closing-page .farewell-cat{
+  top:7.5%;
+  width:clamp(28px,8vw,35px);
+ }
+ .reader-leaf .page-face.closing-page .farewell-ornament{
+  width:77%;
+  height:13px;
+  font-size:11px;
+ }
+ .reader-leaf .page-face.closing-page .farewell-content{gap:12px}
+}
+@media(prefers-reduced-motion:reduce){
+ .reader-leaf .page-face.closing-page .farewell-content button{transition:none!important}
+}
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
 <section id="shelf-view" class="shelf-view" aria-label="Bookshelf">
@@ -3027,7 +3201,7 @@ const $=(s,c=document)=>c.querySelector(s),pad=n=>String(n).padStart(2,'0'); /* 
   <span>Aldryl Labaguis</span>
  </a>
 </div>${pn(5)}`],
- ['closing-page',`<img class="farewell-cat" src="assets/gothic-cat.svg" alt="" aria-hidden="true"><div class="farewell-content"><h2>Thanks for<br>reading.</h2><button data-go="0">Back to cover</button></div>${pn(6)}`],
+ ['closing-page',`<div class="farewell-engraved-frame" aria-hidden="true"><span class="farewell-corner top-left"></span><span class="farewell-corner top-right"></span><span class="farewell-corner bottom-left"></span><span class="farewell-corner bottom-right"></span></div><div class="farewell-cat-halo" aria-hidden="true"></div><img class="farewell-cat" src="assets/gothic-cat.svg" alt="" aria-hidden="true"><div class="farewell-content"><h2>Thanks for<br>reading.</h2><div class="farewell-ornament" aria-hidden="true"><span>✦</span></div><button data-go="0">Back to cover</button></div>${pn(6)}`],
  ['bk bk-main',`<div class="reader-back-design"><span class="reader-back-flourish">✦</span><small>VOLUME I · THE END</small><strong>About Me</strong><span class="reader-back-divider"></span><span class="reader-back-signature">ALDRYL LABAGUIS</span><span class="reader-back-year">PERSONAL COLLECTION · 2026</span></div>`]);
 const WORKS_PG=[
  ['cover cover-works',`<div class="ct"><small>VOLUME II · SELECTED WORKS</small><h1>Works<br>&amp; Projects</h1><p class="works-subtitle">A collection by Aldryl Labaguis</p></div><img class="cover-sticker sticker-cat" src="assets/gothic-cat.svg" alt="" aria-hidden="true"><div class="stamp">Volume<br>Two<br>2026</div><span class="cover-archive-label" aria-hidden="true">EST. 2026<br>ARCHIVE / 02</span>`],
