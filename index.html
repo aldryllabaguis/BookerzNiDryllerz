@@ -2946,6 +2946,35 @@ body::after{
   min-height:34px;
  }
 }
+
+/* Standalone silhouette from the existing book cover: cat only.
+   Keep the farewell centered and page number anchored to the bottom. */
+.reader-leaf .page-face.closing-page .farewell-cat{
+ position:absolute;
+ top:7%;
+ left:50%;
+ display:block;
+ width:clamp(49px,5.1vw,74px);
+ height:auto;
+ max-height:22%;
+ object-fit:contain;
+ transform:translateX(-50%);
+ pointer-events:none;
+ user-select:none;
+}
+@media(max-width:790px){
+ .reader-leaf .page-face.closing-page .farewell-cat{
+  top:6%;
+  width:clamp(37px,5.4vw,60px);
+  max-height:20%;
+ }
+}
+@media(max-width:440px){
+ .reader-leaf .page-face.closing-page .farewell-cat{
+  top:5%;
+  width:clamp(30px,9vw,42px);
+ }
+}
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
 <section id="shelf-view" class="shelf-view" aria-label="Bookshelf">
@@ -2998,7 +3027,7 @@ const $=(s,c=document)=>c.querySelector(s),pad=n=>String(n).padStart(2,'0'); /* 
   <span>Aldryl Labaguis</span>
  </a>
 </div>${pn(5)}`],
- ['closing-page',`<div class="farewell-content"><h2>Thanks for<br>reading.</h2><button data-go="0">Back to cover</button></div>${pn(6)}`],
+ ['closing-page',`<img class="farewell-cat" src="assets/gothic-cat.svg" alt="" aria-hidden="true"><div class="farewell-content"><h2>Thanks for<br>reading.</h2><button data-go="0">Back to cover</button></div>${pn(6)}`],
  ['bk bk-main',`<div class="reader-back-design"><span class="reader-back-flourish">✦</span><small>VOLUME I · THE END</small><strong>About Me</strong><span class="reader-back-divider"></span><span class="reader-back-signature">ALDRYL LABAGUIS</span><span class="reader-back-year">PERSONAL COLLECTION · 2026</span></div>`]);
 const WORKS_PG=[
  ['cover cover-works',`<div class="ct"><small>VOLUME II · SELECTED WORKS</small><h1>Works<br>&amp; Projects</h1><p class="works-subtitle">A collection by Aldryl Labaguis</p></div><img class="cover-sticker sticker-cat" src="assets/gothic-cat.svg" alt="" aria-hidden="true"><div class="stamp">Volume<br>Two<br>2026</div><span class="cover-archive-label" aria-hidden="true">EST. 2026<br>ARCHIVE / 02</span>`],
