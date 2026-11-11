@@ -3224,6 +3224,71 @@ body::after{
  .reader-leaf .page-face.reflections-welcome-page .reader-cross-volume{margin:10px 0}
  .reader-leaf .page-face.reflections-welcome-page .pn{margin-top:12px}
 }
+
+/* REFLECTIONS ROMAN CHAPTER MEDALLIONS — graceful ink-and-gold numerals,
+   inspired by an old journal's engraved seals, on Prelim/Midterm/Final pages. */
+.reader-leaf .page-face:not(.cover):not(.bk) .num.reflection-roman-medallion{
+ position:relative;
+ float:right;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ width:clamp(76px,8.5vw,105px);
+ height:clamp(76px,8.5vw,105px);
+ margin:0 0 17px 20px;
+ padding:0 6px 7px;
+ border:1px solid #af9270;
+ border-radius:50%;
+ background:
+  radial-gradient(ellipse at 30% 25%,rgba(255,252,233,.9),rgba(231,217,190,.65) 62%,rgba(185,160,123,.35)),
+  #f3e8d3;
+ box-shadow:0 3px 9px rgba(91,65,47,.19),inset 0 0 0 3px rgba(255,250,236,.82),inset 0 0 0 5px rgba(153,122,82,.28);
+ color:#486a55;
+ font:italic 700 clamp(34px,3.8vw,49px)/1 'Cormorant Garamond',Georgia,serif;
+ letter-spacing:.015em;
+ text-align:center;
+ text-shadow:0 1px 0 #fff8e8,0 2px 3px rgba(68,79,53,.15);
+}
+.reader-leaf .page-face .num.reflection-roman-medallion::before{
+ content:"";
+ position:absolute;
+ inset:8px;
+ border:1px solid rgba(150,116,75,.46);
+ border-radius:50%;
+ pointer-events:none;
+}
+.reader-leaf .page-face .num.reflection-roman-medallion::after{
+ content:"✦";
+ position:absolute;
+ bottom:10px;
+ left:50%;
+ transform:translateX(-50%);
+ color:#ac835a;
+ font:12px/1 Georgia,serif;
+ text-shadow:none;
+ pointer-events:none;
+}
+@media(max-width:790px){
+ .reader-leaf .page-face:not(.cover):not(.bk) .num.reflection-roman-medallion{
+  width:clamp(55px,10vw,78px);
+  height:clamp(55px,10vw,78px);
+  margin:0 0 12px 10px;
+  padding-bottom:5px;
+  font-size:clamp(27px,4.8vw,36px);
+ }
+ .reader-leaf .page-face .num.reflection-roman-medallion::before{inset:5px}
+ .reader-leaf .page-face .num.reflection-roman-medallion::after{bottom:6px;font-size:9px}
+}
+@media(max-width:440px){
+ .reader-leaf .page-face:not(.cover):not(.bk) .num.reflection-roman-medallion{
+  width:53px;
+  height:53px;
+  margin:0 0 8px 8px;
+  font-size:26px;
+ }
+ .reader-leaf .page-face .num.reflection-roman-medallion::before{inset:4px}
+ .reader-leaf .page-face .num.reflection-roman-medallion::after{bottom:5px;font-size:8px}
+}
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
 <section id="shelf-view" class="shelf-view" aria-label="Bookshelf">
@@ -3302,7 +3367,7 @@ const WORKS_PG=[
 const REFLECTIONS_PG=[
  ['cover cover-reflections',`<div class="ct"><small>VOLUME III · PERSONAL REFLECTIONS</small><h1>My<br>Reflections</h1><p class="works-subtitle">A learning journey by Aldryl Labaguis</p></div><div class="stamp">Volume<br>Three<br>2026</div><span class="cover-journal-crest" aria-hidden="true">✦&nbsp; III &nbsp;✦</span>`],
  ['welcome-page reflections-welcome-page',`<h2>Learning<br>&amp; growing.</h2><p class="lead">These are my reflections throughout Computer Programming 1.</p><p>From learning the basics to tackling more complex problems, each term has helped me improve as a programmer.</p><p class="reader-cross-volume">Also explore <strong><button type="button" class="reader-volume-link" data-open-volume="1" aria-label="Open About Me book">About Me</button></strong> or <strong><button type="button" class="reader-volume-link" data-open-volume="0" aria-label="Open Works and Projects book">Works &amp; Projects</button></strong>.</p>${pn(1)}`],
- ...RF.map((r,i)=>['',`<div class="num">${pad(i+1)}</div><h2>${r[0]}<br>term</h2><p class="body">${r[1]}</p><p class="edit">${r[2]}</p>${pn(i+2)}`]),
+ ...RF.map((r,i)=>['',`<div class="num reflection-roman-medallion" aria-label="Reflection ${roman(i+1)}">${roman(i+1)}</div><h2>${r[0]}<br>term</h2><p class="body">${r[1]}</p><p class="edit">${r[2]}</p>${pn(i+2)}`]),
  ['',`<h2>Looking<br>back.</h2><p>Each term gave me new challenges and helped me practice problem-solving, patience, and logical thinking.</p><p>The lessons in this volume are part of my growth as a Computer Programming student.</p>${pn(5)}`],
  ['',`<h2>End of<br>reflections.</h2><p>Thank you for reading my journey through Prelim, Midterm, and Final.</p><p>© 2026 Aldryl Labaguis · CP1 · JRU</p><button data-go="0">Back to cover</button>${pn(6)}`],
  ['bk bk-reflections',`<div class="reader-back-design"><span class="reader-back-flourish">✦</span><small>VOLUME III · THE END</small><strong>My Reflections</strong><span class="reader-back-divider"></span><span class="reader-back-signature">ALDRYL LABAGUIS</span><span class="reader-back-year">PERSONAL COLLECTION · 2026</span></div>`]
