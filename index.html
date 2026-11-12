@@ -4126,6 +4126,110 @@ body::after{
   .page-face { -webkit-overflow-scrolling:touch; }
 }
 
+
+/* FIX: phone reader spread was inheriting desktop page geometry.
+   Constrain the actual #reader-stage element (not just the generic class). */
+@media screen and (max-width: 790px) {
+  html, body { min-height:100%; }
+  #showcase { min-height:100vh; min-height:100svh; min-height:100dvh; }
+  #reader-view {
+    width:100%;
+    min-height:0;
+    padding:10px 0 24px;
+    box-sizing:border-box;
+  }
+  #reader-view .reader-top {
+    width:100%;
+    box-sizing:border-box;
+    padding:0 2px;
+    margin:4px auto 12px;
+    gap:8px;
+  }
+  #reader-view .reader-top h2 {
+    min-width:0;
+    font-size:clamp(19px,5.4vw,25px);
+  }
+  #reader-view .reader-top button {
+    flex:none;
+    padding:9px 11px;
+    font-size:10px;
+    white-space:nowrap;
+  }
+  #reader-stage#reader-stage {
+    display:block !important;
+    position:relative !important;
+    width:100% !important;
+    height:clamp(360px, 112vw, 470px) !important;
+    min-height:0 !important;
+    max-height:470px !important;
+    margin:0 auto !important;
+    perspective:1000px !important;
+    -webkit-perspective:1000px !important;
+    overflow:visible;
+  }
+  #reader-pages#reader-pages {
+    position:absolute !important;
+    inset:0 !important;
+    width:100% !important;
+    height:100% !important;
+    max-height:100% !important;
+    transform-style:preserve-3d;
+    -webkit-transform-style:preserve-3d;
+  }
+  #reader-pages .reader-leaf {
+    height:100% !important;
+    max-height:100% !important;
+    transform-style:preserve-3d;
+    -webkit-transform-style:preserve-3d;
+  }
+  #reader-pages .page-face {
+    box-sizing:border-box;
+    overflow-y:auto;
+    overflow-x:hidden;
+    -webkit-overflow-scrolling:touch;
+    overscroll-behavior:contain;
+    padding:clamp(8px,2.2vw,14px) !important;
+    font-size:clamp(11px,3vw,13px) !important;
+    line-height:1.35;
+    backface-visibility:hidden;
+    -webkit-backface-visibility:hidden;
+  }
+  #reader-pages .page-face h2 { font-size:clamp(19px,5.2vw,25px) !important; }
+  #reader-pages .page-face h3 { font-size:clamp(14px,3.7vw,17px) !important; }
+  #reader-pages .page-face img { max-width:100%; height:auto; }
+  #reader-view .reader-controls {
+    display:flex;
+    width:100%;
+    box-sizing:border-box;
+    justify-content:space-between;
+    gap:8px;
+    margin:14px auto 0;
+    padding:0 4px;
+  }
+  #reader-view .reader-controls button {
+    min-height:40px;
+    padding:8px 11px;
+    font-size:10px;
+  }
+  #reader-view .reader-progress { width:80%; margin:12px auto 0; }
+}
+@media screen and (max-width: 390px) {
+  #reader-stage#reader-stage { height:clamp(340px,112vw,420px) !important; }
+  #reader-view .reader-top { align-items:flex-start; }
+  #reader-view .reader-top h2 { font-size:19px; }
+  #reader-view .reader-top button { font-size:9px; }
+}
+@supports (-webkit-touch-callout: none) {
+  #reader-stage#reader-stage { -webkit-transform:translateZ(0); }
+  #reader-pages#reader-pages, #reader-pages .reader-leaf {
+    -webkit-transform-style:preserve-3d;
+  }
+  #reader-pages .page-face {
+    -webkit-backface-visibility:hidden;
+    -webkit-overflow-scrolling:touch;
+  }
+}
+
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
 <section id="shelf-view" class="shelf-view" aria-label="Bookshelf">
