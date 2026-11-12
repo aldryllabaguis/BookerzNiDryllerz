@@ -4268,6 +4268,66 @@ body::after{
   }
 }
 
+
+/* MOBILE READER RESTORE: keep the original tall book format and make
+   every page independently scrollable so no text is hidden by the spread. */
+@media screen and (max-width: 790px) {
+  #reader-stage#reader-stage {
+    display:block !important;
+    position:relative !important;
+    width:100% !important;
+    height:clamp(390px,112vw,500px) !important;
+    min-height:390px !important;
+    max-height:none !important;
+    aspect-ratio:auto !important;
+    margin:0 auto !important;
+    overflow:visible !important;
+  }
+  #reader-pages#reader-pages {
+    position:absolute !important;
+    inset:0 !important;
+    width:100% !important;
+    height:100% !important;
+    max-height:none !important;
+  }
+  #reader-pages .reader-leaf {
+    top:0 !important;
+    height:100% !important;
+    max-height:none !important;
+  }
+  #reader-pages .page-face {
+    position:absolute !important;
+    inset:0 !important;
+    width:100% !important;
+    height:100% !important;
+    max-height:none !important;
+    box-sizing:border-box !important;
+    padding:10px !important;
+    overflow-x:hidden !important;
+    overflow-y:auto !important;
+    -webkit-overflow-scrolling:touch !important;
+    overscroll-behavior-y:contain;
+    overflow-wrap:anywhere;
+    font-size:clamp(11px,3.1vw,13px) !important;
+    line-height:1.38 !important;
+  }
+  #reader-pages .page-face h2 { font-size:clamp(18px,5vw,23px) !important; line-height:1.12 !important; }
+  #reader-pages .page-face h3 { font-size:clamp(14px,3.7vw,17px) !important; }
+  #reader-pages .page-face img,
+  #reader-pages .page-face video,
+  #reader-pages .page-face iframe { max-width:100% !important; }
+  #reader-pages .page-face p,
+  #reader-pages .page-face li { overflow-wrap:anywhere; }
+}
+@media screen and (max-width: 390px) {
+  #reader-stage#reader-stage {
+    height:clamp(390px,118vw,470px) !important;
+    min-height:390px !important;
+  }
+  #reader-pages .page-face { padding:8px !important; font-size:11px !important; }
+  #reader-pages .page-face h2 { font-size:18px !important; }
+}
+
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
 <section id="shelf-view" class="shelf-view" aria-label="Bookshelf">
