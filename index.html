@@ -4230,6 +4230,44 @@ body::after{
   }
 }
 
+
+/* FINAL MOBILE BOOK GEOMETRY: scale the two-page spread uniformly.
+   The desktop reader is a 900:565 spread; do not independently stretch its height. */
+@media screen and (max-width: 790px) {
+  #reader-stage#reader-stage {
+    width:100% !important;
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+    aspect-ratio:900 / 565 !important;
+    margin:0 auto !important;
+    overflow:visible !important;
+  }
+  #reader-pages#reader-pages {
+    position:absolute !important;
+    inset:0 !important;
+    width:100% !important;
+    height:100% !important;
+  }
+  #reader-pages .reader-leaf {
+    top:0 !important;
+    height:100% !important;
+  }
+  #reader-pages .page-face {
+    height:100% !important;
+    max-height:100% !important;
+    box-sizing:border-box !important;
+    overflow-y:auto !important;
+    overflow-x:hidden !important;
+  }
+}
+@media screen and (max-width: 390px) {
+  #reader-stage#reader-stage {
+    height:auto !important;
+    aspect-ratio:900 / 565 !important;
+  }
+}
+
 </style></head>
 <body><main id="showcase"><div class="scene" id="scene">
 <section id="shelf-view" class="shelf-view" aria-label="Bookshelf">
